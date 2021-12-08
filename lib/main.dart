@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:galss/generated/l10n.dart' as l10n;
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:galss/generated/l10n.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       localizationsDelegates: const [
-        l10n.S.delegate,
-        DefaultWidgetsLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-        DefaultMaterialLocalizations.delegate
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        S.delegate
       ],
       supportedLocales: const [Locale('es')],
       locale: const Locale('es'),
@@ -41,6 +41,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+
+    );
   }
 }
