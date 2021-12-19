@@ -2,9 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/services/payment_service.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+final locator = GetIt.instance;
+
+void setupLocator() {
+  locator.registerSingleton<PaymentService>(PaymentService());
 }
 
 class MyApp extends StatelessWidget {
@@ -42,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      body: Container(),
     );
   }
 }
