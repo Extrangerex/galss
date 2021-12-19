@@ -1,0 +1,5 @@
+
+
+class FCMUserDeviceToken {
+  String? token;
+}
