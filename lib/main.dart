@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:galss/config/constants.dart';
 import 'package:galss/pages/login.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:get_it/get_it.dart';
