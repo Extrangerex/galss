@@ -2,28 +2,30 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:galss/config/constants.dart';
+import 'package:galss/pages/login.dart';
 import 'package:galss/services/payment_service.dart';
-import 'package:galss/utils/in_app_utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-
-Future<void> main() async{
-  await Purchases.setDebugLogsEnabled(true);
-
-
-  if (Platform.isAndroid) {
-    await Purchases.setup("public_google_sdk_key");
-  } else if (Platform.isIOS) {
-    await Purchases.setup("public_ios_sdk_key");
-  }
-
-  runApp(const MyApp());
-}
 
 final locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerSingleton<PaymentService>(PaymentService());
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Purchases.setDebugLogsEnabled(true);
+
+  if (Platform.isAndroid) {
+    await Purchases.setup("goog_OzclXrIoLpROpKJugNkUIFniBRz");
+  } else if (Platform.isIOS) {
+    await Purchases.setup("appl_OylMRLjcxAiHRQJlaQPfcyeqJMX");
+  }
+
+  setupLocator();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -61,13 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Text('data'),
+    return const Scaffold(
+      body: Login(),
     );
   }
 }
