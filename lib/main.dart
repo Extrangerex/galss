@@ -3,14 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:galss/pages/login.dart';
+import 'package:galss/services/auth_service.dart';
+import 'package:galss/services/http_service.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-final locator = GetIt.instance;
+final locator = GetIt.I;
 
 void setupLocator() {
   locator.registerSingleton<PaymentService>(PaymentService());
+  locator.registerSingleton<HttpService>(HttpService());
+  locator.registerSingleton<AuthService>(AuthService());
 }
 
 Future<void> main() async {

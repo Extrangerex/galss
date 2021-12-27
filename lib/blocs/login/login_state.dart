@@ -1,5 +1,4 @@
 import 'package:galss/form_submission_status.dart';
-import 'package:galss/pages/login.dart';
 
 class LoginState {
   final String? username;

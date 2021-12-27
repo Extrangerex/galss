@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/blocs/login/login_bloc.dart';
+import 'package:galss/blocs/login/login_event.dart';
+import 'package:galss/blocs/login/login_state.dart';
+import 'package:galss/form_submission_status.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -14,42 +19,73 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return ImagedBackgroundContainer(child: loginForm());
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => LoginBloc(),
+        child: ImagedBackgroundContainer(child: loginForm()),
+      ),
+    );
   }
 
   Widget loginForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Image(
-            image: logo,
-            width: 200,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          _usernameField(),
-          _passwordField(),
-          _loginBtn(),
-        ],
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        print(state.formState);
+      },
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(
+              image: logo,
+              width: 200,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            _usernameField(),
+            _passwordField(),
+            _loginBtn(),
+          ],
+        ),
       ),
     );
   }
 
   Widget _passwordField() {
-    return TextFormField(
-      obscureText: true,
-    );
+    return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+      return TextFormField(
+        obscureText: true,
+        validator: (value) => null,
+        onChanged: (value) => context
+            .read<LoginBloc>()
+            .add(LoginPasswordChanged(password: value)),
+      );
+    });
   }
 
   Widget _usernameField() {
-    return TextFormField();
+    return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+      return TextFormField(
+        validator: (value) => null,
+        onChanged: (value) => context
+            .read<LoginBloc>()
+            .add(LoginUsernameChanged(username: value)),
+      );
+    });
   }
 
   Widget _loginBtn() {
-    return TextButton(onPressed: () {}, child: const Text('Login'));
+    return BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) => state.formState is FormSubmittingStatus
+            ? const CircularProgressIndicator()
+            : TextButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<LoginBloc>().add(LoginFormSubmitted());
+                  }
+                },
+                child: const Text('Login')));
   }
 }
