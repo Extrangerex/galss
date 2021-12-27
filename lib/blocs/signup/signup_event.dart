@@ -41,3 +41,5 @@ class SignUpCityChanged extends SignUpEvent {
 
   const SignUpCityChanged({required this.city});
 }
+
+class SignUpFormSubmitted extends SignUpEvent {}
