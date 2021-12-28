@@ -15,6 +15,7 @@ class SignUpState {
   final Country? country;
   final FormSubmissionStatus formState;
   CountryBloc? countryBloc;
+  List<Country> countries = [];
 
   SignUpState(
       {this.name,
@@ -27,6 +28,11 @@ class SignUpState {
     countryBloc = CountryBloc(CountryState());
 
     countryBloc?.add(const FetchListCountry());
+
+    countryBloc?.stream.listen((event) {
+      print(event.countries);
+      countries = event.countries ?? [];
+    });
   }
 
   SignUpState copyWith(

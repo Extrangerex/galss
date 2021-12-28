@@ -77,8 +77,9 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _countryField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
+        print(state.countries);
         return DropdownButton<Country>(
-            items: (state.countryBloc?.state.countries ?? [])
+            items: state.countries
                 .map((e) => DropdownMenuItem<Country>(child: Text(e.name!)))
                 .toList(),
             onChanged: (v) {
