@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:galss/pages/login.dart';
+import 'package:galss/pages/signup_seeker.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/country_service.dart';
 import 'package:galss/services/http_service.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const SignupSeeker(),
     );
   }
 }

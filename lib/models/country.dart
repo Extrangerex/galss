@@ -1,8 +1,18 @@
-
-import 'package:galss/models/city.dart';
-
 class Country {
   int? id;
   String? name;
-  List<City>? cities;
+
+  Country({this.id, this.name});
+
+  Country.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['name'] = name;
+    return data;
+  }
 }

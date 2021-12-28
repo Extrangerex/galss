@@ -78,7 +78,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
         return DropdownButton<Country>(
-            items: state.countryBloc!.state.countries!
+            items: (state.countryBloc?.state.countries ?? [])
                 .map((e) => DropdownMenuItem<Country>(child: Text(e.name!)))
                 .toList(),
             onChanged: (v) {

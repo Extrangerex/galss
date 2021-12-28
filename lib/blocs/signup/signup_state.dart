@@ -1,4 +1,5 @@
 import 'package:galss/blocs/country/country_bloc.dart';
+import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/models/city.dart';
@@ -24,6 +25,8 @@ class SignUpState {
       this.country,
       this.formState = const InitialFormStatus()}) {
     countryBloc = CountryBloc(CountryState());
+
+    countryBloc?.add(const FetchListCountry());
   }
 
   SignUpState copyWith(

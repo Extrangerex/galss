@@ -7,11 +7,12 @@ class CountryRepository {
 
   Future<List<Country>> getCountries() async {
     final response =
-        await http.get<List<Country>>('${HttpService.apiUrl}/country');
+        await http.get<List<dynamic>>('${HttpService.apiUrl}/country');
+
     if (response.statusCode != 200) {
       throw Exception();
     }
 
-    return response.data!;
+    return (response.data ?? []).map((e) => Country.fromJson(e)).toList();
   }
 }
