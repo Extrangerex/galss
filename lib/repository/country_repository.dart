@@ -5,7 +5,13 @@ import 'package:galss/services/http_service.dart';
 class CountryRepository {
   final http = locator<HttpService>().http;
 
-  Future<List<Country>> getCountry() async {
-    return http.get('${HttpService.apiUrl}/country').then((value) {});
+  Future<List<Country>> getCountries() async {
+    final response =
+        await http.get<List<Country>>('${HttpService.apiUrl}/country');
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
+
+    return response.data!;
   }
 }
