@@ -8,6 +8,7 @@ class SignUpState {
   final String? email;
   final String? password;
   final UserType? userType;
+  final DateTime? dob;
   final City? city;
   final Country? country;
   final FormSubmissionStatus formState;
@@ -18,6 +19,7 @@ class SignUpState {
       this.email,
       this.password,
       this.userType,
+      this.dob,
       this.city,
       this.country,
       this.countries = const [],

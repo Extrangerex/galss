@@ -84,13 +84,27 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _countryField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return DropdownButton<Country>(
-            items: state.countries
-                .map((e) => DropdownMenuItem<Country>(child: Text(e.name!)))
-                .toList(),
-            onChanged: (v) {
-              context.read<SignUpBloc>().add(SignUpCountryChanged(country: v!));
-            });
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          decoration: const BoxDecoration(color: Colors.white),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('País'),
+              DropdownButton<Country>(
+                  items: state.countries
+                      .map((e) =>
+                          DropdownMenuItem<Country>(child: Text(e.name!)))
+                      .toList(),
+                  isExpanded: true,
+                  onChanged: (v) {
+                    context
+                        .read<SignUpBloc>()
+                        .add(SignUpCountryChanged(country: v!));
+                  }),
+            ],
+          ),
+        );
       },
     );
   }

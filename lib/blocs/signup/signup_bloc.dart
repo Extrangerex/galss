@@ -32,13 +32,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpUserTypeChanged>(
         (event, emit) => emit(state.copyWith(userType: event.type)));
 
+    on<SignUpCountryListChanged>(
+        (event, emit) => emit(state.copyWith(countries: event.countries)));
+
     on<SignUpFormSubmitted>(_onSignUpFormSubmitted);
 
     countryStreamSubscription = countryBloc.stream.listen((event) {
       if (event.apiFetchStatus is! ApiFetchSuccededStatus) {
         return;
       }
-      state.copyWith(countries: event.countries);
+      add(SignUpCountryListChanged(countries: event.countries!));
     });
   }
 

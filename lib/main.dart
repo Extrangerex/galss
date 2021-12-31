@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      themeMode: ThemeMode.light,
       home: const SignupSeeker(),
     );
   }
