@@ -1,12 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/api_fetch_status.dart';
+import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/form_submission_status.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  SignUpBloc(SignUpState initialState) : super(initialState) {
+  final CountryBloc countryBloc;
+
+  StreamSubscription? countryStreamSubscription;
+
+  SignUpBloc(SignUpState initialState, {required this.countryBloc})
+      : super(initialState) {
     on<SignUpNameChanged>(
         (event, emit) => emit(state.copyWith(name: event.name)));
 
@@ -26,10 +33,24 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         (event, emit) => emit(state.copyWith(userType: event.type)));
 
     on<SignUpFormSubmitted>(_onSignUpFormSubmitted);
+
+    countryStreamSubscription = countryBloc.stream.listen((event) {
+      if (event.apiFetchStatus is! ApiFetchSuccededStatus) {
+        return;
+      }
+      state.copyWith(countries: event.countries);
+    });
   }
 
   FutureOr<void> _onSignUpFormSubmitted(
       SignUpFormSubmitted event, Emitter<SignUpState> emit) async {
     emit(state.copyWith(formState: const FormSubmittingStatus()));
+  }
+
+  @override
+  Future<void> close() {
+    // TODO: implement close
+    countryStreamSubscription?.cancel();
+    return super.close();
   }
 }

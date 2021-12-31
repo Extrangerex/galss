@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/blocs/country/country_bloc.dart';
+import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
@@ -20,8 +22,13 @@ class _SignupSeekerState extends State<SignupSeeker> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return BlocProvider(
-      create: (context) => SignUpBloc(SignUpState()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (create) => CountryBloc(CountryState())),
+        BlocProvider(
+            create: (create) => SignUpBloc(SignUpState(),
+                countryBloc: create.read<CountryBloc>()))
+      ],
       child: Scaffold(
         body: ImagedBackgroundContainer(
             child: Column(
@@ -77,7 +84,6 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _countryField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        print(state.countries);
         return DropdownButton<Country>(
             items: state.countries
                 .map((e) => DropdownMenuItem<Country>(child: Text(e.name!)))

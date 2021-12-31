@@ -1,6 +1,3 @@
-import 'package:galss/blocs/country/country_bloc.dart';
-import 'package:galss/blocs/country/country_event.dart';
-import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/models/city.dart';
 import 'package:galss/models/country.dart';
@@ -14,8 +11,7 @@ class SignUpState {
   final City? city;
   final Country? country;
   final FormSubmissionStatus formState;
-  CountryBloc? countryBloc;
-  List<Country> countries = [];
+  List<Country> countries;
 
   SignUpState(
       {this.name,
@@ -24,16 +20,8 @@ class SignUpState {
       this.userType,
       this.city,
       this.country,
-      this.formState = const InitialFormStatus()}) {
-    countryBloc = CountryBloc(CountryState());
-
-    countryBloc?.add(const FetchListCountry());
-
-    countryBloc?.stream.listen((event) {
-      print(event.countries);
-      countries = event.countries ?? [];
-    });
-  }
+      this.countries = const [],
+      this.formState = const InitialFormStatus()});
 
   SignUpState copyWith(
       {String? name,
@@ -42,6 +30,7 @@ class SignUpState {
       UserType? userType,
       City? city,
       Country? country,
+      List<Country>? countries,
       FormSubmissionStatus? formState}) {
     return SignUpState(
         name: name ?? this.name,
@@ -50,6 +39,7 @@ class SignUpState {
         userType: userType ?? this.userType,
         city: city ?? this.city,
         country: country ?? this.country,
+        countries: countries ?? this.countries,
         formState: formState ?? this.formState);
   }
 }
