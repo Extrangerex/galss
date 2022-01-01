@@ -48,4 +48,16 @@ class SignUpCountryListChanged extends SignUpEvent {
   const SignUpCountryListChanged({required this.countries});
 }
 
+class SignUpDateOfBirthChanged extends SignUpEvent {
+  final DateTime dob;
+
+  const SignUpDateOfBirthChanged({required this.dob});
+}
+
+class SignUpLicenseTermsAcceptedChanged extends SignUpEvent {
+  final bool licenseTermsAccepted;
+
+  const SignUpLicenseTermsAcceptedChanged({required this.licenseTermsAccepted});
+}
+
 class SignUpFormSubmitted extends SignUpEvent {}

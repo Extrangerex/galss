@@ -48,6 +48,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   FutureOr<void> _onSignUpFormSubmitted(
       SignUpFormSubmitted event, Emitter<SignUpState> emit) async {
     emit(state.copyWith(formState: const FormSubmittingStatus()));
+
+    try {} catch (e) {
+      emit(
+          state.copyWith(formState: FormFailedStatus(exception: Exception(e))));
+    }
   }
 
   @override

@@ -12,6 +12,7 @@ class SignUpState {
   final City? city;
   final Country? country;
   final FormSubmissionStatus formState;
+  final bool licenseTermsAccepted;
   List<Country> countries;
 
   SignUpState(
@@ -23,6 +24,7 @@ class SignUpState {
       this.city,
       this.country,
       this.countries = const [],
+      this.licenseTermsAccepted = false,
       this.formState = const InitialFormStatus()});
 
   SignUpState copyWith(
@@ -32,6 +34,7 @@ class SignUpState {
       UserType? userType,
       City? city,
       Country? country,
+      bool? licenseTermsAccepted,
       List<Country>? countries,
       FormSubmissionStatus? formState}) {
     return SignUpState(
@@ -42,6 +45,7 @@ class SignUpState {
         city: city ?? this.city,
         country: country ?? this.country,
         countries: countries ?? this.countries,
+        licenseTermsAccepted: licenseTermsAccepted ?? this.licenseTermsAccepted,
         formState: formState ?? this.formState);
   }
 }

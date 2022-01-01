@@ -18,6 +18,7 @@ class SignupSeeker extends StatefulWidget {
 
 class _SignupSeekerState extends State<SignupSeeker> {
   final _formKey = GlobalKey<FormState>();
+  final _dobController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +46,48 @@ class _SignupSeekerState extends State<SignupSeeker> {
         child: Column(
           children: [
             _nameField(),
+            _dobField(),
             _emailField(),
             _countryField(),
-            _passwordField()
+            _passwordField(),
+            const SizedBox(
+              height: 20,
+            ),
+            _termsAndConditionsField(),
+            const SizedBox(
+              height: 20,
+            ),
+            _btnSubmit()
           ],
         ));
+  }
+
+  Widget _btnSubmit() {
+    return TextButton(
+        onPressed: () {
+          if (!_formKey.currentState!.validate()) return;
+
+          context.read<SignUpBloc>().add(SignUpFormSubmitted());
+        },
+        child: const Text('enviar'));
+  }
+
+  Widget _termsAndConditionsField() {
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        return CheckboxListTile(
+          selected: state.licenseTermsAccepted,
+          value: state.licenseTermsAccepted,
+          title: const Text('Acepto los terminos y condiciones'),
+          onChanged: (v) {
+            if (v == null) return;
+
+            context.read<SignUpBloc>().add(
+                SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
+          },
+        );
+      },
+    );
   }
 
   Widget _nameField() {
@@ -57,6 +95,38 @@ class _SignupSeekerState extends State<SignupSeeker> {
       onChanged: (v) {
         context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
       },
+    );
+  }
+
+  Widget _dobField() {
+    return BlocListener<SignUpBloc, SignUpState>(
+      listener: (context, state) {
+        setState(() {
+          _dobController.text = state.dob.toString();
+        });
+      },
+      child: GestureDetector(
+        onTap: () {
+          final legalDatetime =
+              DateTime.now().subtract(const Duration(days: 365 * 18));
+          showDatePicker(
+                  context: context,
+                  initialDate: legalDatetime,
+                  firstDate:
+                      legalDatetime.subtract(const Duration(days: 365 * 80)),
+                  lastDate: legalDatetime)
+              .then((value) {
+            if (value == null) return;
+
+            context
+                .read<SignUpBloc>()
+                .add(SignUpDateOfBirthChanged(dob: value));
+          });
+        },
+        child: TextFormField(
+          controller: _dobController,
+        ),
+      ),
     );
   }
 

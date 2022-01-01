@@ -10,4 +10,8 @@ class AuthRepository {
   Future<Response<dynamic>> login(Map<String, dynamic> data) async {
     return http.post('${HttpService.apiUrl}/Login/SignIn', data: data);
   }
+
+  Future<Response<dynamic>> signUp(Map<String, dynamic> data) async {
+    return http.post('${HttpService.apiUrl}/Login/SignUp', data: data);
+  }
 }
