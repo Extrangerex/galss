@@ -35,6 +35,7 @@ class SignUpState {
       City? city,
       Country? country,
       bool? licenseTermsAccepted,
+      DateTime? dob,
       List<Country>? countries,
       FormSubmissionStatus? formState}) {
     return SignUpState(
@@ -43,6 +44,7 @@ class SignUpState {
         password: password ?? this.password,
         userType: userType ?? this.userType,
         city: city ?? this.city,
+        dob: dob ?? this.dob,
         country: country ?? this.country,
         countries: countries ?? this.countries,
         licenseTermsAccepted: licenseTermsAccepted ?? this.licenseTermsAccepted,

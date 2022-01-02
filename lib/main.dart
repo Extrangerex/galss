@@ -48,9 +48,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [Locale('es')],
       locale: const Locale('es'),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
       ),
-      themeMode: ThemeMode.light,
       home: const SignupSeeker(),
     );
   }

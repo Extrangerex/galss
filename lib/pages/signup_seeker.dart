@@ -8,6 +8,7 @@ import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:intl/intl.dart';
 
 class SignupSeeker extends StatefulWidget {
   const SignupSeeker({Key? key}) : super(key: key);
@@ -32,9 +33,15 @@ class _SignupSeekerState extends State<SignupSeeker> {
       ],
       child: Scaffold(
         body: ImagedBackgroundContainer(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [const Image(image: logo, width: 100), _signUpForm()],
+            child: ListView(
+          children: [
+            Column(
+              children: const [
+                Image(image: logo, width: 100),
+              ],
+            ),
+            _signUpForm()
+          ],
         )),
       ),
     );
@@ -49,6 +56,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
             _dobField(),
             _emailField(),
             _countryField(),
+            const Spacer(),
             _passwordField(),
             const SizedBox(
               height: 20,
@@ -91,49 +99,60 @@ class _SignupSeekerState extends State<SignupSeeker> {
   }
 
   Widget _nameField() {
-    return TextFormField(
-      onChanged: (v) {
-        context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        return TextFormField(
+          onChanged: (v) {
+            context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
+          },
+        );
       },
     );
   }
 
   Widget _dobField() {
-    return BlocListener<SignUpBloc, SignUpState>(
-      listener: (context, state) {
-        setState(() {
-          _dobController.text = state.dob.toString();
-        });
-      },
-      child: GestureDetector(
-        onTap: () {
-          final legalDatetime =
-              DateTime.now().subtract(const Duration(days: 365 * 18));
-          showDatePicker(
-                  context: context,
-                  initialDate: legalDatetime,
-                  firstDate:
-                      legalDatetime.subtract(const Duration(days: 365 * 80)),
-                  lastDate: legalDatetime)
-              .then((value) {
-            if (value == null) return;
+    final legalDatetime =
+        DateTime.now().subtract(const Duration(days: 365 * 18));
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (blocContext, state) {
+        return GestureDetector(
+          onTap: () async {
+            var result = await showDatePicker(
+              context: blocContext,
+              initialDate: legalDatetime,
+              firstDate: legalDatetime.subtract(const Duration(days: 365 * 80)),
+              lastDate: legalDatetime,
+            );
 
-            context
-                .read<SignUpBloc>()
-                .add(SignUpDateOfBirthChanged(dob: value));
-          });
-        },
-        child: TextFormField(
-          controller: _dobController,
-        ),
-      ),
+            if (result == null) return;
+
+            setState(() {
+              _dobController.text = result.toString();
+            });
+          },
+          child: TextFormField(
+            controller: _dobController,
+            onChanged: (value) {
+              blocContext
+                  .read<SignUpBloc>()
+                  .add(SignUpDateOfBirthChanged(dob: DateTime.parse(value)));
+            },
+            decoration: const InputDecoration(
+                enabled: false, hintText: 'Fecha de nacimiento'),
+          ),
+        );
+      },
     );
   }
 
   Widget _emailField() {
-    return TextFormField(
-      onChanged: (v) {
-        context.read<SignUpBloc>().add(SignUpEmailChanged(email: v));
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        return TextFormField(
+          onChanged: (v) {
+            context.read<SignUpBloc>().add(SignUpEmailChanged(email: v));
+          },
+        );
       },
     );
   }
@@ -157,22 +176,26 @@ class _SignupSeekerState extends State<SignupSeeker> {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: const BoxDecoration(color: Colors.white),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('País'),
-              DropdownButton<Country>(
-                  items: state.countries
-                      .map((e) =>
-                          DropdownMenuItem<Country>(child: Text(e.name!)))
-                      .toList(),
-                  isExpanded: true,
-                  onChanged: (v) {
-                    context
-                        .read<SignUpBloc>()
-                        .add(SignUpCountryChanged(country: v!));
-                  }),
-            ],
+          child: Theme(
+            data: ThemeData(brightness: Brightness.light),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('País'),
+                DropdownButton<Country>(
+                    items: state.countries
+                        .map((e) =>
+                            DropdownMenuItem<Country>(child: Text(e.name!)))
+                        .toList(),
+                    isExpanded: true,
+                    onChanged: (v) {
+                      if (v == null) return;
+                      context
+                          .read<SignUpBloc>()
+                          .add(SignUpCountryChanged(country: v));
+                    }),
+              ],
+            ),
           ),
         );
       },
