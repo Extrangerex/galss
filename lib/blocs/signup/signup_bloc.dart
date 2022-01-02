@@ -7,7 +7,6 @@ import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/main.dart';
-import 'package:galss/models/user_type.dart';
 import 'package:galss/services/auth_service.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
@@ -63,7 +62,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       var body = Map<String, dynamic>.from({
         "user": {
           "fullName": state.name,
-          "type": UserType.seeker,
+          "type": state.userType,
           "bornDate": state.dob,
           "country": state.country!.id
         },
