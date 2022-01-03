@@ -5,11 +5,12 @@ import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
+import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/country.dart';
+import 'package:galss/models/user_type.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
-import 'package:intl/intl.dart';
 
 class SignupSeeker extends StatefulWidget {
   const SignupSeeker({Key? key}) : super(key: key);
@@ -29,7 +30,8 @@ class _SignupSeekerState extends State<SignupSeeker> {
       providers: [
         BlocProvider(create: (create) => CountryBloc(CountryState())),
         BlocProvider(
-            create: (create) => SignUpBloc(SignUpState(),
+            create: (create) => SignUpBloc(
+                SignUpState(userType: UserType.seeker),
                 countryBloc: create.read<CountryBloc>()))
       ],
       child: Scaffold(
@@ -49,26 +51,31 @@ class _SignupSeekerState extends State<SignupSeeker> {
   }
 
   Widget _signUpForm() {
-    return Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            _nameField(),
-            _dobField(),
-            _emailField(),
-            _countryField(),
-            const Spacer(),
-            _passwordField(),
-            const SizedBox(
-              height: 20,
-            ),
-            _termsAndConditionsField(),
-            const SizedBox(
-              height: 20,
-            ),
-            _btnSubmit()
-          ],
-        ));
+    return BlocListener<SignUpBloc, SignUpState>(
+      listener: (context, state) {
+        if (state.formState is FormSuccessStatus) {}
+      },
+      child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              _nameField(),
+              _dobField(),
+              _emailField(),
+              _countryField(),
+              const Spacer(),
+              _passwordField(),
+              const SizedBox(
+                height: 20,
+              ),
+              _termsAndConditionsField(),
+              const SizedBox(
+                height: 20,
+              ),
+              _btnSubmit()
+            ],
+          )),
+    );
   }
 
   Widget _btnSubmit() {

@@ -7,6 +7,7 @@ import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/country.dart';
+import 'package:galss/models/user_type.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -18,6 +19,7 @@ class SignUpModel extends StatefulWidget {
 }
 
 class _SignUpModelState extends State<SignUpModel> {
+  final _formKey = GlobalKey<FormState>();
   final _dobController = TextEditingController();
 
   @override
@@ -28,21 +30,37 @@ class _SignUpModelState extends State<SignUpModel> {
         providers: [
           BlocProvider(create: (create) => CountryBloc(CountryState())),
           BlocProvider(
-              create: (create) => SignUpBloc(SignUpState(),
+              create: (create) => SignUpBloc(
+                  SignUpState(userType: UserType.model),
                   countryBloc: create.read<CountryBloc>()))
         ],
-        child: ImagedBackgroundContainer(
-            child: Column(
-          children: [
-            const Image(
-              image: logo,
-              width: 200,
-            ),
-            Text(S.current.sign_up_form_for_galss_models),
-            Text(S.current.fonts_with_asterisk_are_mandatory)
-          ],
-        )),
+        child: ImagedBackgroundContainer(child: _form()),
       ),
+    );
+  }
+
+  Widget _form() {
+    return Column(
+      children: [
+        const Image(
+          image: logo,
+          width: 200,
+        ),
+        Text(S.current.sign_up_form_for_galss_models),
+        Text(S.current.fonts_with_asterisk_are_mandatory),
+        _nameField(),
+        _dobField(),
+        _emailField(),
+        _countryField(),
+        _passwordField(),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(S.current.prompt_terms_conditions),
+        _termsAndConditionsField(),
+        const Spacer(),
+        _btnSubmit()
+      ],
     );
   }
 
@@ -97,6 +115,16 @@ class _SignUpModelState extends State<SignUpModel> {
         );
       },
     );
+  }
+
+  Widget _btnSubmit() {
+    return TextButton(
+        onPressed: () {
+          if (!_formKey.currentState!.validate()) return;
+
+          context.read<SignUpBloc>().add(SignUpFormSubmitted());
+        },
+        child: Text(S.current.sign_up));
   }
 
   Widget _termsAndConditionsField() {
