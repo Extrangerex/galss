@@ -4,6 +4,7 @@ import 'package:galss/blocs/login/login_bloc.dart';
 import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
 import 'package:galss/form_submission_status.dart';
+import 'package:galss/generated/l10n.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -28,27 +29,22 @@ class _LoginState extends State<Login> {
   }
 
   Widget loginForm() {
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        print(state.formState);
-      },
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Image(
-              image: logo,
-              width: 200,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            _usernameField(),
-            _passwordField(),
-            _loginBtn(),
-          ],
-        ),
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Image(
+            image: logo,
+            width: 200,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          _usernameField(),
+          _passwordField(),
+          _loginBtn(),
+        ],
       ),
     );
   }
@@ -86,6 +82,6 @@ class _LoginState extends State<Login> {
                     context.read<LoginBloc>().add(LoginFormSubmitted());
                   }
                 },
-                child: const Text('Login')));
+                child: Text(S.current.action_sign_in_short)));
   }
 }

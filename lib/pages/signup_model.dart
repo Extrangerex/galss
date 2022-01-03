@@ -9,105 +9,58 @@ import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
-import 'package:intl/intl.dart';
 
-class SignupSeeker extends StatefulWidget {
-  const SignupSeeker({Key? key}) : super(key: key);
+class SignUpModel extends StatefulWidget {
+  const SignUpModel({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SignupSeekerState();
+  State<StatefulWidget> createState() => _SignUpModelState();
 }
 
-class _SignupSeekerState extends State<SignupSeeker> {
-  final _formKey = GlobalKey<FormState>();
+class _SignUpModelState extends State<SignUpModel> {
   final _dobController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (create) => CountryBloc(CountryState())),
-        BlocProvider(
-            create: (create) => SignUpBloc(SignUpState(),
-                countryBloc: create.read<CountryBloc>()))
-      ],
-      child: Scaffold(
-        body: ImagedBackgroundContainer(
-            child: ListView(
+    return Scaffold(
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (create) => CountryBloc(CountryState())),
+          BlocProvider(
+              create: (create) => SignUpBloc(SignUpState(),
+                  countryBloc: create.read<CountryBloc>()))
+        ],
+        child: ImagedBackgroundContainer(
+            child: Column(
           children: [
-            Column(
-              children: const [
-                Image(image: logo, width: 100),
-              ],
+            const Image(
+              image: logo,
+              width: 200,
             ),
-            _signUpForm()
+            Text(S.current.sign_up_form_for_galss_models),
+            Text(S.current.fonts_with_asterisk_are_mandatory)
           ],
         )),
       ),
     );
   }
 
-  Widget _signUpForm() {
-    return Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            _nameField(),
-            _dobField(),
-            _emailField(),
-            _countryField(),
-            const Spacer(),
-            _passwordField(),
-            const SizedBox(
-              height: 20,
-            ),
-            _termsAndConditionsField(),
-            const SizedBox(
-              height: 20,
-            ),
-            _btnSubmit()
-          ],
-        ));
-  }
-
-  Widget _btnSubmit() {
-    return TextButton(
-        onPressed: () {
-          if (!_formKey.currentState!.validate()) return;
-
-          context.read<SignUpBloc>().add(SignUpFormSubmitted());
-        },
-        child: Text(S.current.sign_up));
-  }
-
-  Widget _termsAndConditionsField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(
-      builder: (context, state) {
-        return CheckboxListTile(
-          selected: state.licenseTermsAccepted,
-          value: state.licenseTermsAccepted,
-          title: Text(S.current.prompt_accept_terms_conditions),
-          onChanged: (v) {
-            if (v == null) return;
-
-            context.read<SignUpBloc>().add(
-                SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
-          },
-        );
-      },
+  Widget _nameField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: S.current.name),
     );
   }
 
-  Widget _nameField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(
-      builder: (context, state) {
-        return TextFormField(
-          onChanged: (v) {
-            context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
-          },
-        );
-      },
+  Widget _passwordField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: S.current.name),
+    );
+  }
+
+  Widget _emailField() {
+    return TextFormField(
+      decoration: InputDecoration(hintText: S.current.prompt_email),
     );
   }
 
@@ -146,25 +99,18 @@ class _SignupSeekerState extends State<SignupSeeker> {
     );
   }
 
-  Widget _emailField() {
+  Widget _termsAndConditionsField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return TextFormField(
+        return CheckboxListTile(
+          selected: state.licenseTermsAccepted,
+          value: state.licenseTermsAccepted,
+          title: Text(S.current.prompt_accept_terms_conditions),
           onChanged: (v) {
-            context.read<SignUpBloc>().add(SignUpEmailChanged(email: v));
-          },
-        );
-      },
-    );
-  }
+            if (v == null) return;
 
-  Widget _passwordField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(
-      builder: (context, state) {
-        return TextFormField(
-          obscureText: true,
-          onChanged: (v) {
-            context.read<SignUpBloc>().add(SignUpPasswordChanged(password: v));
+            context.read<SignUpBloc>().add(
+                SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
           },
         );
       },
@@ -182,7 +128,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('País'),
+                Text(S.current.country),
                 DropdownButton<Country>(
                     items: state.countries
                         .map((e) =>

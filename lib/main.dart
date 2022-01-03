@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:galss/generated/l10n.dart';
 import 'package:galss/pages/login.dart';
 import 'package:galss/pages/signup_seeker.dart';
+import 'package:galss/router_generator.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/country_service.dart';
 import 'package:galss/services/http_service.dart';
@@ -43,14 +45,16 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
+        GlobalWidgetsLocalizations.delegate,
+        S.delegate
       ],
       supportedLocales: const [Locale('es')],
       locale: const Locale('es'),
       theme: ThemeData(
         brightness: Brightness.dark,
       ),
-      home: const SignupSeeker(),
+      routes: RouterGenerator.routes,
+      initialRoute: '/signup/model',
     );
   }
 }
