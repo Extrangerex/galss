@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prompt_email": MessageLookupByLibrary.simpleMessage(""),
         "prompt_must_accept_terms_conditions":
             MessageLookupByLibrary.simpleMessage(""),
+        "prompt_next": MessageLookupByLibrary.simpleMessage(""),
         "prompt_password": MessageLookupByLibrary.simpleMessage(""),
         "prompt_passwords_must_match": MessageLookupByLibrary.simpleMessage(""),
         "prompt_select_country": MessageLookupByLibrary.simpleMessage(""),
@@ -65,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recently_added": MessageLookupByLibrary.simpleMessage(""),
         "repeat_password": MessageLookupByLibrary.simpleMessage(""),
         "search": MessageLookupByLibrary.simpleMessage(""),
+        "seeker": MessageLookupByLibrary.simpleMessage(""),
         "sign_up": MessageLookupByLibrary.simpleMessage(""),
         "sign_up_form_for_galss_models":
             MessageLookupByLibrary.simpleMessage(""),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -14,17 +16,23 @@ class SignUpModelSucceded extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(
-              image: logo,
-              width: 200,
-            ),
+            Text(S.current.your_request_was_received_see_you_in_48hr),
             const SizedBox(
               height: 10,
             ),
-            Text(S.current.your_request_was_received_see_you_in_48hr)
+            _continueBtn()
           ],
         ),
       ),
     );
+  }
+
+  Widget _continueBtn() {
+    return ElevatedButton(
+        onPressed: () {
+          locator<NavigationService>().pushRemoveUntil('/login');
+          return;
+        },
+        child: Text(S.current.prompt_next));
   }
 }

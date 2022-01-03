@@ -5,9 +5,12 @@ import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
+import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -40,27 +43,44 @@ class _SignUpModelState extends State<SignUpModel> {
   }
 
   Widget _form() {
-    return Column(
-      children: [
-        const Image(
-          image: logo,
-          width: 200,
+    return BlocListener<SignUpBloc, SignUpState>(
+      listener: (context, state) {
+        if (state.formState is FormSuccessStatus) {
+          locator<NavigationService>()
+              .pushRemoveUntil('/signup/model/succeded');
+          return;
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Image(
+              image: logo,
+              width: 200,
+            ),
+            Text(S.current.sign_up_form_for_galss_models),
+            Text(S.current.fonts_with_asterisk_are_mandatory),
+            Row(
+              children: [
+                Flexible(child: _nameField()),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(child: _dobField()),
+              ],
+            ),
+            _emailField(),
+            _countryField(),
+            _passwordField(),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(S.current.prompt_terms_conditions),
+            _termsAndConditionsField(),
+            _btnSubmit()
+          ],
         ),
-        Text(S.current.sign_up_form_for_galss_models),
-        Text(S.current.fonts_with_asterisk_are_mandatory),
-        _nameField(),
-        _dobField(),
-        _emailField(),
-        _countryField(),
-        _passwordField(),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(S.current.prompt_terms_conditions),
-        _termsAndConditionsField(),
-        const Spacer(),
-        _btnSubmit()
-      ],
+      ),
     );
   }
 
@@ -72,7 +92,8 @@ class _SignUpModelState extends State<SignUpModel> {
 
   Widget _passwordField() {
     return TextFormField(
-      decoration: InputDecoration(hintText: S.current.name),
+      obscureText: true,
+      decoration: InputDecoration(hintText: S.current.prompt_password),
     );
   }
 
@@ -118,13 +139,21 @@ class _SignUpModelState extends State<SignUpModel> {
   }
 
   Widget _btnSubmit() {
-    return TextButton(
-        onPressed: () {
-          if (!_formKey.currentState!.validate()) return;
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        if (state.formState is FormSubmittingStatus) {
+          return const CircularProgressIndicator();
+        }
 
-          context.read<SignUpBloc>().add(SignUpFormSubmitted());
-        },
-        child: Text(S.current.sign_up));
+        return ElevatedButton(
+            onPressed: () {
+              if (!_formKey.currentState!.validate()) return;
+
+              context.read<SignUpBloc>().add(SignUpFormSubmitted());
+            },
+            child: Text(S.current.sign_up));
+      },
+    );
   }
 
   Widget _termsAndConditionsField() {
@@ -148,29 +177,26 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _countryField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Theme(
-            data: ThemeData(brightness: Brightness.light),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(S.current.country),
-                DropdownButton<Country>(
-                    items: state.countries
-                        .map((e) =>
-                            DropdownMenuItem<Country>(child: Text(e.name!)))
-                        .toList(),
-                    isExpanded: true,
-                    onChanged: (v) {
-                      if (v == null) return;
-                      context
-                          .read<SignUpBloc>()
-                          .add(SignUpCountryChanged(country: v));
-                    }),
-              ],
-            ),
+        return Theme(
+          data: ThemeData(brightness: Brightness.light),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(S.current.country),
+              DropdownButton<Country>(
+                  items: state.countries
+                      .map((e) =>
+                          DropdownMenuItem<Country>(child: Text(e.name!)))
+                      .toList(),
+                  // underline: const SizedBox.shrink(),
+                  isExpanded: true,
+                  onChanged: (v) {
+                    if (v == null) return;
+                    context
+                        .read<SignUpBloc>()
+                        .add(SignUpCountryChanged(country: v));
+                  }),
+            ],
           ),
         );
       },

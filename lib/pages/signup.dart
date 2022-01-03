@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -30,10 +33,18 @@ class SignUp extends StatelessWidget {
   }
 
   Widget _btnSeeker() {
-    return ElevatedButton(onPressed: () {}, child: const Text('Buscador'));
+    return ElevatedButton(
+        onPressed: () {
+          locator<NavigationService>().navigateTo('/signup/seeker');
+        },
+        child: Text(S.current.seeker));
   }
 
   Widget _btnModel() {
-    return ElevatedButton(onPressed: () {}, child: const Text('Modelo'));
+    return ElevatedButton(
+        onPressed: () {
+          locator<NavigationService>().navigateTo('/signup/model');
+        },
+        child: Text(S.current.model));
   }
 }

@@ -74,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prompt_must_accept_terms_conditions":
             MessageLookupByLibrary.simpleMessage(
                 "Debes aceptar los terminos y condiciones"),
+        "prompt_next": MessageLookupByLibrary.simpleMessage("Continuar"),
         "prompt_password": MessageLookupByLibrary.simpleMessage("Contraseña"),
         "prompt_passwords_must_match": MessageLookupByLibrary.simpleMessage(
             "Las contraseñas deben coincidir"),
@@ -86,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "repeat_password":
             MessageLookupByLibrary.simpleMessage("Repetir contraseña"),
         "search": MessageLookupByLibrary.simpleMessage("Buscar"),
+        "seeker": MessageLookupByLibrary.simpleMessage("Buscador"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Registrarse"),
         "sign_up_form_for_galss_models": MessageLookupByLibrary.simpleMessage(
             "Formulario de Solicitud Para Modelos de Galss"),

@@ -451,6 +451,26 @@ class S {
   }
 
   /// ``
+  String get seeker {
+    return Intl.message(
+      '',
+      name: 'seeker',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get prompt_next {
+    return Intl.message(
+      '',
+      name: 'prompt_next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
   String get prompt_are_u_model_or_finder {
     return Intl.message(
       '',

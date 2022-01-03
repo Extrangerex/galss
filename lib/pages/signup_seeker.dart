@@ -79,13 +79,21 @@ class _SignupSeekerState extends State<SignupSeeker> {
   }
 
   Widget _btnSubmit() {
-    return TextButton(
-        onPressed: () {
-          if (!_formKey.currentState!.validate()) return;
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        if (state.formState is FormSubmittingStatus) {
+          return const CircularProgressIndicator();
+        }
 
-          context.read<SignUpBloc>().add(SignUpFormSubmitted());
-        },
-        child: Text(S.current.sign_up));
+        return ElevatedButton(
+            onPressed: () {
+              if (!_formKey.currentState!.validate()) return;
+
+              context.read<SignUpBloc>().add(SignUpFormSubmitted());
+            },
+            child: Text(S.current.sign_up));
+      },
+    );
   }
 
   Widget _termsAndConditionsField() {

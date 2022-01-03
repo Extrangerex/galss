@@ -3,6 +3,7 @@ import 'package:galss/main.dart';
 import 'package:galss/pages/login.dart';
 import 'package:galss/pages/signup.dart';
 import 'package:galss/pages/signup_model.dart';
+import 'package:galss/pages/signup_model_succeded.dart';
 import 'package:galss/pages/signup_seeker.dart';
 
 class RouterGenerator {
@@ -11,6 +12,7 @@ class RouterGenerator {
     '/login': (builder) => const Login(),
     '/signup': (builder) => const SignUp(),
     '/signup/seeker': (builder) => const SignupSeeker(),
-    '/signup/model': (builder) => const SignUpModel()
+    '/signup/model': (builder) => const SignUpModel(),
+    '/signup/model/succeded': (builder) => const SignUpModelSucceded()
   };
 }

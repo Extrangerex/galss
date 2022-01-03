@@ -5,6 +5,8 @@ import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 
@@ -44,6 +46,10 @@ class _LoginState extends State<Login> {
           _usernameField(),
           _passwordField(),
           _loginBtn(),
+          const SizedBox(
+            height: 10,
+          ),
+          _signupBtn()
         ],
       ),
     );
@@ -83,5 +89,13 @@ class _LoginState extends State<Login> {
                   }
                 },
                 child: Text(S.current.action_sign_in_short)));
+  }
+
+  Widget _signupBtn() {
+    return TextButton(
+        onPressed: () {
+          locator<NavigationService>().navigateTo('/signup');
+        },
+        child: Text(S.current.sign_up));
   }
 }

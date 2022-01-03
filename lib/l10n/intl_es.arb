@@ -40,6 +40,8 @@
   "birthdate": "Fecha de Nacimiento",
   "congrats": "Felicidades",
   "oops": "Oops",
+  "prompt_next": "Continuar",
+  "seeker": "Buscador",
   "prompt_are_u_model_or_finder": "¿Eres una modelo o\n un buscador de modelo?",
   "your_request_was_received_see_you_in_48hr": "Su Solicitud fue recibida correctamente. \n Antes de las 48 horas le estaremos \n confirmando.",
   "sign_up_form_for_galss_models": "Formulario de Solicitud Para Modelos de Galss",
