@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/pages/login.dart';
-import 'package:galss/pages/signup_seeker.dart';
 import 'package:galss/router_generator.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/country_service.dart';
@@ -58,28 +57,6 @@ class MyApp extends StatelessWidget {
       ),
       routes: RouterGenerator.routes,
       initialRoute: '/login',
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Login(),
     );
   }
 }

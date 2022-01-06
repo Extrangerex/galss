@@ -11,7 +11,9 @@ class FormSubmittingStatus extends FormSubmissionStatus {
 }
 
 class FormSuccessStatus extends FormSubmissionStatus {
-  const FormSuccessStatus();
+  final Map<String, dynamic>? payload;
+
+  const FormSuccessStatus({this.payload});
 }
 
 class FormFailedStatus extends FormSubmissionStatus {

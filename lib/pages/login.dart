@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/blocs/auth/user_bloc.dart';
+import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/login/login_bloc.dart';
 import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
+import 'package:galss/models/api_login.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
@@ -23,34 +26,46 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => LoginBloc(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => UserBloc()),
+          BlocProvider(create: (context) => LoginBloc())
+        ],
         child: ImagedBackgroundContainer(child: loginForm()),
       ),
     );
   }
 
   Widget loginForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Image(
-            image: logo,
-            width: 200,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          _usernameField(),
-          _passwordField(),
-          _loginBtn(),
-          const SizedBox(
-            height: 10,
-          ),
-          _signupBtn()
-        ],
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state.formState is FormSuccessStatus) {
+          context.read<UserBloc>().add(UserIsConnected(
+              authLoginData: ApiLogin.fromJson(
+                  (state.formState as FormSuccessStatus).payload!)));
+        }
+      },
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(
+              image: logo,
+              width: 200,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            _usernameField(),
+            _passwordField(),
+            _loginBtn(),
+            const SizedBox(
+              height: 10,
+            ),
+            _signupBtn()
+          ],
+        ),
       ),
     );
   }

@@ -25,8 +25,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         .repository
         .login(Map.from(
             {"emailAddress": state.username, "password": state.password}))
-        .then((value) => emit(
-            state.copyWith(formSubmissionStatus: const FormSuccessStatus())))
+        .then((value) => emit(state.copyWith(
+            formSubmissionStatus: FormSuccessStatus(payload: value.data))))
         .catchError((onError) => emit(state.copyWith(
             formSubmissionStatus: FormFailedStatus(exception: onError))));
   }
