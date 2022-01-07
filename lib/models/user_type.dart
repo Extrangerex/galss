@@ -1,1 +1,1 @@
-enum UserType { seeker, model }
+enum UserType { model, seeker }

@@ -28,6 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         .then((value) => emit(state.copyWith(
             formSubmissionStatus: FormSuccessStatus(payload: value.data))))
         .catchError((onError) => emit(state.copyWith(
-            formSubmissionStatus: FormFailedStatus(exception: onError))));
+            formSubmissionStatus:
+                FormFailedStatus(exception: Exception(onError)))));
   }
 }

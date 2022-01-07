@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:galss/main.dart';
+import 'package:galss/models/user.dart';
 import 'package:galss/services/http_service.dart';
 
 class AuthRepository {
@@ -13,5 +14,9 @@ class AuthRepository {
 
   Future<Response<dynamic>> signUp(Map<String, dynamic> data) async {
     return http.post('${HttpService.apiUrl}/Login/SignUp', data: data);
+  }
+
+  Future<Response<User>> getUserInfo(int userId) async {
+    return http.get<User>('${HttpService.apiUrl}/User/$userId');
   }
 }

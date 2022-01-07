@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:galss/pages/login.dart';
+import 'package:galss/pages/model/home_model.dart';
 import 'package:galss/pages/signup.dart';
 import 'package:galss/pages/signup_model.dart';
 import 'package:galss/pages/signup_model_succeded.dart';
@@ -11,6 +12,7 @@ class RouterGenerator {
     '/signup': (builder) => const SignUp(),
     '/signup/seeker': (builder) => const SignupSeeker(),
     '/signup/model': (builder) => const SignUpModel(),
-    '/signup/model/succeded': (builder) => const SignUpModelSucceded()
+    '/signup/model/succeded': (builder) => const SignUpModelSucceded(),
+    '/model': (builder) => const HomeModel(),
   };
 }

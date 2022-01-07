@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
+import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/blocs/login/login_bloc.dart';
 import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
@@ -9,6 +12,7 @@ import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
+import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
@@ -22,16 +26,31 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldMessagerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => UserBloc()),
-          BlocProvider(create: (context) => LoginBloc())
-        ],
-        child: ImagedBackgroundContainer(child: loginForm()),
+      body: ScaffoldMessenger(
+        key: _scaffoldMessagerKey,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => UserBloc()),
+            BlocProvider(create: (context) => LoginBloc())
+          ],
+          child: BlocListener<UserBloc, UserState>(
+            listener: (context, state) {
+              if (state.isAuthenticated) {
+                if (state.authLoginData?.userType == UserType.model.index) {
+                  print('object');
+                  locator<NavigationService>().pushRemoveUntil('/model');
+                  return;
+                }
+              }
+            },
+            child: ImagedBackgroundContainer(child: loginForm()),
+          ),
+        ),
       ),
     );
   }
@@ -43,6 +62,10 @@ class _LoginState extends State<Login> {
           context.read<UserBloc>().add(UserIsConnected(
               authLoginData: ApiLogin.fromJson(
                   (state.formState as FormSuccessStatus).payload!)));
+        } else if (state.formState is FormFailedStatus) {
+          _scaffoldMessagerKey.currentState?.showSnackBar(SnackBar(
+              content: Text(
+                  (state.formState as FormFailedStatus).exception.toString())));
         }
       },
       child: Form(

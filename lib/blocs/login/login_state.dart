@@ -16,7 +16,7 @@ class LoginState {
       FormSubmissionStatus? formSubmissionStatus}) {
     return LoginState(
         username: username ?? this.username,
-        password: this.password,
+        password: password ?? this.password,
         formState: formSubmissionStatus ?? formState);
   }
 }
