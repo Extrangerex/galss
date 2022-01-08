@@ -5,10 +5,8 @@ class PaymentService {
   Future<List<Offering>> fetchOffers() async {
     try {
       final offerings = await Purchases.getOfferings();
-      final current = offerings.current;
 
-      // return [current.] ?? [];
-      return [];
+      return offerings.all.values.toList();
     } catch (e) {
       return [];
     }
