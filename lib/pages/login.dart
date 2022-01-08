@@ -16,6 +16,8 @@ import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:galss/theme/button_styles.dart';
+import 'package:galss/theme/variables.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -42,7 +44,6 @@ class _LoginState extends State<Login> {
             listener: (context, state) {
               if (state.isAuthenticated) {
                 if (state.authLoginData?.userType == UserType.model.index) {
-                  print('object');
                   locator<NavigationService>().pushRemoveUntil('/model');
                   return;
                 }
@@ -83,9 +84,6 @@ class _LoginState extends State<Login> {
             _usernameField(),
             _passwordField(),
             _loginBtn(),
-            const SizedBox(
-              height: 10,
-            ),
             _signupBtn()
           ],
         ),
@@ -97,6 +95,7 @@ class _LoginState extends State<Login> {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
         obscureText: true,
+        decoration: InputDecoration(hintText: S.current.prompt_password),
         validator: (value) => null,
         onChanged: (value) => context
             .read<LoginBloc>()
@@ -109,6 +108,7 @@ class _LoginState extends State<Login> {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
         validator: (value) => null,
+        decoration: InputDecoration(hintText: S.current.prompt_email),
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginUsernameChanged(username: value)),
@@ -120,7 +120,8 @@ class _LoginState extends State<Login> {
     return BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) => state.formState is FormSubmittingStatus
             ? const CircularProgressIndicator()
-            : TextButton(
+            : ElevatedButton(
+                style: holoGreenDarkBtnStyle,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     context.read<LoginBloc>().add(LoginFormSubmitted());
@@ -130,7 +131,8 @@ class _LoginState extends State<Login> {
   }
 
   Widget _signupBtn() {
-    return TextButton(
+    return ElevatedButton(
+        style: grayBtnStyle,
         onPressed: () {
           locator<NavigationService>().navigateTo('/signup');
         },

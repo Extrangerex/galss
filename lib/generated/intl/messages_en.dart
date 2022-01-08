@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "close_to_me": MessageLookupByLibrary.simpleMessage(""),
         "congrats": MessageLookupByLibrary.simpleMessage(""),
         "country": MessageLookupByLibrary.simpleMessage(""),
+        "current_location": MessageLookupByLibrary.simpleMessage(""),
         "editar_mi_perfil": MessageLookupByLibrary.simpleMessage(""),
         "error_field_required": MessageLookupByLibrary.simpleMessage(""),
         "error_invalid_email": MessageLookupByLibrary.simpleMessage(""),
@@ -47,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "my_connections": MessageLookupByLibrary.simpleMessage(""),
         "my_profile": MessageLookupByLibrary.simpleMessage(""),
         "name": MessageLookupByLibrary.simpleMessage(""),
+        "nationality": MessageLookupByLibrary.simpleMessage(""),
         "oops": MessageLookupByLibrary.simpleMessage(""),
         "poner_perfil_anonimo": MessageLookupByLibrary.simpleMessage(""),
         "prompt_accept_terms_conditions":

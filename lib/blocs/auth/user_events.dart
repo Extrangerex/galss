@@ -14,7 +14,11 @@ class UserIsConnected extends UserEvent {
 class UserIsDisconnected extends UserEvent {}
 
 class FetchUserData extends UserEvent {
+  const FetchUserData();
+}
+
+class FetchUserDataSucceded extends UserEvent {
   final User user;
 
-  const FetchUserData({required this.user});
+  const FetchUserDataSucceded({required this.user});
 }

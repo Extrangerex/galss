@@ -509,6 +509,26 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get current_location {
+    return Intl.message(
+      '',
+      name: 'current_location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get nationality {
+    return Intl.message(
+      '',
+      name: 'nationality',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

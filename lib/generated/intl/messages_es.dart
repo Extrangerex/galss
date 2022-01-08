@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close_to_me": MessageLookupByLibrary.simpleMessage("Cerca de Mi"),
         "congrats": MessageLookupByLibrary.simpleMessage("Felicidades"),
         "country": MessageLookupByLibrary.simpleMessage("País"),
+        "current_location":
+            MessageLookupByLibrary.simpleMessage("Ubicación actúal"),
         "editar_mi_perfil":
             MessageLookupByLibrary.simpleMessage("Editar mi Perfil"),
         "error_field_required":
@@ -58,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mis conexiones"),
         "my_profile": MessageLookupByLibrary.simpleMessage("Mi Perfil"),
         "name": MessageLookupByLibrary.simpleMessage("Nombre"),
+        "nationality": MessageLookupByLibrary.simpleMessage("Nacionalidad"),
         "oops": MessageLookupByLibrary.simpleMessage("Oops"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("Poner Perfil Anonimo"),

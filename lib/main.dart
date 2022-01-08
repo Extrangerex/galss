@@ -10,6 +10,7 @@ import 'package:galss/services/country_service.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/payment_service.dart';
+import 'package:galss/theme/variables.dart';
 import 'package:get_it/get_it.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -53,8 +54,9 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [Locale('es')],
       locale: const Locale('es'),
       theme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+          brightness: Brightness.dark,
+          primaryColor: primaryColor,
+          primaryColorDark: primaryColorDark),
       routes: RouterGenerator.routes,
       initialRoute: '/login',
     );

@@ -22,6 +22,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     var userId = locator<AuthService>().authLogin?.userId;
 
+    print(locator<AuthService>().authLogin);
+
     if (userId == null) return;
 
     await locator<AuthService>()
