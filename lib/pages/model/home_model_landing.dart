@@ -6,6 +6,7 @@ import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/photo.dart';
+import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/variables.dart';
 
 class HomeModelLanding extends StatelessWidget {
@@ -16,34 +17,40 @@ class HomeModelLanding extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => UserBloc(),
+          create: (context) => UserBloc()..add(const FetchUserData()),
         )
       ],
       child: Scaffold(
-        body: BlocBuilder<UserBloc, UserState>(
-          builder: (context, state) {
-            // context.read<UserBloc>().add(const FetchUserData());
-
-            return ListView(
-              children: [
-                carouselSlider(),
-                // Row(
-                //   children: [_nameTile(), _locationTile()],
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [_nationalityTile()],
-                // ),
-                _description(),
-                Row(
-                  children: [
-                    Expanded(child: _editProfileBtn(context: context)),
-                    Expanded(child: _connectionsBtn(context: context))
-                  ],
-                )
-              ],
-            );
-          },
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              carouselSlider(),
+              _nameTile(),
+              _locationTile(),
+              _nationalityTile(),
+              // Row(
+              //   children: [_nameTile(), _locationTile()],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [_nationalityTile()],
+              // ),
+              _description(),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(child: _editProfileBtn(context: context)),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(child: _connectionsBtn(context: context))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -77,6 +84,7 @@ class HomeModelLanding extends StatelessWidget {
   Widget _editProfileBtn({required BuildContext context}) => ElevatedButton(
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(holoGreenDark),
+          padding: MaterialStateProperty.all(paddingBtnLg),
           textStyle:
               MaterialStateProperty.all(const TextStyle(color: Colors.white))),
       onPressed: () {},
@@ -86,6 +94,7 @@ class HomeModelLanding extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all(Theme.of(context).primaryColor),
+          padding: MaterialStateProperty.all(paddingBtnLg),
           textStyle:
               MaterialStateProperty.all(const TextStyle(color: Colors.white))),
       onPressed: () {},
@@ -116,10 +125,9 @@ class HomeModelLanding extends StatelessWidget {
         builder: (context, state) {
           var profileStatus = state.user?.profileStatus ?? "";
 
-          return Container(
-            color: Theme.of(context).primaryColor,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(profileStatus),
+          return ListTile(
+            tileColor: Theme.of(context).primaryColor,
+            title: Text(profileStatus),
           );
         },
       );

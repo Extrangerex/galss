@@ -14,24 +14,31 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserIsDisconnected>(
         (event, emit) => emit(state.copyWith(authLoginData: null)));
     on<FetchUserData>(_fetchUserData);
+
+    on<UserModelNameChanged>((event, emit) => emit(state.copyWith(
+            user: state.user?.copyWith({
+          "model": state.user!.model?.copyWith({"fullname": event.name})
+        }))));
+
+    on<UserDateOfBirthChanged>((event, emit) => emit(state.copyWith(
+            user: state.user?.copyWith({
+          "model": state.user?.model?.copyWith({"bornDate": event.dob})
+        }))));
   }
 
   FutureOr<void> _fetchUserData(
       FetchUserData event, Emitter<UserState> emit) async {
     emit(state.copyWith(apiFetchStatus: const ApiFetchingStatus()));
 
-    var userId = locator<AuthService>().authLogin?.userId;
-
-    print(locator<AuthService>().authLogin);
-
-    if (userId == null) return;
+    var userId = (await locator<AuthService>().authData).userId;
 
     await locator<AuthService>()
         .repository
-        .getUserInfo(userId)
+        .getUserInfo(userId!)
         .then((value) => emit(state.copyWith(
-            user: value.data, apiFetchStatus: const ApiFetchSuccededStatus())))
+            user: value, apiFetchStatus: const ApiFetchSuccededStatus())))
         .catchError((onError) => emit(state.copyWith(
-            apiFetchStatus: ApiFetchFailedStatus(exception: onError))));
+            apiFetchStatus:
+                ApiFetchFailedStatus(exception: Exception(onError)))));
   }
 }

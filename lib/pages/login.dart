@@ -8,12 +8,14 @@ import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/blocs/login/login_bloc.dart';
 import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
+import 'package:galss/config/constants.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/services/shared_preferences.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/button_styles.dart';
@@ -31,6 +33,12 @@ class _LoginState extends State<Login> {
   final _scaffoldMessagerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScaffoldMessenger(
@@ -42,11 +50,10 @@ class _LoginState extends State<Login> {
           ],
           child: BlocListener<UserBloc, UserState>(
             listener: (context, state) {
-              if (state.isAuthenticated) {
-                if (state.authLoginData?.userType == UserType.model.index) {
-                  locator<NavigationService>().pushRemoveUntil('/model');
-                  return;
-                }
+              if (state.authLoginData != null) {
+                locator<SharedPreferencesService>().setItem(
+                    SharedPrefs.authData, jsonEncode(state.authLoginData));
+                locator<NavigationService>().pushRemoveUntil('/');
               }
             },
             child: ImagedBackgroundContainer(child: loginForm()),

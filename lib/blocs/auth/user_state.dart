@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:galss/api_fetch_status.dart';
+import 'package:galss/config/constants.dart';
+import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/user.dart';
+import 'package:galss/services/shared_preferences.dart';
 
 class UserState {
   final ApiLogin? authLoginData;
@@ -11,10 +16,6 @@ class UserState {
       {this.authLoginData,
       this.user,
       this.userDataFetchStatus = const ApiFetchInitialStatus()});
-
-  bool get isAuthenticated {
-    return authLoginData != null;
-  }
 
   UserState copyWith(
           {ApiLogin? authLoginData,

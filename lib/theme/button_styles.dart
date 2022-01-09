@@ -8,3 +8,6 @@ ButtonStyle holoGreenDarkBtnStyle = ButtonStyle(
 ButtonStyle grayBtnStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(defaultGray),
     textStyle: MaterialStateProperty.all(const TextStyle(color: Colors.white)));
+
+EdgeInsets paddingBtnLg =
+    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0);

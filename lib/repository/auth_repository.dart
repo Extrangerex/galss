@@ -16,7 +16,10 @@ class AuthRepository {
     return http.post('${HttpService.apiUrl}/Login/SignUp', data: data);
   }
 
-  Future<Response<User>> getUserInfo(int userId) async {
-    return http.get<User>('${HttpService.apiUrl}/User/$userId');
+  Future<User> getUserInfo(int userId) async {
+    return http
+        .get('${HttpService.apiUrl}/User/$userId')
+        .then((value) => value.data)
+        .then((value) => User.fromJson(value));
   }
 }
