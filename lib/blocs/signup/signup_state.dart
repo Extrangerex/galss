@@ -13,7 +13,6 @@ class SignUpState {
   final Country? country;
   final FormSubmissionStatus formState;
   final bool licenseTermsAccepted;
-  List<Country> countries;
 
   SignUpState(
       {this.name,
@@ -23,7 +22,6 @@ class SignUpState {
       this.dob,
       this.city,
       this.country,
-      this.countries = const [],
       this.licenseTermsAccepted = false,
       this.formState = const InitialFormStatus()});
 
@@ -46,7 +44,6 @@ class SignUpState {
         city: city ?? this.city,
         dob: dob ?? this.dob,
         country: country ?? this.country,
-        countries: countries ?? this.countries,
         licenseTermsAccepted: licenseTermsAccepted ?? this.licenseTermsAccepted,
         formState: formState ?? this.formState);
   }

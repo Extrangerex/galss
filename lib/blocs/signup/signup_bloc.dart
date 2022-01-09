@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:galss/api_fetch_status.dart';
-import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/form_submission_status.dart';
@@ -10,12 +8,9 @@ import 'package:galss/main.dart';
 import 'package:galss/services/auth_service.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final CountryBloc countryBloc;
-
   StreamSubscription? countryStreamSubscription;
 
-  SignUpBloc(SignUpState initialState, {required this.countryBloc})
-      : super(initialState) {
+  SignUpBloc(SignUpState initialState) : super(initialState) {
     on<SignUpNameChanged>(
         (event, emit) => emit(state.copyWith(name: event.name)));
 
@@ -34,9 +29,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpUserTypeChanged>(
         (event, emit) => emit(state.copyWith(userType: event.type)));
 
-    on<SignUpCountryListChanged>(
-        (event, emit) => emit(state.copyWith(countries: event.countries)));
-
     on<SignUpFormSubmitted>(_onSignUpFormSubmitted);
 
     on<SignUpLicenseTermsAcceptedChanged>((event, emit) =>
@@ -44,13 +36,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
     on<SignUpDateOfBirthChanged>(
         (event, emit) => state.copyWith(dob: event.dob));
-
-    countryStreamSubscription = countryBloc.stream.listen((event) {
-      if (event.apiFetchStatus is! ApiFetchSuccededStatus) {
-        return;
-      }
-      add(SignUpCountryListChanged(countries: event.countries!));
-    });
   }
 
   FutureOr<void> _onSignUpFormSubmitted(
@@ -64,7 +49,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           "fullName": state.name,
           "type": state.userType,
           "bornDate": state.dob,
-          "country": state.country!.id
+          "country": state.country?.id
         },
         "login": {"emailAddress": state.email, "password": state.password}
       });

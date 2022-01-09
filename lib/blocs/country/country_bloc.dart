@@ -10,8 +10,6 @@ import 'package:galss/services/country_service.dart';
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
   CountryBloc(CountryState initialState) : super(initialState) {
     on<FetchListCountry>(_onFetchListCountry);
-
-    add(const FetchListCountry());
   }
 
   FutureOr<void> _onFetchListCountry(
@@ -21,6 +19,8 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     try {
       final countries =
           await locator<CountryService>().repository.getCountries();
+
+      print(countries);
 
       emit(state.copyWith(
           countries: countries,

@@ -60,7 +60,7 @@ class _HomeModelProfileState extends State<HomeModelProfile> {
                   items: context
                       .read<CountryBloc>()
                       .state
-                      .countries!
+                      .countries
                       .map((e) =>
                           DropdownMenuItem<Country>(child: Text(e.name!)))
                       .toList(),

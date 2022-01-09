@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
+import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
@@ -31,11 +32,12 @@ class _SignUpModelState extends State<SignUpModel> {
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (create) => CountryBloc(CountryState())),
           BlocProvider(
-              create: (create) => SignUpBloc(
-                  SignUpState(userType: UserType.model),
-                  countryBloc: create.read<CountryBloc>()))
+              create: (create) =>
+                  CountryBloc(CountryState())..add(const FetchListCountry())),
+          BlocProvider(
+              create: (create) =>
+                  SignUpBloc(SignUpState(userType: UserType.model)))
         ],
         child: ImagedBackgroundContainer(child: _form()),
       ),
@@ -184,7 +186,10 @@ class _SignUpModelState extends State<SignUpModel> {
             children: [
               Text(S.current.country),
               DropdownButton<Country>(
-                  items: state.countries
+                  items: context
+                      .read<CountryBloc>()
+                      .state
+                      .countries
                       .map((e) =>
                           DropdownMenuItem<Country>(child: Text(e.name!)))
                       .toList(),

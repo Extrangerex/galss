@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
+import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
@@ -10,6 +11,7 @@ import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/shared/imaged_background_container.dart';
+import 'package:galss/shared/input_container.dart';
 import 'package:galss/shared/logo.dart';
 
 class SignupSeeker extends StatefulWidget {
@@ -28,11 +30,13 @@ class _SignupSeekerState extends State<SignupSeeker> {
     // TODO: implement build
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (create) => CountryBloc(CountryState())),
+        BlocProvider(
+            create: (create) =>
+                CountryBloc(CountryState())..add(const FetchListCountry())),
         BlocProvider(
             create: (create) => SignUpBloc(
-                SignUpState(userType: UserType.seeker),
-                countryBloc: create.read<CountryBloc>()))
+                  SignUpState(userType: UserType.seeker),
+                ))
       ],
       child: Scaffold(
         body: ImagedBackgroundContainer(
@@ -53,6 +57,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _signUpForm() {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
+        print(state.formState);
         if (state.formState is FormSuccessStatus) {}
       },
       child: Form(
@@ -63,7 +68,6 @@ class _SignupSeekerState extends State<SignupSeeker> {
               _dobField(),
               _emailField(),
               _countryField(),
-              const Spacer(),
               _passwordField(),
               const SizedBox(
                 height: 20,
@@ -117,10 +121,13 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _nameField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return TextFormField(
-          onChanged: (v) {
-            context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
-          },
+        return InputContainer(
+          child: TextFormField(
+            decoration: InputDecoration(hintText: S.current.name),
+            onChanged: (v) {
+              context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
+            },
+          ),
         );
       },
     );
@@ -146,15 +153,17 @@ class _SignupSeekerState extends State<SignupSeeker> {
               _dobController.text = result.toString();
             });
           },
-          child: TextFormField(
-            controller: _dobController,
-            onChanged: (value) {
-              blocContext
-                  .read<SignUpBloc>()
-                  .add(SignUpDateOfBirthChanged(dob: DateTime.parse(value)));
-            },
-            decoration:
-                InputDecoration(enabled: false, hintText: S.current.birthdate),
+          child: InputContainer(
+            child: TextFormField(
+              controller: _dobController,
+              onChanged: (value) {
+                blocContext
+                    .read<SignUpBloc>()
+                    .add(SignUpDateOfBirthChanged(dob: DateTime.parse(value)));
+              },
+              decoration: InputDecoration(
+                  enabled: false, hintText: S.current.birthdate),
+            ),
           ),
         );
       },
@@ -164,10 +173,13 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _emailField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return TextFormField(
-          onChanged: (v) {
-            context.read<SignUpBloc>().add(SignUpEmailChanged(email: v));
-          },
+        return InputContainer(
+          child: TextFormField(
+            decoration: InputDecoration(hintText: S.current.prompt_email),
+            onChanged: (v) {
+              context.read<SignUpBloc>().add(SignUpEmailChanged(email: v));
+            },
+          ),
         );
       },
     );
@@ -176,11 +188,16 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _passwordField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return TextFormField(
-          obscureText: true,
-          onChanged: (v) {
-            context.read<SignUpBloc>().add(SignUpPasswordChanged(password: v));
-          },
+        return InputContainer(
+          child: TextFormField(
+            obscureText: true,
+            decoration: InputDecoration(hintText: S.current.prompt_password),
+            onChanged: (v) {
+              context
+                  .read<SignUpBloc>()
+                  .add(SignUpPasswordChanged(password: v));
+            },
+          ),
         );
       },
     );
@@ -189,28 +206,36 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _countryField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Theme(
-            data: ThemeData(brightness: Brightness.light),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('País'),
-                DropdownButton<Country>(
-                    items: state.countries
-                        .map((e) =>
-                            DropdownMenuItem<Country>(child: Text(e.name!)))
-                        .toList(),
-                    isExpanded: true,
-                    onChanged: (v) {
-                      if (v == null) return;
-                      context
-                          .read<SignUpBloc>()
-                          .add(SignUpCountryChanged(country: v));
-                    }),
-              ],
+        return Theme(
+          data: ThemeData.light(),
+          child: InputContainer(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: const BoxDecoration(color: Colors.white),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.current.country,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  DropdownButton<Country>(
+                      items: context
+                          .read<CountryBloc>()
+                          .state
+                          .countries
+                          .map((e) =>
+                              DropdownMenuItem<Country>(child: Text(e.name!)))
+                          .toList(),
+                      isExpanded: true,
+                      onChanged: (v) {
+                        if (v == null) return;
+                        context
+                            .read<SignUpBloc>()
+                            .add(SignUpCountryChanged(country: v));
+                      }),
+                ],
+              ),
             ),
           ),
         );

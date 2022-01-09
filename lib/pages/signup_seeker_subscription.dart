@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/payment_service.dart';
+import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -23,6 +24,8 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
 
     locator<PaymentService>().fetchOffers().then((value) {
       setState(() {
+        print(offerins.length);
+
         offerins = value;
       });
     });
@@ -31,19 +34,23 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Image(
-            image: logo,
-            width: 200,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ...offerins.map((e) => TextButton(
-              onPressed: () {}, child: Text(e.monthly!.product.title)))
-        ],
+      body: ImagedBackgroundContainer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(
+              image: logo,
+              width: 200,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ...offerins.map((e) => ElevatedButton(
+                onPressed: () {}, child: Text(e.monthly?.product.title ?? ""))),
+            ...offerins.map((e) => ElevatedButton(
+                onPressed: () {}, child: Text(e.annual?.product.title ?? "")))
+          ],
+        ),
       ),
     );
   }
