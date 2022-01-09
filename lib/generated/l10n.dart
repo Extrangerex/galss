@@ -529,6 +529,26 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get annual {
+    return Intl.message(
+      '',
+      name: 'annual',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get montly {
+    return Intl.message(
+      '',
+      name: 'montly',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

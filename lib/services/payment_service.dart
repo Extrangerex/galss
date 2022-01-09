@@ -2,13 +2,13 @@ import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class PaymentService {
-  Future<List<Offering>> fetchOffers() async {
+  Future<Offering?> fetchOffer(String identifier) async {
     try {
       final offerings = await Purchases.getOfferings();
 
-      return offerings.all.values.toList();
+      return offerings.getOffering(identifier);
     } catch (e) {
-      return [];
+      return null;
     }
   }
 }

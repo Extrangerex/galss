@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:galss/config/constants.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:galss/theme/button_styles.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class SignupSeekerSubscription extends StatefulWidget {
@@ -15,20 +17,47 @@ class SignupSeekerSubscription extends StatefulWidget {
 }
 
 class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
-  List<Offering> offerins = [];
+  Offering? offerins;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
 
-    locator<PaymentService>().fetchOffers().then((value) {
-      setState(() {
-        print(offerins.length);
+  Widget _monthlySubscriptionBtn() {
+    return FutureBuilder<Offering?>(
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
+          return ElevatedButton(
+              onPressed: () {
+                // purchase
+              },
+              style: btnLgStyle,
+              child: Text(snapshot.data?.monthly?.product.priceString ?? ""));
+        },
+        future:
+            locator<PaymentService>().fetchOffer("galss_monthly_subscription"));
+  }
 
-        offerins = value;
-      });
-    });
+  Widget _annualSubscriptionBtn() {
+    return FutureBuilder<Offering?>(
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
+          return ElevatedButton(
+              onPressed: () {
+                // purchase
+              },
+              style: btnLgStyle,
+              child:
+                  Text(" ${snapshot.data?.annual?.product.priceString ?? ""}"));
+        },
+        future:
+            locator<PaymentService>().fetchOffer("galss_yearly_subscription"));
   }
 
   @override
@@ -43,12 +72,13 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
               width: 200,
             ),
             const SizedBox(
+              height: 20,
+            ),
+            _monthlySubscriptionBtn(),
+            const SizedBox(
               height: 10,
             ),
-            ...offerins.map((e) => ElevatedButton(
-                onPressed: () {}, child: Text(e.monthly?.product.title ?? ""))),
-            ...offerins.map((e) => ElevatedButton(
-                onPressed: () {}, child: Text(e.annual?.product.title ?? "")))
+            _annualSubscriptionBtn()
           ],
         ),
       ),

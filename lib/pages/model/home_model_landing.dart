@@ -84,7 +84,6 @@ class HomeModelLanding extends StatelessWidget {
   Widget _editProfileBtn({required BuildContext context}) => ElevatedButton(
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(holoGreenDark),
-          padding: MaterialStateProperty.all(paddingBtnLg),
           textStyle:
               MaterialStateProperty.all(const TextStyle(color: Colors.white))),
       onPressed: () {},
@@ -94,7 +93,6 @@ class HomeModelLanding extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all(Theme.of(context).primaryColor),
-          padding: MaterialStateProperty.all(paddingBtnLg),
           textStyle:
               MaterialStateProperty.all(const TextStyle(color: Colors.white))),
       onPressed: () {},

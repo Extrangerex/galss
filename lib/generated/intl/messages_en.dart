@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "action_sign_in": MessageLookupByLibrary.simpleMessage(""),
         "action_sign_in_short": MessageLookupByLibrary.simpleMessage(""),
+        "annual": MessageLookupByLibrary.simpleMessage(""),
         "birthdate": MessageLookupByLibrary.simpleMessage(""),
         "cancel": MessageLookupByLibrary.simpleMessage(""),
         "choose_your_subscription": MessageLookupByLibrary.simpleMessage(""),
@@ -45,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "model": MessageLookupByLibrary.simpleMessage(""),
         "model_catalog": MessageLookupByLibrary.simpleMessage(""),
         "monthly": MessageLookupByLibrary.simpleMessage(""),
+        "montly": MessageLookupByLibrary.simpleMessage(""),
         "my_connections": MessageLookupByLibrary.simpleMessage(""),
         "my_profile": MessageLookupByLibrary.simpleMessage(""),
         "name": MessageLookupByLibrary.simpleMessage(""),
