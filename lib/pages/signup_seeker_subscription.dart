@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:galss/config/constants.dart';
+import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
@@ -31,12 +32,16 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
           }
+
           return ElevatedButton(
               onPressed: () {
                 // purchase
+
+                locator<PaymentService>().purchase(snapshot.data!.monthly!);
               },
               style: btnLgStyle,
-              child: Text(snapshot.data?.monthly?.product.priceString ?? ""));
+              child: Text(
+                  "${S.current.monthly} ${snapshot.data?.monthly?.product.priceString ?? ""}"));
         },
         future:
             locator<PaymentService>().fetchOffer("galss_monthly_subscription"));
@@ -48,13 +53,17 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
           }
+          if (snapshot.data?.annual == null) {
+            return const CircularProgressIndicator();
+          }
           return ElevatedButton(
               onPressed: () {
                 // purchase
+                locator<PaymentService>().purchase(snapshot.data!.annual!);
               },
               style: btnLgStyle,
-              child:
-                  Text(" ${snapshot.data?.annual?.product.priceString ?? ""}"));
+              child: Text(
+                  "${S.current.yearly} ${snapshot.data?.annual?.product.priceString ?? ""}"));
         },
         future:
             locator<PaymentService>().fetchOffer("galss_yearly_subscription"));

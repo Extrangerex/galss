@@ -26,7 +26,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Iniciar Sesión"),
         "action_sign_in_short":
             MessageLookupByLibrary.simpleMessage("Ingresar"),
-        "annual": MessageLookupByLibrary.simpleMessage("Anual"),
         "birthdate":
             MessageLookupByLibrary.simpleMessage("Fecha de Nacimiento"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
@@ -57,7 +56,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "model_catalog":
             MessageLookupByLibrary.simpleMessage("Catálogos de Modelos"),
         "monthly": MessageLookupByLibrary.simpleMessage("Mensuales"),
-        "montly": MessageLookupByLibrary.simpleMessage("Mensual"),
         "my_connections":
             MessageLookupByLibrary.simpleMessage("Mis conexiones"),
         "my_profile": MessageLookupByLibrary.simpleMessage("Mi Perfil"),

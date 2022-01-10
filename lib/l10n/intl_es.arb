@@ -48,6 +48,6 @@
   "fonts_with_asterisk_are_mandatory": "Las Fuentes que Tienen (*) Son Obligatorias",
   "current_location": "Ubicación actúal",
   "nationality": "Nacionalidad",
-  "annual": "Anual",
-  "montly": "Mensual"
+  "prompt_annual": "Anual",
+  "prompt_monthly": "Mensual"
 }
