@@ -8,7 +8,6 @@ import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/country.dart';
-import 'package:galss/models/user.dart';
 
 class HomeModelProfile extends StatefulWidget {
   const HomeModelProfile({Key? key}) : super(key: key);

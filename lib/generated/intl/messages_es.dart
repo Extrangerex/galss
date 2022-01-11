@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -20,54 +21,84 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "action_sign_in" : MessageLookupByLibrary.simpleMessage("Iniciar Sesión"),
-    "action_sign_in_short" : MessageLookupByLibrary.simpleMessage("Ingresar"),
-    "birthdate" : MessageLookupByLibrary.simpleMessage("Fecha de Nacimiento"),
-    "cancel" : MessageLookupByLibrary.simpleMessage("Cancelar"),
-    "choose_your_subscription" : MessageLookupByLibrary.simpleMessage("Elige tu plan"),
-    "close_to_me" : MessageLookupByLibrary.simpleMessage("Cerca de Mi"),
-    "congrats" : MessageLookupByLibrary.simpleMessage("Felicidades"),
-    "country" : MessageLookupByLibrary.simpleMessage("País"),
-    "current_location" : MessageLookupByLibrary.simpleMessage("Ubicación actúal"),
-    "editar_mi_perfil" : MessageLookupByLibrary.simpleMessage("Editar mi Perfil"),
-    "error_field_required" : MessageLookupByLibrary.simpleMessage("Este campo es requerido"),
-    "error_invalid_email" : MessageLookupByLibrary.simpleMessage("Esta dirección de correo electrónico no es válida"),
-    "error_invalid_password" : MessageLookupByLibrary.simpleMessage("Esta contraseña es muy corta"),
-    "exit" : MessageLookupByLibrary.simpleMessage("Salir"),
-    "finder" : MessageLookupByLibrary.simpleMessage("Buscador"),
-    "fonts_with_asterisk_are_mandatory" : MessageLookupByLibrary.simpleMessage("Las Fuentes que Tienen (*) Son Obligatorias"),
-    "home" : MessageLookupByLibrary.simpleMessage("Inicio"),
-    "language" : MessageLookupByLibrary.simpleMessage("Español"),
-    "lastname" : MessageLookupByLibrary.simpleMessage("Apellido"),
-    "model" : MessageLookupByLibrary.simpleMessage("Modelo"),
-    "model_catalog" : MessageLookupByLibrary.simpleMessage("Catálogos de Modelos"),
-    "monthly" : MessageLookupByLibrary.simpleMessage("Mensuales"),
-    "my_connections" : MessageLookupByLibrary.simpleMessage("Mis conexiones"),
-    "my_profile" : MessageLookupByLibrary.simpleMessage("Mi Perfil"),
-    "name" : MessageLookupByLibrary.simpleMessage("Nombre"),
-    "nationality" : MessageLookupByLibrary.simpleMessage("Nacionalidad"),
-    "oops" : MessageLookupByLibrary.simpleMessage("Oops"),
-    "poner_perfil_anonimo" : MessageLookupByLibrary.simpleMessage("Poner Perfil Anonimo"),
-    "prompt_accept_terms_conditions" : MessageLookupByLibrary.simpleMessage("Acepto los Términos y Condiciones"),
-    "prompt_all_fields_requeried" : MessageLookupByLibrary.simpleMessage("Todos los Campos Son Obligatorios"),
-    "prompt_are_u_model_or_finder" : MessageLookupByLibrary.simpleMessage("¿Eres una modelo o\n un buscador de modelo?"),
-    "prompt_buy_suscription" : MessageLookupByLibrary.simpleMessage("Comprar suscripción"),
-    "prompt_email" : MessageLookupByLibrary.simpleMessage("Correo Electrónico"),
-    "prompt_must_accept_terms_conditions" : MessageLookupByLibrary.simpleMessage("Debes aceptar los terminos y condiciones"),
-    "prompt_next" : MessageLookupByLibrary.simpleMessage("Continuar"),
-    "prompt_password" : MessageLookupByLibrary.simpleMessage("Contraseña"),
-    "prompt_passwords_must_match" : MessageLookupByLibrary.simpleMessage("Las contraseñas deben coincidir"),
-    "prompt_select_country" : MessageLookupByLibrary.simpleMessage("Seleccionar un país"),
-    "prompt_terms_conditions" : MessageLookupByLibrary.simpleMessage("Términos y Condiciones"),
-    "recently_added" : MessageLookupByLibrary.simpleMessage("Añadidas Recientemente"),
-    "repeat_password" : MessageLookupByLibrary.simpleMessage("Repetir contraseña"),
-    "search" : MessageLookupByLibrary.simpleMessage("Buscar"),
-    "seeker" : MessageLookupByLibrary.simpleMessage("Buscador"),
-    "sign_up" : MessageLookupByLibrary.simpleMessage("Registrarse"),
-    "sign_up_form_for_galss_models" : MessageLookupByLibrary.simpleMessage("Formulario de Solicitud Para Modelos de Galss"),
-    "signin_form" : MessageLookupByLibrary.simpleMessage("Formulario de Inicio de Sesión"),
-    "yearly" : MessageLookupByLibrary.simpleMessage("Anuales"),
-    "your_request_was_received_see_you_in_48hr" : MessageLookupByLibrary.simpleMessage("Su Solicitud fue recibida correctamente. \n Antes de las 48 horas le estaremos \n confirmando.")
-  };
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "action_sign_in":
+            MessageLookupByLibrary.simpleMessage("Iniciar Sesión"),
+        "action_sign_in_short":
+            MessageLookupByLibrary.simpleMessage("Ingresar"),
+        "birthdate":
+            MessageLookupByLibrary.simpleMessage("Fecha de Nacimiento"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
+        "choose_your_subscription":
+            MessageLookupByLibrary.simpleMessage("Elige tu plan"),
+        "close_to_me": MessageLookupByLibrary.simpleMessage("Cerca de Mi"),
+        "congrats": MessageLookupByLibrary.simpleMessage("Felicidades"),
+        "country": MessageLookupByLibrary.simpleMessage("País"),
+        "current_location":
+            MessageLookupByLibrary.simpleMessage("Ubicación actúal"),
+        "editar_mi_perfil":
+            MessageLookupByLibrary.simpleMessage("Editar mi Perfil"),
+        "error_field_required":
+            MessageLookupByLibrary.simpleMessage("Este campo es requerido"),
+        "error_invalid_email": MessageLookupByLibrary.simpleMessage(
+            "Esta dirección de correo electrónico no es válida"),
+        "error_invalid_password": MessageLookupByLibrary.simpleMessage(
+            "Esta contraseña es muy corta"),
+        "exit": MessageLookupByLibrary.simpleMessage("Salir"),
+        "finder": MessageLookupByLibrary.simpleMessage("Buscador"),
+        "fonts_with_asterisk_are_mandatory":
+            MessageLookupByLibrary.simpleMessage(
+                "Las Fuentes que Tienen (*) Son Obligatorias"),
+        "home": MessageLookupByLibrary.simpleMessage("Inicio"),
+        "language": MessageLookupByLibrary.simpleMessage("Español"),
+        "lastname": MessageLookupByLibrary.simpleMessage("Apellido"),
+        "model": MessageLookupByLibrary.simpleMessage("Modelo"),
+        "model_catalog":
+            MessageLookupByLibrary.simpleMessage("Catálogos de Modelos"),
+        "monthly": MessageLookupByLibrary.simpleMessage("Mensuales"),
+        "my_connections":
+            MessageLookupByLibrary.simpleMessage("Mis conexiones"),
+        "my_profile": MessageLookupByLibrary.simpleMessage("Mi Perfil"),
+        "name": MessageLookupByLibrary.simpleMessage("Nombre"),
+        "nationality": MessageLookupByLibrary.simpleMessage("Nacionalidad"),
+        "oops": MessageLookupByLibrary.simpleMessage("Oops"),
+        "poner_perfil_anonimo":
+            MessageLookupByLibrary.simpleMessage("Poner Perfil Anonimo"),
+        "prompt_accept_terms_conditions": MessageLookupByLibrary.simpleMessage(
+            "Acepto los Términos y Condiciones"),
+        "prompt_all_fields_requeried": MessageLookupByLibrary.simpleMessage(
+            "Todos los Campos Son Obligatorios"),
+        "prompt_are_u_model_or_finder": MessageLookupByLibrary.simpleMessage(
+            "¿Eres una modelo o\n un buscador de modelo?"),
+        "prompt_buy_suscription":
+            MessageLookupByLibrary.simpleMessage("Comprar suscripción"),
+        "prompt_email":
+            MessageLookupByLibrary.simpleMessage("Correo Electrónico"),
+        "prompt_must_accept_terms_conditions":
+            MessageLookupByLibrary.simpleMessage(
+                "Debes aceptar los terminos y condiciones"),
+        "prompt_next": MessageLookupByLibrary.simpleMessage("Continuar"),
+        "prompt_password": MessageLookupByLibrary.simpleMessage("Contraseña"),
+        "prompt_passwords_must_match": MessageLookupByLibrary.simpleMessage(
+            "Las contraseñas deben coincidir"),
+        "prompt_select_country":
+            MessageLookupByLibrary.simpleMessage("Seleccionar un país"),
+        "prompt_terms_conditions":
+            MessageLookupByLibrary.simpleMessage("Términos y Condiciones"),
+        "recently_added":
+            MessageLookupByLibrary.simpleMessage("Añadidas Recientemente"),
+        "repeat_password":
+            MessageLookupByLibrary.simpleMessage("Repetir contraseña"),
+        "search": MessageLookupByLibrary.simpleMessage("Buscar"),
+        "seeker": MessageLookupByLibrary.simpleMessage("Buscador"),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Registrarse"),
+        "sign_up_form_for_galss_models": MessageLookupByLibrary.simpleMessage(
+            "Formulario de Solicitud Para Modelos de Galss"),
+        "signin_form": MessageLookupByLibrary.simpleMessage(
+            "Formulario de Inicio de Sesión"),
+        "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
+        "your_request_was_received_see_you_in_48hr":
+            MessageLookupByLibrary.simpleMessage(
+                "Su Solicitud fue recibida correctamente. \n Antes de las 48 horas le estaremos \n confirmando.")
+      };
 }

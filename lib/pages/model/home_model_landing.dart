@@ -6,7 +6,6 @@ import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/photo.dart';
-import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/variables.dart';
 
 class HomeModelLanding extends StatelessWidget {

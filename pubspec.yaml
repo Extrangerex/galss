@@ -41,11 +41,12 @@ dependencies:
   get_it: ^7.2.0
   purchases_flutter: ^3.8.0
   dio: ^4.0.4
-  flutter_bloc: ^8.0.0
+  flutter_bloc: ^8.0.1
   intl_utils: ^2.6.0
   carousel_slider: ^4.0.0
   shared_preferences: ^2.0.11
   flutter_automation: ^2.0.0
+  font_awesome_flutter: ^9.2.0
 
 dev_dependencies:
   flutter_test:

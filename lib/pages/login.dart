@@ -13,13 +13,11 @@ import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
-import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/shared_preferences.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/button_styles.dart';
-import 'package:galss/theme/variables.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

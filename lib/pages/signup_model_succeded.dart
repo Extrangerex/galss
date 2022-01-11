@@ -3,7 +3,6 @@ import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
-import 'package:galss/shared/logo.dart';
 
 class SignUpModelSucceded extends StatelessWidget {
   const SignUpModelSucceded({Key? key}) : super(key: key);
