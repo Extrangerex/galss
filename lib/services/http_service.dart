@@ -7,11 +7,6 @@ class HttpService {
   Dio get http {
     Dio _dio = Dio();
 
-    return _dio
-      ..interceptors.add(InterceptorsWrapper(
-        onError: (e, handler) {
-          throw e.response?.data;
-        },
-      ));
+    return _dio;
   }
 }

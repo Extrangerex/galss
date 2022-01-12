@@ -7,18 +7,31 @@ class SignUpState {
   final String? name;
   final String? email;
   final String? password;
-  final UserType? userType;
+  final UserType userType;
   final DateTime? dob;
   final City? city;
   final Country? country;
   final FormSubmissionStatus formState;
   final bool licenseTermsAccepted;
 
+  toJson() {
+    return {
+      "name": name,
+      "email": email,
+      "password": password,
+      "userType": userType.index,
+      "city": city,
+      "dob": dob.toString(),
+      "country": country,
+      "licenseTermsAccepted": licenseTermsAccepted,
+    };
+  }
+
   SignUpState(
       {this.name,
       this.email,
       this.password,
-      this.userType,
+      required this.userType,
       this.dob,
       this.city,
       this.country,

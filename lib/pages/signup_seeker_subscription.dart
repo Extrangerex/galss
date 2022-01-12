@@ -8,9 +8,7 @@ import 'package:galss/theme/button_styles.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class SignupSeekerSubscription extends StatefulWidget {
-  final int userId;
-  const SignupSeekerSubscription({Key? key, required this.userId})
-      : super(key: key);
+  const SignupSeekerSubscription({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SignupSeekerSubscriptionState();

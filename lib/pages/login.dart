@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
         if (state.formState is FormSuccessStatus) {
           context.read<UserBloc>().add(UserIsConnected(
               authLoginData: ApiLogin.fromJson(
-                  (state.formState as FormSuccessStatus).payload!)));
+                  (state.formState as FormSuccessStatus).payload)));
         } else if (state.formState is FormFailedStatus) {
           _scaffoldMessagerKey.currentState?.showSnackBar(SnackBar(
               content: Text(

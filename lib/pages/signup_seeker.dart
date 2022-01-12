@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
@@ -8,11 +10,14 @@ import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/input_container.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:intl/intl.dart';
 
 class SignupSeeker extends StatefulWidget {
   const SignupSeeker({Key? key}) : super(key: key);
@@ -57,8 +62,11 @@ class _SignupSeekerState extends State<SignupSeeker> {
   Widget _signUpForm() {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
-        print(state.formState);
-        if (state.formState is FormSuccessStatus) {}
+        if (state.formState is FormSuccessStatus) {
+          locator<NavigationService>().pushRemoveUntil(
+              '/signup/seeker/subscribe',
+              arguments: (state.formState as FormSuccessStatus).payload);
+        }
       },
       child: Form(
           key: _formKey,
@@ -149,18 +157,17 @@ class _SignupSeekerState extends State<SignupSeeker> {
 
             if (result == null) return;
 
+            blocContext
+                .read<SignUpBloc>()
+                .add(SignUpDateOfBirthChanged(dob: result));
+
             setState(() {
-              _dobController.text = result.toString();
+              _dobController.text = DateFormat("yyyy-MM-dd").format(result);
             });
           },
           child: InputContainer(
             child: TextFormField(
               controller: _dobController,
-              onChanged: (value) {
-                blocContext
-                    .read<SignUpBloc>()
-                    .add(SignUpDateOfBirthChanged(dob: DateTime.parse(value)));
-              },
               decoration: InputDecoration(
                   enabled: false, hintText: S.current.birthdate),
             ),
@@ -224,10 +231,15 @@ class _SignupSeekerState extends State<SignupSeeker> {
                           .read<CountryBloc>()
                           .state
                           .countries
-                          .map((e) =>
-                              DropdownMenuItem<Country>(child: Text(e.name!)))
+                          .map((e) => DropdownMenuItem<Country>(
+                                child: Text(e.name!),
+                                value: e,
+                              ))
                           .toList(),
                       isExpanded: true,
+                      value: state.country,
+                      isDense: true,
+                      hint: Text(S.current.country),
                       onChanged: (v) {
                         if (v == null) return;
                         context

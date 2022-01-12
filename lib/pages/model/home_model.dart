@@ -33,7 +33,7 @@ class _HomeModelState extends State<HomeModel> {
         )
       ],
       child: Scaffold(
-        drawer: _drawer(context),
+        drawer: _drawer(),
         body: BlocBuilder<DrawerBloc, DrawerState>(
           builder: (context, state) {
             if (state.drawerWidget == null) {
@@ -56,41 +56,45 @@ class _HomeModelState extends State<HomeModel> {
     );
   }
 
-  Widget _drawer(BuildContext context) {
-    var index = context.read<DrawerBloc>().state.drawerIndex;
-
+  Widget _drawer() {
     return Drawer(
-      child: ListView(
-        children: [
-          DrawerListItem(
-            label: S.current.home,
-            selected: index == 0,
-            onPressed: () {
-              context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
-                  newIndex: 0, newWidget: HomeModelLanding()));
-            },
-          ),
-          DrawerListItem(
-            label: S.current.my_profile,
-            onPressed: () {
-              context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
-                  newIndex: 1, newWidget: HomeModelProfile()));
-            },
-            selected: index == 1,
-          ),
-          DrawerListItem(
-            label: S.current.my_connections,
-            onPressed: () {
-              context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
-                  newIndex: 1, newWidget: HomeModelConections()));
-            },
-            selected: index == 2,
-          ),
-          DrawerListItem(
-            label: S.current.exit,
-            onPressed: () {},
-          )
-        ],
+      child: BlocBuilder<DrawerBloc, DrawerState>(
+        builder: (context, state) {
+          var index = state.drawerIndex;
+
+          return ListView(
+            children: [
+              DrawerListItem(
+                label: S.current.home,
+                selected: index == 0,
+                onPressed: () {
+                  context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+                      newIndex: 0, newWidget: HomeModelLanding()));
+                },
+              ),
+              DrawerListItem(
+                label: S.current.my_profile,
+                onPressed: () {
+                  context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+                      newIndex: 1, newWidget: HomeModelProfile()));
+                },
+                selected: index == 1,
+              ),
+              DrawerListItem(
+                label: S.current.my_connections,
+                onPressed: () {
+                  context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+                      newIndex: 1, newWidget: HomeModelConections()));
+                },
+                selected: index == 2,
+              ),
+              DrawerListItem(
+                label: S.current.exit,
+                onPressed: () {},
+              )
+            ],
+          );
+        },
       ),
     );
   }

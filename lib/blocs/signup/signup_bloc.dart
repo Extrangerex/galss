@@ -6,6 +6,7 @@ import 'package:galss/blocs/signup/signup_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/auth_service.dart';
+import 'package:intl/intl.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   StreamSubscription? countryStreamSubscription;
@@ -35,7 +36,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         emit(state.copyWith(licenseTermsAccepted: event.licenseTermsAccepted)));
 
     on<SignUpDateOfBirthChanged>(
-        (event, emit) => state.copyWith(dob: event.dob));
+        (event, emit) => emit(state.copyWith(dob: event.dob)));
   }
 
   FutureOr<void> _onSignUpFormSubmitted(
@@ -47,8 +48,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       var body = Map<String, dynamic>.from({
         "user": {
           "fullName": state.name,
-          "type": state.userType,
-          "bornDate": state.dob,
+          "type": state.userType.index,
+          "bornDate": DateFormat("yyyy-MM-dd").format(state.dob!),
           "country": state.country?.id
         },
         "login": {"emailAddress": state.email, "password": state.password}
@@ -58,10 +59,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       if (response.statusCode == 409) {
       } else if (response.statusCode == 200) {
+        emit(state.copyWith(
+            formState: FormSuccessStatus(payload: response.data)));
       } else if (response.statusCode == 400) {}
     } catch (e) {
       emit(
           state.copyWith(formState: FormFailedStatus(exception: Exception(e))));
+
+      print(e);
     }
   }
 
