@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           primaryColor: primaryColor,
           primaryColorDark: primaryColorDark),
       routes: RouterGenerator.routes,
-      initialRoute: '/signup',
+      initialRoute: '/',
     );
   }
 }

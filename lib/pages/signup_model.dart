@@ -13,6 +13,7 @@ import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
+import 'package:galss/shared/input_container.dart';
 import 'package:galss/shared/logo.dart';
 
 class SignUpModel extends StatefulWidget {
@@ -30,6 +31,16 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        title: const Image(
+          image: logo,
+          width: 75,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -39,7 +50,11 @@ class _SignUpModelState extends State<SignUpModel> {
               create: (create) =>
                   SignUpBloc(SignUpState(userType: UserType.model)))
         ],
-        child: ImagedBackgroundContainer(child: _form()),
+        child: ImagedBackgroundContainer(
+            child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: _form(),
+        )),
       ),
     );
   }
@@ -56,29 +71,30 @@ class _SignUpModelState extends State<SignUpModel> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const Image(
-              image: logo,
-              width: 200,
-            ),
-            Text(S.current.sign_up_form_for_galss_models),
-            Text(S.current.fonts_with_asterisk_are_mandatory),
-            Row(
-              children: [
-                Flexible(child: _nameField()),
-                const SizedBox(
-                  width: 10,
-                ),
-                Flexible(child: _dobField()),
-              ],
-            ),
-            _emailField(),
-            _countryField(),
-            _passwordField(),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text(S.current.sign_up_form_for_galss_models),
+            // ),
+            // Text(S.current.fonts_with_asterisk_are_mandatory),
             const SizedBox(
-              height: 10,
+              height: 16,
             ),
+            InputContainer(
+              child: Row(
+                children: [
+                  Flexible(child: _nameField()),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(child: _dobField()),
+                ],
+              ),
+            ),
+            InputContainer(child: _emailField()),
+            InputContainer(child: _countryField()),
+            InputContainer(child: _passwordField()),
             Text(S.current.prompt_terms_conditions),
-            _termsAndConditionsField(),
+            InputContainer(child: _termsAndConditionsField()),
             _btnSubmit()
           ],
         ),
@@ -121,17 +137,16 @@ class _SignUpModelState extends State<SignUpModel> {
 
             if (result == null) return;
 
+            blocContext
+                .read<SignUpBloc>()
+                .add(SignUpDateOfBirthChanged(dob: result));
+
             setState(() {
               _dobController.text = result.toString();
             });
           },
           child: TextFormField(
             controller: _dobController,
-            onChanged: (value) {
-              blocContext
-                  .read<SignUpBloc>()
-                  .add(SignUpDateOfBirthChanged(dob: DateTime.parse(value)));
-            },
             decoration:
                 InputDecoration(enabled: false, hintText: S.current.birthdate),
           ),
@@ -161,16 +176,20 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _termsAndConditionsField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return CheckboxListTile(
-          selected: state.licenseTermsAccepted,
-          value: state.licenseTermsAccepted,
+        return ListTile(
           title: Text(S.current.prompt_accept_terms_conditions),
-          onChanged: (v) {
-            if (v == null) return;
+          trailing: Checkbox(
+            // selected: state.licenseTermsAccepted,
+            value: state.licenseTermsAccepted,
+            activeColor: Theme.of(context).primaryColor,
+            shape: const CircleBorder(),
+            onChanged: (v) {
+              if (v == null) return;
 
-            context.read<SignUpBloc>().add(
-                SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
-          },
+              context.read<SignUpBloc>().add(
+                  SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
+            },
+          ),
         );
       },
     );
@@ -190,11 +209,16 @@ class _SignUpModelState extends State<SignUpModel> {
                       .read<CountryBloc>()
                       .state
                       .countries
-                      .map((e) =>
-                          DropdownMenuItem<Country>(child: Text(e.name!)))
+                      .map((e) => DropdownMenuItem<Country>(
+                            child: Text(e.name!),
+                            value: e,
+                          ))
                       .toList(),
                   // underline: const SizedBox.shrink(),
                   isExpanded: true,
+                  value: state.country,
+                  hint: Text(S.current.country),
+                  isDense: true,
                   onChanged: (v) {
                     if (v == null) return;
                     context

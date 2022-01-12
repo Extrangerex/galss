@@ -12,15 +12,26 @@ class SignUpModelSucceded extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       body: ImagedBackgroundContainer(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(S.current.your_request_was_received_see_you_in_48hr),
-            const SizedBox(
-              height: 10,
+        child: SizedBox.expand(
+          child: Container(
+            color: Colors.black54,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: Text(
+                      S.current.your_request_was_received_see_you_in_48hr,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                _continueBtn()
+              ],
             ),
-            _continueBtn()
-          ],
+          ),
         ),
       ),
     );

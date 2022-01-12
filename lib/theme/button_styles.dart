@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:galss/theme/variables.dart';
 
+ButtonStyle primaryColorBtnStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(primaryColor),
+    textStyle: MaterialStateProperty.all(const TextStyle(color: Colors.white)));
+
 ButtonStyle holoGreenDarkBtnStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(holoGreenDark),
     textStyle: MaterialStateProperty.all(const TextStyle(color: Colors.white)));

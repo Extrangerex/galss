@@ -1,11 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/photo.dart';
+import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/variables.dart';
 
 class HomeModelLanding extends StatelessWidget {
@@ -25,6 +27,11 @@ class HomeModelLanding extends StatelessWidget {
           child: ListView(
             children: [
               carouselSlider(),
+              Column(
+                children: [
+                  _addPhotoBtn(),
+                ],
+              ),
               _nameTile(),
               _locationTile(),
               _nationalityTile(),
@@ -71,6 +78,17 @@ class HomeModelLanding extends StatelessWidget {
                 .toList(),
             options: CarouselOptions(height: 200));
       },
+    );
+  }
+
+  Widget _addPhotoBtn() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ElevatedButton.icon(
+          onPressed: () {},
+          style: primaryColorBtnStyle,
+          icon: const FaIcon(FontAwesomeIcons.camera),
+          label: Text(S.current.add_photo)),
     );
   }
 

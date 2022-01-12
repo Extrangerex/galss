@@ -11,13 +11,11 @@ import 'package:galss/pages/signup_seeker_subscription.dart';
 
 class RouterGenerator {
   static Map<String, Widget Function(BuildContext)> routes = {
-    // '/': (builder) => const Home(),
+    '/': (builder) => const Home(),
     '/login': (builder) => const Login(),
     '/signup': (builder) => const SignUp(),
     '/signup/seeker': (builder) => const SignupSeeker(),
-    '/signup/seeker/subscribe': (builder) => const SignupSeekerSubscription(
-          userId: 2,
-        ),
+    '/signup/seeker/subscribe': (builder) => const SignupSeekerSubscription(),
     '/signup/model': (builder) => const SignUpModel(),
     '/signup/model/succeded': (builder) => const SignUpModelSucceded(),
     '/model': (builder) => const HomeModel(),

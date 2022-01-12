@@ -49,5 +49,6 @@
   "current_location": "Ubicación actúal",
   "nationality": "Nacionalidad",
   "prompt_annual": "Anual",
-  "prompt_monthly": "Mensual"
+  "prompt_monthly": "Mensual",
+  "add_photo": "Agregar una foto"
 }
