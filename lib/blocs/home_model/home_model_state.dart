@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:galss/api_fetch_status.dart';
 import 'package:galss/pages/model/home_model_landing.dart';
 
 class HomeModelState {
-  final Widget? drawerWidget;
-  final int? drawerIndex;
+  final ApiFetchStatus fetchStatus;
 
-  HomeModelState(
-      {this.drawerIndex = 0, this.drawerWidget = const HomeModelLanding()});
+  HomeModelState({this.fetchStatus = const ApiFetchInitialStatus()});
 
-  HomeModelState copyWith({Widget? drawerWidget, int? drawerIndex}) =>
-      HomeModelState(
-          drawerIndex: drawerIndex ?? this.drawerIndex,
-          drawerWidget: drawerWidget ?? this.drawerWidget);
+  HomeModelState copyWith({ApiFetchStatus? apiFetchStatus}) =>
+      HomeModelState(fetchStatus: apiFetchStatus ?? fetchStatus);
 }

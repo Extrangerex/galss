@@ -5,10 +5,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
+import 'package:galss/blocs/home_model/home_model_bloc.dart';
+import 'package:galss/blocs/home_model/home_model_event.dart';
+import 'package:galss/blocs/home_model/home_model_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/photo.dart';
+import 'package:galss/models/user.dart';
+import 'package:galss/services/http_service.dart';
 import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/variables.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeModelLanding extends StatelessWidget {
   const HomeModelLanding({Key? key}) : super(key: key);
@@ -69,26 +75,40 @@ class HomeModelLanding extends StatelessWidget {
 
         return CarouselSlider(
             items: photos
-                .map((e) => Center(
+                .map((e) => SizedBox.expand(
                       child: Image.network(
-                        e.urlPath!,
+                        "${HttpService.apiBaseUrl}/${e.urlPath!}",
                         fit: BoxFit.cover,
                       ),
                     ))
                 .toList(),
-            options: CarouselOptions(height: 200));
+            options: CarouselOptions(
+                height: 200, viewportFraction: 1, enableInfiniteScroll: false));
       },
     );
   }
 
   Widget _addPhotoBtn() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ElevatedButton.icon(
-          onPressed: () {},
-          style: primaryColorBtnStyle,
-          icon: const FaIcon(FontAwesomeIcons.camera),
-          label: Text(S.current.add_photo)),
+    return BlocBuilder<HomeModelBloc, HomeModelState>(
+      builder: (context, state) {
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          child: ElevatedButton.icon(
+              onPressed: () async {
+                final picker = ImagePicker();
+                final imageFile =
+                    await picker.pickImage(source: ImageSource.gallery);
+
+                if (imageFile != null) {
+                  context.read<HomeModelBloc>().add(
+                      HomeModelUploadImageEvent(imageFileToUpload: imageFile));
+                }
+              },
+              style: primaryColorBtnStyle,
+              icon: const FaIcon(FontAwesomeIcons.camera),
+              label: Text(S.current.add_photo)),
+        );
+      },
     );
   }
 

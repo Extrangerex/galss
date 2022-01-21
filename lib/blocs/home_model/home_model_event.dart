@@ -1,13 +1,22 @@
-import 'package:flutter/cupertino.dart';
+import 'package:galss/api_fetch_status.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class HomeModelEvent {
   const HomeModelEvent();
 }
 
-class HomeModelDrawerWidgetChangedEvent extends HomeModelEvent {
-  final Widget newWidget;
-  final int newIndex;
+class HomeModelUploadImageEvent extends HomeModelEvent {
+  final XFile imageFileToUpload;
 
-  const HomeModelDrawerWidgetChangedEvent(
-      {required this.newIndex, required this.newWidget});
+  const HomeModelUploadImageEvent({required this.imageFileToUpload});
+}
+
+class HomeModelImageUploadingEvent extends HomeModelEvent {
+  const HomeModelImageUploadingEvent();
+}
+
+class HomeModelFetchStatusChangedEvent extends HomeModelEvent {
+  final ApiFetchStatus newStatus;
+
+  const HomeModelFetchStatusChangedEvent({required this.newStatus});
 }
