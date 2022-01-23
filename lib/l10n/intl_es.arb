@@ -50,5 +50,15 @@
   "nationality": "Nacionalidad",
   "prompt_annual": "Anual",
   "prompt_monthly": "Mensual",
-  "add_photo": "Agregar una foto"
+  "add_photo": "Agregar una foto",
+  "you_have_n_connections": "Tienes {roomsLength} conexiones",
+  "@you_have_n_connections": {
+    "description": "Especificar la cantidad de chats",
+    "placeholders": {
+      "roomsLength": {
+        "type": "Integer",
+        "example": "10"
+      }
+    }
+  }
 }

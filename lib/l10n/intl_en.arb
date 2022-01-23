@@ -50,5 +50,15 @@
   "nationality": "",
   "annual": "",
   "montly": "",
-  "add_photo": ""
+  "add_photo": "",
+  "you_have_n_connections": "You have {roomsLength} connections",
+  "@you_have_n_connections": {
+    "description": "Specify the room quantity",
+    "placeholders": {
+      "roomsLength": {
+        "type": "Integer",
+        "example": "10"
+      }
+    }
+  }
 }

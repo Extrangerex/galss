@@ -5,7 +5,7 @@ import 'package:galss/blocs/drawer/drawer_event.dart';
 import 'package:galss/blocs/drawer/drawer_state.dart';
 import 'package:galss/blocs/home_model/home_model_bloc.dart';
 import 'package:galss/generated/l10n.dart';
-import 'package:galss/pages/model/home_model_conections.dart';
+import 'package:galss/pages/model/home_model_connections.dart';
 import 'package:galss/pages/model/home_model_landing.dart';
 import 'package:galss/pages/model/home_model_profile.dart';
 import 'package:galss/shared/drawer_list_item.dart';
@@ -84,7 +84,7 @@ class _HomeModelState extends State<HomeModel> {
                 label: S.current.my_connections,
                 onPressed: () {
                   context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
-                      newIndex: 1, newWidget: HomeModelConections()));
+                      newIndex: 1, newWidget: HomeModelConnections()));
                 },
                 selected: index == 2,
               ),

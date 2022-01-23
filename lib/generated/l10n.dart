@@ -559,6 +559,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You have {roomsLength} connections`
+  String you_have_n_connections(Integer roomsLength) {
+    return Intl.message(
+      'You have $roomsLength connections',
+      name: 'you_have_n_connections',
+      desc: 'Specify the room quantity',
+      args: [roomsLength],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
