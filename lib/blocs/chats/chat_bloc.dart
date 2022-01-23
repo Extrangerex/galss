@@ -11,7 +11,7 @@ import 'package:galss/services/http_service.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(const ChatState()) {
-    on<ChatGetChatHistoryEvent>(_fetchChatHistory);
+    on<ChatGetChatsEvent>(_fetchChatHistory);
     on<ChatRoomsChanged>(
         (event, emit) => emit(state.copyWith(rooms: event.rooms)));
     on<ChatFetchStatusChanged>((event, emit) =>
@@ -19,7 +19,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   FutureOr<void> _fetchChatHistory(
-      ChatGetChatHistoryEvent event, Emitter<ChatState> emit) async {
+      ChatGetChatsEvent event, Emitter<ChatState> emit) async {
     add(const ChatFetchStatusChanged(apiFetchStatus: ApiFetchingStatus()));
 
     final authData = await locator<AuthService>().authData;

@@ -48,6 +48,7 @@ dependencies:
   flutter_automation: ^2.0.0
   font_awesome_flutter: ^9.2.0
   image_picker: ^0.8.4+4
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:

@@ -561,7 +561,7 @@ class S {
   }
 
   /// `You have {roomsLength} connections`
-  String you_have_n_connections(Integer roomsLength) {
+  String you_have_n_connections(int roomsLength) {
     return Intl.message(
       'You have $roomsLength connections',
       name: 'you_have_n_connections',

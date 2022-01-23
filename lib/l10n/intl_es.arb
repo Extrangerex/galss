@@ -56,7 +56,7 @@
     "description": "Especificar la cantidad de chats",
     "placeholders": {
       "roomsLength": {
-        "type": "Integer",
+        "type": "int",
         "example": "10"
       }
     }

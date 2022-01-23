@@ -56,7 +56,7 @@
     "description": "Specify the room quantity",
     "placeholders": {
       "roomsLength": {
-        "type": "Integer",
+        "type": "int",
         "example": "10"
       }
     }
