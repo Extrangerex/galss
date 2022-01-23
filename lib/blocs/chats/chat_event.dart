@@ -9,12 +9,6 @@ class ChatGetChatsEvent extends ChatEvent {
   const ChatGetChatsEvent();
 }
 
-class ChatGetChatHistoryEvent extends ChatEvent {
-  final String roomId;
-
-  const ChatGetChatHistoryEvent({required this.roomId});
-}
-
 class ChatRoomsChanged extends ChatEvent {
   final List<Chat> rooms;
 
@@ -26,5 +20,3 @@ class ChatFetchStatusChanged  extends ChatEvent{
 
   const ChatFetchStatusChanged({required this.apiFetchStatus});
 }
-
-class ChatSentMessageEvent extends ChatEvent {}
