@@ -18,7 +18,7 @@ import 'package:galss/theme/variables.dart';
 class ChatRoom extends StatefulWidget {
   final Chat chat;
 
-  ChatRoom({required this.chat});
+  const ChatRoom({Key? key, required this.chat}): super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ChatRoomState();
