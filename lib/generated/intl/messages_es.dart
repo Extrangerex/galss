@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(roomsLength) => "Tienes ${roomsLength} conexiones";
 
+  static String m1(targetName) => "Estas hablando con ${targetName}...";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "action_sign_in":
@@ -99,8 +101,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Formulario de Solicitud Para Modelos de Galss"),
         "signin_form": MessageLookupByLibrary.simpleMessage(
             "Formulario de Inicio de Sesión"),
+        "type_a_message_placeholder":
+            MessageLookupByLibrary.simpleMessage("Aa"),
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
         "you_have_n_connections": m0,
+        "you_talking_with_n": m1,
         "your_request_was_received_see_you_in_48hr":
             MessageLookupByLibrary.simpleMessage(
                 "Su Solicitud fue recibida correctamente. \n Antes de las 48 horas le estaremos \n confirmando.")

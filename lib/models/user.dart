@@ -5,6 +5,7 @@ import 'package:galss/models/model.dart';
 import 'package:galss/models/photo.dart';
 import 'package:galss/models/seeker.dart';
 import 'package:galss/models/user_lat_lng.dart';
+import 'package:galss/models/user_type.dart';
 
 class User {
   int? id;
@@ -19,6 +20,10 @@ class User {
   Country? country;
   City? currentLocation;
   List<DeviceToken>? deviceTokens;
+
+  String? get fullName {
+    return type == UserType.seeker.index ? seeker?.fullName : model?.fullName;
+  }
 
   User(
       {this.id,

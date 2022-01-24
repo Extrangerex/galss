@@ -21,6 +21,7 @@ class ChatMessage {
         this.creationDate});
 
   ChatMessage.fromJson(Map<String, dynamic> json) {
+
     id = json['id'];
     chatId = json['chatId'];
     chatSubject = json['chatSubject'];

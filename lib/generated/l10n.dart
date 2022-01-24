@@ -569,6 +569,26 @@ class S {
       args: [roomsLength],
     );
   }
+
+  /// `Talking to {targetName}...`
+  String you_talking_with_n(String targetName) {
+    return Intl.message(
+      'Talking to $targetName...',
+      name: 'you_talking_with_n',
+      desc: 'Specify the name of your chat target',
+      args: [targetName],
+    );
+  }
+
+  /// `Aa`
+  String get type_a_message_placeholder {
+    return Intl.message(
+      'Aa',
+      name: 'type_a_message_placeholder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

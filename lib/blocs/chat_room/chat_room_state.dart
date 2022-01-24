@@ -3,11 +3,30 @@ import 'package:galss/models/api_chat_message.dart';
 
 class ChatRoomState {
   final List<ChatMessage> chatMessages;
-  final ApiFetchStatus greetingFetchingStatus;
-  final ApiFetchStatus sentMessageFetchingStatus;
+  final ApiFetchStatus greetingFetchStatus;
+  final ApiFetchStatus sentMessageFetchStatus;
+  final ApiFetchStatus fetchChatHistoryStatus;
+  final String? msgToSend;
 
-  const ChatRoomState({this.chatMessages = const [
-  ], this.greetingFetchingStatus = const ApiFetchInitialStatus(), this.sentMessageFetchingStatus = const ApiFetchInitialStatus()});
+  ChatRoomState(
+      {this.chatMessages = const [],
+      this.greetingFetchStatus = const ApiFetchInitialStatus(),
+      this.sentMessageFetchStatus = const ApiFetchInitialStatus(),
+      this.fetchChatHistoryStatus = const ApiFetchInitialStatus(),
+      this.msgToSend});
 
-
+  ChatRoomState copyWith(
+          {List<ChatMessage>? chatMessages,
+          ApiFetchStatus? greetingFetchStatus,
+          ApiFetchStatus? sentMessageFetchStatus,
+          ApiFetchStatus? fetchChatHistoryStatus,
+          String? msgToSend}) =>
+      ChatRoomState(
+          chatMessages: chatMessages ?? this.chatMessages,
+          greetingFetchStatus: greetingFetchStatus ?? this.greetingFetchStatus,
+          sentMessageFetchStatus:
+              sentMessageFetchStatus ?? this.sentMessageFetchStatus,
+          fetchChatHistoryStatus:
+              fetchChatHistoryStatus ?? this.fetchChatHistoryStatus,
+      msgToSend: msgToSend ?? this.msgToSend);
 }

@@ -60,5 +60,16 @@
         "example": "10"
       }
     }
-  }
+  },
+  "you_talking_with_n": "Talking to {targetName}...",
+  "@you_talking_with_n": {
+    "description": "Specify the name of your chat target",
+    "placeholders": {
+      "targetName": {
+        "type": "String",
+        "example": "Jhon Doe"
+      }
+    }
+  },
+  "type_a_message_placeholder": "Aa"
 }

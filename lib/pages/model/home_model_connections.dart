@@ -5,7 +5,10 @@ import 'package:galss/blocs/chats/chat_bloc.dart';
 import 'package:galss/blocs/chats/chat_event.dart';
 import 'package:galss/blocs/chats/chat_state.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
+import 'package:galss/pages/chat_room.dart';
 import 'package:galss/services/http_service.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/images.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/variables.dart';
@@ -60,6 +63,10 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
               ?.singleWhere((element) => element.isCreator == false);
 
           return ListTile(
+
+            onTap: () {
+              locator<NavigationService>().navigatorKey.currentState?.push(MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
+            },
             leading: CircleAvatar(
               backgroundColor: Colors.black12,
               child: CachedNetworkImage(
