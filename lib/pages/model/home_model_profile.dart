@@ -29,7 +29,9 @@ class _HomeModelProfileState extends State<HomeModelProfile> {
       ],
       child: Scaffold(
         body: ListView(
-          children: [],
+          children: [
+            _profileStatusField()
+          ],
         ),
       ),
     );
