@@ -15,8 +15,6 @@ class PaymentService {
 
   Future<bool> purchase(Package package) async {
     try {
-      print(
-          package.product.identifier);
       PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package);
       if (purchaserInfo.entitlements.all[package.identifier]!.isActive) {
         // Unlock that great "pro" content
