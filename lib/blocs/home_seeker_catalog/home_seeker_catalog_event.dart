@@ -8,9 +8,32 @@ class HomeSeekerCatalogGetModelsEvent extends HomeSeekerCatalogEvent {
   const HomeSeekerCatalogGetModelsEvent();
 }
 
+class HomeSeekerGetCloseMeEvent extends HomeSeekerCatalogEvent {
+  const HomeSeekerGetCloseMeEvent();
+}
+
+class HomeSeekerGetFavoritesEvent extends HomeSeekerCatalogEvent {
+  const HomeSeekerGetFavoritesEvent();
+}
+
+class HomeSeekerGetLikedModelsEvent extends HomeSeekerCatalogEvent {
+  const HomeSeekerGetLikedModelsEvent();
+}
+
+class HomeSeekerGetRecentlyAddedModelsEvent extends HomeSeekerCatalogEvent {
+  const HomeSeekerGetRecentlyAddedModelsEvent();
+}
+
+class HomeSeekerSearchFieldChanged extends HomeSeekerCatalogEvent {
+  final String q;
+
+  const HomeSeekerSearchFieldChanged({required this.q});
+}
+
 class HomeSeekerFavModelClicked extends HomeSeekerCatalogEvent {
   final User model;
   final bool isFavorite;
 
-  const HomeSeekerFavModelClicked({required this.model, required this.isFavorite});
+  const HomeSeekerFavModelClicked(
+      {required this.model, required this.isFavorite});
 }

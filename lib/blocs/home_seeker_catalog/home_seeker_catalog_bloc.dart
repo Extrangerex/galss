@@ -14,6 +14,8 @@ class HomeSeekerCatalogBloc
   HomeSeekerCatalogBloc() : super(const HomeSeekerCatalogState()) {
     on<HomeSeekerCatalogGetModelsEvent>(_fetchCatalogModels);
     on<HomeSeekerFavModelClicked>(_toggleRequestFavModel);
+    on<HomeSeekerGetCloseMeEvent>(_fetchCloseMeModels);
+    on<HomeSeekerSearchFieldChanged>(_searchModels);
   }
 
   FutureOr<void> _fetchCatalogModels(HomeSeekerCatalogGetModelsEvent event,
@@ -30,6 +32,27 @@ class HomeSeekerCatalogBloc
           .then((value) => emit(state.copyWith(
               models: value,
               fetchModelStatus: const ApiFetchSuccededStatus())));
+    } catch (e) {
+      emit(state.copyWith(
+          fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+
+  FutureOr<void> _fetchRecentModels(HomeSeekerCatalogGetModelsEvent event,
+      Emitter<HomeSeekerCatalogState> emit) async {
+    emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
+
+    try {
+      await locator<HttpService>()
+          .http
+          .get("${HttpService.apiUrl}/User/Models/Recently")
+          .then((value) => value.data)
+          .then((value) => List.from(value))
+          .then((value) => value.map((e) => User.fromJson(e)).toList())
+          .then((value) => emit(state.copyWith(
+          models: value,
+          fetchModelStatus: const ApiFetchSuccededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -61,5 +84,93 @@ class HomeSeekerCatalogBloc
           .then((value) => emit(state.copyWith(
               requestToggleModelStatus: const ApiFetchSuccededStatus())));
     } catch (e) {}
+  }
+
+  FutureOr<void> _fetchCloseMeModels(HomeSeekerGetCloseMeEvent event,
+      Emitter<HomeSeekerCatalogState> emit) async {
+    emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
+
+    try {
+      final userData = await locator<AuthService>().authData;
+
+      await locator<HttpService>()
+          .http
+          .get("${HttpService.apiUrl}/User/Models/Nearby/${userData.userId}")
+          .then((value) => value.data)
+          .then((value) => List.from(value))
+          .then((value) => value.map((e) => User.fromJson(e)).toList())
+          .then((value) => emit(state.copyWith(
+              models: value,
+              fetchModelStatus: const ApiFetchSuccededStatus())));
+    } catch (e) {
+      emit(state.copyWith(
+          fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+
+  FutureOr<void> _fetchFavoriteModels(HomeSeekerGetCloseMeEvent event,
+      Emitter<HomeSeekerCatalogState> emit) async {
+    emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
+
+    try {
+      final userData = await locator<AuthService>().authData;
+
+      await locator<HttpService>()
+          .http
+          .get("${HttpService.apiUrl}/User/Favorites/${userData.userId}")
+          .then((value) => value.data)
+          .then((value) => List.from(value))
+          .then((value) => value.map((e) => User.fromJson(e)).toList())
+          .then((value) => emit(state.copyWith(
+          models: value,
+          fetchModelStatus: const ApiFetchSuccededStatus())));
+    } catch (e) {
+      emit(state.copyWith(
+          fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+
+  FutureOr<void> _fetchLikeModels(HomeSeekerGetCloseMeEvent event,
+      Emitter<HomeSeekerCatalogState> emit) async {
+    emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
+
+    try {
+      final userData = await locator<AuthService>().authData;
+
+      await locator<HttpService>()
+          .http
+          .get("${HttpService.apiUrl}/User/Likes/${userData.userId}")
+          .then((value) => value.data)
+          .then((value) => List.from(value))
+          .then((value) => value.map((e) => User.fromJson(e)).toList())
+          .then((value) => emit(state.copyWith(
+          models: value,
+          fetchModelStatus: const ApiFetchSuccededStatus())));
+    } catch (e) {
+      emit(state.copyWith(
+          fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+  FutureOr<void> _searchModels(HomeSeekerSearchFieldChanged event,
+      Emitter<HomeSeekerCatalogState> emit) async {
+    emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
+
+    try {
+      await locator<HttpService>()
+          .http
+          .get("${HttpService.apiUrl}/User/Models/${event.q}")
+          .then((value) => value.data)
+          .then((value) => List.from(value))
+          .then((value) => value.map((e) => User.fromJson(e)).toList())
+          .then((value) => emit(state.copyWith(
+              models: value,
+              fetchModelStatus: const ApiFetchSuccededStatus())));
+    } catch (e) {
+      emit(state.copyWith(
+          fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
   }
 }

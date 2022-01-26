@@ -11,7 +11,7 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('data'),
+      body: null,
     );
   }
 }
