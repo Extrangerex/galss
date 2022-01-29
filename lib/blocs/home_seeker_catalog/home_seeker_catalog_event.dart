@@ -30,6 +30,14 @@ class HomeSeekerSearchFieldChanged extends HomeSeekerCatalogEvent {
   const HomeSeekerSearchFieldChanged({required this.q});
 }
 
+class HomeSeekerLikeModelClicked extends HomeSeekerCatalogEvent {
+  final User model;
+  final bool isLiked;
+
+  const HomeSeekerLikeModelClicked(
+      {required this.model, required this.isLiked});
+}
+
 class HomeSeekerFavModelClicked extends HomeSeekerCatalogEvent {
   final User model;
   final bool isFavorite;

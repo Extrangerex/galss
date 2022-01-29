@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:galss/blocs/auth/user_bloc.dart';
+import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_bloc.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_event.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_state.dart';
@@ -18,10 +20,14 @@ class HomeSeekerCatalog extends StatefulWidget {
 }
 
 class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
+
+  TextEditingController searchTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (create) => UserBloc()..add(const FetchUserData())),
         BlocProvider(
           create: (create) => HomeSeekerCatalogBloc()
             ..add(const HomeSeekerCatalogGetModelsEvent()),
@@ -31,13 +37,18 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
         data: ThemeData.light(),
         child: Scaffold(
           appBar: AppBar(
+            elevation: 0,
             title: Container(
-              color: Colors.white,
+              width: double.infinity,
+              height: 40,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: _searchTextField(),
             ),
-            titleSpacing: 0,
+            titleSpacing: 8,
           ),
-          body: _models(),
+          body: Container(
+              margin: const EdgeInsets.only(top: 8), child: _models()),
         ),
       ),
     );
@@ -46,6 +57,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
   Widget _searchTextField() {
     return BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
       builder: (context, state) => TextField(
+        controller: searchTextEditingController,
         onChanged: (v) {
           if (v == "") {
             context
@@ -59,10 +71,19 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
               .add(HomeSeekerSearchFieldChanged(q: v));
         },
         decoration: InputDecoration(
-          hintText: S.current.search,
-          contentPadding: const EdgeInsets.only(left: 8),
-          border: InputBorder.none,
-        ),
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: IconButton(
+              icon: searchTextEditingController.text != "" ? const Icon(Icons.clear) : const SizedBox.shrink(),
+              onPressed: () {
+                /* Clear the search field */
+                searchTextEditingController.text = "";
+                context
+                    .read<HomeSeekerCatalogBloc>()
+                    .add(const HomeSeekerSearchFieldChanged(q: ""));
+              },
+            ),
+            hintText: S.current.search,
+            border: InputBorder.none),
       ),
     );
   }
@@ -97,7 +118,9 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                         title: Text("${item.model?.fullName}"),
                         isThreeLine: true,
                         trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+
+                            },
                             icon: const FaIcon(FontAwesomeIcons.heart)),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

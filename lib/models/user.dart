@@ -6,6 +6,7 @@ import 'package:galss/models/photo.dart';
 import 'package:galss/models/seeker.dart';
 import 'package:galss/models/user_lat_lng.dart';
 import 'package:galss/models/user_type.dart';
+import 'package:intl/intl.dart';
 
 class User {
   int? id;
@@ -45,6 +46,21 @@ class User {
         country: json['country'] ?? country,
         currentLocation: json['currentLocation'] ?? currentLocation,
         model: json['model'] ?? model);
+  }
+
+  int get age {
+    var today = DateTime.now();
+
+    if (type == UserType.model.index) {
+      return today.year - DateFormat("yyyy-MM-dd").parse(model!.bornDate!).year;
+    }
+
+    if (type == UserType.seeker.index) {
+      return today.year -
+          DateFormat("yyyy-MM-dd").parse(seeker!.bornDate!).year;
+    }
+
+    return 0;
   }
 
   User.fromJson(Map<String, dynamic> json) {
