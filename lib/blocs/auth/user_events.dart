@@ -16,8 +16,11 @@ class UserIsConnected extends UserEvent {
 class UserIsDisconnected extends UserEvent {}
 
 class FetchUserData extends UserEvent {
-  const FetchUserData();
+  final int? userId;
+
+  const FetchUserData({this.userId});
 }
+
 
 class UserModelNameChanged extends UserEvent {
   final String name;

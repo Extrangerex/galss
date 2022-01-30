@@ -1,6 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/blocs/auth/user_bloc.dart';
+import 'package:galss/blocs/auth/user_events.dart';
+import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
@@ -27,7 +31,10 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
       providers: [
         BlocProvider(
             create: (create) => CountryBloc()
-              ..add(FetchListCities(countryId: widget.userModel.model!.city!)))
+              ..add(FetchListCities(countryId: widget.userModel.model!.city!))),
+        BlocProvider(
+            create: (create) =>
+                UserBloc()..add(FetchUserData(userId: widget.userModel.id)))
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -39,14 +46,30 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
             const SizedBox(
               height: 30,
             ),
-            Text("${widget.userModel.model?.fullName}, ${widget.userModel.age}"),
-            Text("${widget.userModel.model?.city}"),
-            city(),
-            Text.rich(TextSpan(
+            Text(
+                "${widget.userModel.model?.fullName}, ${widget.userModel.age}",
+            style: Theme.of(context).textTheme.subtitle1,),
+            Text("${widget.userModel.country?.name}"),
+            Text("${widget.userModel.currentLocation?.name}"),
+            // city(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
-              ]
-            ))
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.message,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                Text("${widget.userModel.profileStatus}")
+              ],
+            ),
           ],
         ),
       ),
@@ -60,30 +83,20 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
   }
 
   Widget carouselSlider() {
-    List<Photo> photos = widget.userModel.photos ?? [];
+    return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+      var photos = state.user?.photos ?? [];
 
-    print(widget.userModel.photos);
-
-    return CarouselSlider(
-        items: photos
-            .map((e) => SizedBox.expand(
-                  child: Image.network(
-                    "${HttpService.apiBaseUrl}/${e.urlPath!}",
-                    fit: BoxFit.cover,
-                  ),
-                ))
-            .toList(),
-        options: CarouselOptions(
-            height: 200, viewportFraction: 1, enableInfiniteScroll: false));
-  }
-}
-
-extension IconExt on Text {
-  Rich(String text, {required Widget leading, TextStyle? textStyle}) {
-    return RichText(
-        text: TextSpan(children: [
-      WidgetSpan(child: leading),
-      TextSpan(text: text, style: textStyle)
-    ]));
+      return CarouselSlider(
+          items: photos
+              .map((e) => SizedBox.expand(
+                    child: Image.network(
+                      "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                      fit: BoxFit.cover,
+                    ),
+                  ))
+              .toList(),
+          options: CarouselOptions(
+              height: 300, viewportFraction: 1, enableInfiniteScroll: false));
+    });
   }
 }

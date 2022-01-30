@@ -30,7 +30,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       FetchUserData event, Emitter<UserState> emit) async {
     emit(state.copyWith(apiFetchStatus: const ApiFetchingStatus()));
 
-    var userId = (await locator<AuthService>().authData).userId;
+    var userId = event.userId;
+
+    if(event.userId == null) {
+      userId = (await locator<AuthService>().authData).userId;
+    }
 
     await locator<AuthService>()
         .repository
