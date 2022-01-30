@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,21 +29,26 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
             create: (create) => CountryBloc()
               ..add(FetchListCities(countryId: widget.userModel.model!.city!)))
       ],
-      child: ListView(
-        children: [
-          carouselSlider(),
-          const SizedBox(
-            height: 30,
-          ),
-          Text("${widget.userModel.model?.fullName}, ${widget.userModel.age}"),
-          Text("${widget.userModel.model?.city}"),
-          city(),
-          Text.rich(TextSpan(
-            children: [
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("${widget.userModel.model!.fullName}"),
+        ),
+        body: ListView(
+          children: [
+            carouselSlider(),
+            const SizedBox(
+              height: 30,
+            ),
+            Text("${widget.userModel.model?.fullName}, ${widget.userModel.age}"),
+            Text("${widget.userModel.model?.city}"),
+            city(),
+            Text.rich(TextSpan(
+              children: [
 
-            ]
-          ))
-        ],
+              ]
+            ))
+          ],
+        ),
       ),
     );
   }
@@ -58,6 +61,9 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
 
   Widget carouselSlider() {
     List<Photo> photos = widget.userModel.photos ?? [];
+
+    print(widget.userModel.photos);
+
     return CarouselSlider(
         items: photos
             .map((e) => SizedBox.expand(

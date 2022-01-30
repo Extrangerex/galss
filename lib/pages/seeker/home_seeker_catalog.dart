@@ -9,7 +9,9 @@ import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_event.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
+import 'package:galss/pages/model_viewer_profile.dart';
 import 'package:galss/services/http_service.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/images.dart';
 
 class HomeSeekerCatalog extends StatefulWidget {
@@ -20,14 +22,14 @@ class HomeSeekerCatalog extends StatefulWidget {
 }
 
 class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
-
   TextEditingController searchTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (create) => UserBloc()..add(const FetchUserData())),
+        BlocProvider(
+            create: (create) => UserBloc()..add(const FetchUserData())),
         BlocProvider(
           create: (create) => HomeSeekerCatalogBloc()
             ..add(const HomeSeekerCatalogGetModelsEvent()),
@@ -73,7 +75,9 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
         decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
             suffixIcon: IconButton(
-              icon: searchTextEditingController.text != "" ? const Icon(Icons.clear) : const SizedBox.shrink(),
+              icon: searchTextEditingController.text != ""
+                  ? const Icon(Icons.clear)
+                  : const SizedBox.shrink(),
               onPressed: () {
                 /* Clear the search field */
                 searchTextEditingController.text = "";
@@ -96,48 +100,54 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
               itemBuilder: (context, index) {
                 var item = state.models[index];
 
-                return Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        constraints: const BoxConstraints(minHeight: 128),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) => Image(
-                            image: placeHolderProfileImg,
+                return InkWell(
+                  onTap: () {
+                    locator<NavigationService>().navigatorKey.currentState?.push(
+                        MaterialPageRoute(
+                            builder: (builder) =>
+                                ModelViewerProfile(userModel: item)));
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          constraints: const BoxConstraints(minHeight: 128),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
                             fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Image(
+                              image: placeHolderProfileImg,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: ListTile(
-                        title: Text("${item.model?.fullName}"),
-                        isThreeLine: true,
-                        trailing: IconButton(
-                            onPressed: () {
-
-                            },
-                            icon: const FaIcon(FontAwesomeIcons.heart)),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${item.currentLocation?.name}"),
-                            Text("${item.country?.name}"),
-                            Text(
-                              "${item.profileStatus}",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12),
-                            )
-                          ],
+                      Expanded(
+                        flex: 2,
+                        child: ListTile(
+                          title: Text("${item.model?.fullName}"),
+                          isThreeLine: true,
+                          trailing: IconButton(
+                              onPressed: () {},
+                              icon: const FaIcon(FontAwesomeIcons.heart)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${item.currentLocation?.name}"),
+                              Text("${item.country?.name}"),
+                              Text(
+                                "${item.profileStatus}",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 12),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ));
