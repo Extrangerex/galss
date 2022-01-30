@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
-  static String m0(roomsLength) => "Tienes ${roomsLength} conexiones";
+  static String m0(likesCount) => "Les ha gustado a ${likesCount} persona(s)";
 
-  static String m1(targetName) => "Estas hablando con ${targetName}...";
+  static String m1(roomsLength) => "Tienes ${roomsLength} conexion(es)";
+
+  static String m2(targetName) => "Estas hablando con ${targetName}...";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -57,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Inicio"),
         "language": MessageLookupByLibrary.simpleMessage("Español"),
         "lastname": MessageLookupByLibrary.simpleMessage("Apellido"),
+        "liked_by_n_people": m0,
         "model": MessageLookupByLibrary.simpleMessage("Modelo"),
         "model_catalog":
             MessageLookupByLibrary.simpleMessage("Catálogos de Modelos"),
@@ -103,9 +106,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Formulario de Inicio de Sesión"),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
+        "unknown_city":
+            MessageLookupByLibrary.simpleMessage("Ciudad desconocida"),
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
-        "you_have_n_connections": m0,
-        "you_talking_with_n": m1,
+        "you_have_n_connections": m1,
+        "you_talking_with_n": m2,
         "your_request_was_received_see_you_in_48hr":
             MessageLookupByLibrary.simpleMessage(
                 "Su Solicitud fue recibida correctamente. \n Antes de las 48 horas le estaremos \n confirmando.")

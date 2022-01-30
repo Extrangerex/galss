@@ -71,5 +71,16 @@
       }
     }
   },
-  "type_a_message_placeholder": "Aa"
+  "type_a_message_placeholder": "Aa",
+  "liked_by_n_people": "{likesCount} people liked it",
+  "@liked_by_n_people": {
+    "description": "Show likes count of a model",
+    "placeholders": {
+    "likesCount": {
+    "type": "int",
+    "example": "10"
+    }
+    }
+  },
+  "unknown_city": "Unknown city"
 }

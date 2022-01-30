@@ -589,6 +589,26 @@ class S {
       args: [],
     );
   }
+
+  /// `{likesCount} people liked it`
+  String liked_by_n_people(int likesCount) {
+    return Intl.message(
+      '$likesCount people liked it',
+      name: 'liked_by_n_people',
+      desc: 'Show likes count of a model',
+      args: [likesCount],
+    );
+  }
+
+  /// `Unknown city`
+  String get unknown_city {
+    return Intl.message(
+      'Unknown city',
+      name: 'unknown_city',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

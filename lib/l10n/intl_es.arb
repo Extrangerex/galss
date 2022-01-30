@@ -71,5 +71,17 @@
       }
     }
   },
-  "type_a_message_placeholder": "Aa"
+  "type_a_message_placeholder": "Aa",
+
+  "liked_by_n_people": "Les ha gustado a {likesCount} persona(s)",
+  "@liked_by_n_people": {
+    "description": "Muestra la cantidad de likes de una modelo",
+    "placeholders": {
+    "likesCount": {
+    "type": "int",
+    "example": "10"
+    }
+    }
+  },
+  "unknown_city": "Ciudad desconocida"
 }
