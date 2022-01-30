@@ -45,7 +45,7 @@ class _SignUpModelState extends State<SignUpModel> {
         providers: [
           BlocProvider(
               create: (create) =>
-                  CountryBloc(CountryState())..add(const FetchListCountry())),
+                  CountryBloc()..add(const FetchListCountry())),
           BlocProvider(
               create: (create) =>
                   SignUpBloc(SignUpState(userType: UserType.model)))

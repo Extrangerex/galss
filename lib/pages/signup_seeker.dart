@@ -37,7 +37,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
       providers: [
         BlocProvider(
             create: (create) =>
-                CountryBloc(CountryState())..add(const FetchListCountry())),
+                CountryBloc()..add(const FetchListCountry())),
         BlocProvider(
             create: (create) => SignUpBloc(
                   SignUpState(userType: UserType.seeker),

@@ -25,7 +25,7 @@ class _HomeModelProfileState extends State<HomeModelProfile> {
             create: (context) => UserBloc()..add(const FetchUserData())),
         BlocProvider(
             create: (context) =>
-                CountryBloc(CountryState())..add(const FetchListCountry()))
+                CountryBloc()..add(const FetchListCountry()))
       ],
       child: Scaffold(
         body: ListView(
