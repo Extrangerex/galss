@@ -67,10 +67,11 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
                 ],
               ),
             ),
+            const Spacer(),
+            const RecentlyAddedModels()
             // Flexible(flex: 1, child: SizedBox(height: 100,child: RecentlyAddedModels()))
           ],
         )),
-        bottomSheet: const RecentlyAddedModels(),
       ),
     );
   }

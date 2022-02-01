@@ -10,6 +10,7 @@ import 'package:galss/models/user.dart';
 import 'package:galss/pages/model_viewer_profile.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/images.dart';
 
 class RecentlyAddedModels extends StatelessWidget {
@@ -33,15 +34,16 @@ class RecentlyAddedModels extends StatelessWidget {
             Container(
               width: double.infinity,
               color: Colors.pink.shade100,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 S.current.recently_added,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.pink.shade900),
               ),
             ),
-            SizedBox(
+            Container(
               height: 180,
+              color: Colors.transparent,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: state.models

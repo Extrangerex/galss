@@ -26,6 +26,7 @@ class HomeSeekerCatalog extends StatefulWidget {
 
 class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
   TextEditingController searchTextEditingController = TextEditingController();
+  Color backgroundColor = const Color.fromRGBO(243, 235, 241, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
       child: Theme(
         data: ThemeData.light(),
         child: Scaffold(
+          backgroundColor: backgroundColor,
           appBar: AppBar(
             elevation: 0,
             title: Container(
@@ -116,45 +118,52 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                             builder: (builder) =>
                                 ModelViewerProfile(userModel: item)));
                   },
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          constraints: const BoxConstraints(minHeight: 128),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
-                            fit: BoxFit.cover,
-                            errorWidget: (context, url, error) => Image(
-                              image: placeHolderProfileImg,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: .25)
+                      )
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            constraints: const BoxConstraints(minHeight: 128),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
                               fit: BoxFit.cover,
+                              errorWidget: (context, url, error) => Image(
+                                image: placeHolderProfileImg,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: ListTile(
-                          title: Text("${item.model?.fullName}"),
-                          isThreeLine: true,
-                          trailing: ToggleLikeModel(model: item),
-                          subtitle: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("${item.currentLocation?.name}"),
-                              Text("${item.country?.name}"),
-                              Text(
-                                "${item.profileStatus}",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 12),
-                              )
-                            ],
+                        Expanded(
+                          flex: 2,
+                          child: ListTile(
+                            title: Text("${item.model?.fullName}"),
+                            isThreeLine: true,
+                            trailing: ToggleLikeModel(model: item),
+                            subtitle: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("${item.currentLocation?.name}"),
+                                Text("${item.country?.name}"),
+                                Text(
+                                  "${item.profileStatus}",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

@@ -35,7 +35,7 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
             title: title(),
             elevation: 0,
             centerTitle: true,
-            backgroundColor: Colors.transparent,
+            // backgroundColor: Colors.transparent,
           ),
           body: _rooms(),
         ),
@@ -53,26 +53,25 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
           var chatFriend = e.chatMembers
               ?.singleWhere((element) => element.isCreator == false);
 
-          return ListTile(
-            onTap: () {
-              locator<NavigationService>().navigatorKey.currentState?.push(
-                  MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
-            },
-            leading: CircleAvatar(
-              backgroundColor: Colors.black12,
-              child: CachedNetworkImage(
-                imageUrl:
-                    "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}",
-                errorWidget: (context, url, error) =>
-                    CircleAvatar(backgroundImage: placeHolderProfileImg),
+          return Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: .25)
+              )
+            ),
+            child: ListTile(
+              onTap: () {
+                locator<NavigationService>().navigatorKey.currentState?.push(
+                    MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
+              },
+              leading: CircleAvatar(
+                backgroundColor: Colors.black12,
+                backgroundImage: CachedNetworkImageProvider(
+                    "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}"),
               ),
+              title: Text("${chatFriend?.user?.model?.fullName}"),
+              subtitle: Text("${e.lastMessage}")
             ),
-            title: Text("${chatFriend?.user?.model?.fullName}"),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text("${e.lastMessage}"), const Divider()],
-            ),
-            isThreeLine: true,
           );
         },
       );
@@ -83,7 +82,7 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
     return BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
       return Text(
         S.current.you_have_n_connections(state.rooms.length),
-        style: TextStyle(color: primaryColor),
+        // style: TextStyle(color: primaryColor),
       );
     });
   }
