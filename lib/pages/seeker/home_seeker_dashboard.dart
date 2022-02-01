@@ -70,7 +70,7 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
             BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
                 builder: (context, state) {
               if (state.models.isEmpty) {
-                return SizedBox(
+                return const SizedBox(
                   height: 180,
                   width: 180,
                   child: CircularProgressIndicator(),

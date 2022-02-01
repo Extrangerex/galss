@@ -17,23 +17,7 @@ class RecentlyAddedModelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (create) => HomeSeekerCatalogBloc()
-                ..add(const HomeSeekerGetRecentlyAddedModelsEvent()))
-        ],
-        child: BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
-            builder: (context, state) {
-          if (state.models.isEmpty) {
-            return Container();
-          }
-
-          return Row(
-            // children: [],
-            children: state.models.map((e) => modelCard(e)).toList(),
-          );
-        }));
+    return modelCard(model);
   }
 
   Widget modelCard(User user) {
