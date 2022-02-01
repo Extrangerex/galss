@@ -64,7 +64,7 @@ class _ChatRoomState extends State<ChatRoom> {
             appBar: AppBar(
               title: title(),
             ),
-            body: Container(margin: EdgeInsets.only(top: 8.0), child: chat()),
+            body: Container(margin: const EdgeInsets.only(top: 8.0), child: chat()),
             bottomSheet: bottomSheet()));
   }
 

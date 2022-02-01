@@ -67,27 +67,10 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
                 ],
               ),
             ),
-            BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
-                builder: (context, state) {
-              if (state.models.isEmpty) {
-                return const SizedBox(
-                  height: 180,
-                  width: 180,
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              return Row(
-                children: state.models
-                    .map((e) => RecentlyAddedModelCard(
-                          model: e,
-                        ))
-                    .toList(),
-              );
-            })
             // Flexible(flex: 1, child: SizedBox(height: 100,child: RecentlyAddedModels()))
           ],
         )),
+        bottomSheet: const RecentlyAddedModels(),
       ),
     );
   }

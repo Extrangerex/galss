@@ -52,8 +52,8 @@ class UserCityChanged extends UserEvent {
   const UserCityChanged({required this.city});
 }
 
-class FetchUserDataSucceded extends UserEvent {
+class FetchUserDataSucceed extends UserEvent {
   final User user;
 
-  const FetchUserDataSucceded({required this.user});
+  const FetchUserDataSucceed({required this.user});
 }

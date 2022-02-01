@@ -13,6 +13,8 @@ import 'package:galss/pages/model_viewer_profile.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/images.dart';
+import 'package:galss/shared/recently_added_models.dart';
+import 'package:galss/shared/toggle_favorite_model.dart';
 
 class HomeSeekerCatalog extends StatefulWidget {
   const HomeSeekerCatalog({Key? key}) : super(key: key);
@@ -49,8 +51,12 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
             ),
             titleSpacing: 8,
           ),
-          body: Container(
-              margin: const EdgeInsets.only(top: 8), child: _models()),
+          body: Column(
+            children: [
+              Theme(data: ThemeData.dark(), child: const RecentlyAddedModels()),
+              _models(),
+            ],
+          ),
         ),
       ),
     );
@@ -102,8 +108,10 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
 
                 return InkWell(
                   onTap: () {
-                    locator<NavigationService>().navigatorKey.currentState?.push(
-                        MaterialPageRoute(
+                    locator<NavigationService>()
+                        .navigatorKey
+                        .currentState
+                        ?.push(MaterialPageRoute(
                             builder: (builder) =>
                                 ModelViewerProfile(userModel: item)));
                   },
@@ -128,10 +136,9 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                         child: ListTile(
                           title: Text("${item.model?.fullName}"),
                           isThreeLine: true,
-                          trailing: IconButton(
-                              onPressed: () {},
-                              icon: const FaIcon(FontAwesomeIcons.heart)),
+                          trailing: ToggleFavoriteModel(model: item),
                           subtitle: Column(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("${item.currentLocation?.name}"),

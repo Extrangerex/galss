@@ -5,6 +5,7 @@ import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_event.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_state.dart';
 import 'package:galss/main.dart';
+import 'package:galss/models/api_user_favorite.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/http_service.dart';
@@ -13,9 +14,11 @@ class HomeSeekerCatalogBloc
     extends Bloc<HomeSeekerCatalogEvent, HomeSeekerCatalogState> {
   HomeSeekerCatalogBloc() : super(const HomeSeekerCatalogState()) {
     on<HomeSeekerCatalogGetModelsEvent>(_fetchCatalogModels);
+    on<HomeSeekerGetFavoritesEvent>(_fetchFavoriteModels);
     on<HomeSeekerFavModelClicked>(_toggleRequestFavModel);
     on<HomeSeekerGetCloseMeEvent>(_fetchCloseMeModels);
     on<HomeSeekerSearchFieldChanged>(_searchModels);
+    on<HomeSeekerGetRecentlyAddedModelsEvent>(_fetchRecentModels);
   }
 
   FutureOr<void> _fetchCatalogModels(HomeSeekerCatalogGetModelsEvent event,
@@ -38,8 +41,7 @@ class HomeSeekerCatalogBloc
     }
   }
 
-
-  FutureOr<void> _fetchRecentModels(HomeSeekerCatalogGetModelsEvent event,
+  FutureOr<void> _fetchRecentModels(HomeSeekerGetRecentlyAddedModelsEvent event,
       Emitter<HomeSeekerCatalogState> emit) async {
     emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
 
@@ -51,8 +53,8 @@ class HomeSeekerCatalogBloc
           .then((value) => List.from(value))
           .then((value) => value.map((e) => User.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
-          models: value,
-          fetchModelStatus: const ApiFetchSuccededStatus())));
+              models: value,
+              fetchModelStatus: const ApiFetchSuccededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -70,7 +72,7 @@ class HomeSeekerCatalogBloc
         await locator<HttpService>()
             .http
             .delete(
-                '${HttpService.apiUrl}/Favorites/${userAuth.userId}/${event.model.id}')
+                '${HttpService.apiUrl}/User/Favorites/${userAuth.userId}/${event.model.id}')
             .then((value) => value.data)
             .then((value) => emit(state.copyWith(
                 requestToggleModelStatus: const ApiFetchSuccededStatus())));
@@ -79,11 +81,15 @@ class HomeSeekerCatalogBloc
       await locator<HttpService>()
           .http
           .post(
-              '${HttpService.apiUrl}/Favorites/${userAuth.userId}/${event.model.id}')
+              '${HttpService.apiUrl}/User/Favorites/${userAuth.userId}/${event.model.id}')
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
               requestToggleModelStatus: const ApiFetchSuccededStatus())));
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(
+          fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
   }
 
   FutureOr<void> _fetchCloseMeModels(HomeSeekerGetCloseMeEvent event,
@@ -108,29 +114,30 @@ class HomeSeekerCatalogBloc
     }
   }
 
-
-  FutureOr<void> _fetchFavoriteModels(HomeSeekerGetCloseMeEvent event,
+  FutureOr<void> _fetchFavoriteModels(HomeSeekerGetFavoritesEvent event,
       Emitter<HomeSeekerCatalogState> emit) async {
-    emit(state.copyWith(fetchModelStatus: const ApiFetchingStatus()));
+    emit(state.copyWith(
+        fetchModelStatus: const ApiFetchingStatus(),
+        requestToggleModelStatus: const ApiFetchInitialStatus()));
 
     try {
       final userData = await locator<AuthService>().authData;
+
 
       await locator<HttpService>()
           .http
           .get("${HttpService.apiUrl}/User/Favorites/${userData.userId}")
           .then((value) => value.data)
           .then((value) => List.from(value))
-          .then((value) => value.map((e) => User.fromJson(e)).toList())
+          .then((value) => value.map((e) => UserFavorite.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
-          models: value,
-          fetchModelStatus: const ApiFetchSuccededStatus())));
+              favorites: value,
+              fetchModelStatus: const ApiFetchSuccededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
     }
   }
-
 
   FutureOr<void> _fetchLikeModels(HomeSeekerGetCloseMeEvent event,
       Emitter<HomeSeekerCatalogState> emit) async {
@@ -146,8 +153,8 @@ class HomeSeekerCatalogBloc
           .then((value) => List.from(value))
           .then((value) => value.map((e) => User.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
-          models: value,
-          fetchModelStatus: const ApiFetchSuccededStatus())));
+              models: value,
+              fetchModelStatus: const ApiFetchSuccededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
