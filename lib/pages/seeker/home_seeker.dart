@@ -9,9 +9,12 @@ import 'package:galss/pages/seeker/home_seeker_close_me.dart';
 import 'package:galss/pages/seeker/home_seeker_connections.dart';
 import 'package:galss/pages/seeker/home_seeker_dashboard.dart';
 import 'package:galss/pages/seeker/home_seeker_profile.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/drawer_list_item.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../main.dart';
 
 class HomeSeeker extends StatefulWidget {
   const HomeSeeker({Key? key}) : super(key: key);
@@ -100,7 +103,16 @@ class _HomeSeekerState extends State<HomeSeeker> {
             backgroundColor: Colors.transparent,
             elevation: 1,
             actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.chat))
+              IconButton(
+                  onPressed: () {
+                    locator<NavigationService>()
+                        .navigatorKey
+                        .currentState
+                        ?.push(MaterialPageRoute(
+                            builder: (builder) =>
+                                const HomeSeekerMyConnections()));
+                  },
+                  icon: const Icon(Icons.chat))
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

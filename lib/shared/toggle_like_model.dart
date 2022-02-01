@@ -6,25 +6,24 @@ import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_bloc.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_event.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_state.dart';
 import 'package:galss/models/api_user_favorite.dart';
+import 'package:galss/models/api_user_like.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/theme/variables.dart';
 
-class ToggleFavoriteModel extends StatelessWidget {
+class ToggleLikeModel extends StatelessWidget {
   final User model;
   final Function()? afterToggle;
 
-  const ToggleFavoriteModel({Key? key, this.afterToggle, required this.model})
+  const ToggleLikeModel({Key? key, required this.model, this.afterToggle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // return const SizedBox.shrink();
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
             create: (context) => HomeSeekerCatalogBloc()
-              ..add(const HomeSeekerGetFavoritesEvent()))
+              ..add(const HomeSeekerGetLikedModelsEvent()))
       ],
       child: BlocListener<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
         listener: (context, state) {
@@ -32,7 +31,7 @@ class ToggleFavoriteModel extends StatelessWidget {
           if (state.requestToggleModelStatus is ApiFetchSuccededStatus) {
             context
                 .read<HomeSeekerCatalogBloc>()
-                .add(const HomeSeekerGetFavoritesEvent());
+                .add(const HomeSeekerGetLikedModelsEvent());
 
             if (afterToggle != null) {
               afterToggle!();
@@ -41,13 +40,13 @@ class ToggleFavoriteModel extends StatelessWidget {
         },
         child: BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
           builder: (context, state) {
-            var isFavorite = false;
+            var isLiked = false;
 
-            if (state.favorites.isNotEmpty) {
-              isFavorite = state.favorites
+            if (state.likes.isNotEmpty) {
+              isLiked = state.likes
                       .singleWhere(
                         (element) => element.user?.id == model.id,
-                        orElse: () => UserFavorite(),
+                        orElse: () => UserLike(),
                       )
                       .id !=
                   null;
@@ -56,12 +55,12 @@ class ToggleFavoriteModel extends StatelessWidget {
             return IconButton(
                 onPressed: () {
                   context.read<HomeSeekerCatalogBloc>().add(
-                      HomeSeekerFavModelClicked(
-                          model: model, isFavorite: isFavorite));
+                      HomeSeekerLikeModelClicked(
+                          model: model, isLiked: isLiked));
                 },
                 icon: FaIcon(
-                  FontAwesomeIcons.star,
-                  color: isFavorite ? primaryColor : Colors.black12,
+                  FontAwesomeIcons.solidHeart,
+                  color: isLiked ? primaryColor : Colors.black12,
                 ));
           },
         ),

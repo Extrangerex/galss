@@ -10,9 +10,14 @@ import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
 import 'package:galss/models/photo.dart';
 import 'package:galss/models/user.dart';
+import 'package:galss/pages/seeker/home_seeker_connections.dart';
 import 'package:galss/services/http_service.dart';
+import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/toggle_favorite_model.dart';
+import 'package:galss/shared/toggle_like_model.dart';
 
 class ModelViewerProfile extends StatefulWidget {
   final User userModel;
@@ -38,7 +43,7 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
               ..add(FetchListCities(countryId: widget.userModel.country!.id!))),
         BlocProvider(
             create: (create) =>
-                UserBloc()..add(FetchUserData(userId: widget.userModel.id)))
+                UserBloc()..add(FetchUserData(userId: widget.userModel.id))),
       ],
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -87,22 +92,41 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
               data: Theme.of(context).copyWith(
                   iconTheme:
                       IconThemeData(color: Theme.of(context).primaryColor)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      iconSize: 34,
-                      icon: const Icon(FontAwesomeIcons.heart)),
-                  IconButton(
-                      onPressed: () {},
-                      iconSize: 34,
-                      icon: const Icon(FontAwesomeIcons.star)),
-                  IconButton(
-                      onPressed: () {},
-                      iconSize: 34,
-                      icon: const Icon(Icons.chat)),
-                ],
+              child: BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ToggleLikeModel(
+                        model: widget.userModel,
+                        afterToggle: () {
+                          context
+                              .read<UserBloc>()
+                              .add(FetchUserData(userId: widget.userModel.id));
+                        },
+                      ),
+                      ToggleFavoriteModel(
+                        model: widget.userModel,
+                        afterToggle: () {
+                          context
+                              .read<UserBloc>()
+                              .add(FetchUserData(userId: widget.userModel.id));
+                        },
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            locator<NavigationService>()
+                                .navigatorKey
+                                .currentState
+                                ?.push(MaterialPageRoute(
+                                    builder: (builder) =>
+                                        const HomeSeekerMyConnections()));
+                          },
+                          iconSize: 34,
+                          icon: const Icon(Icons.chat)),
+                    ],
+                  );
+                },
               ),
             ),
             Column(
@@ -146,10 +170,14 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
   }
 
   Widget likesCount() {
-    var likesCount = widget.userModel.model?.likesCount ?? 0;
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        var likesCount = state.user?.model?.likesCount ?? 0;
 
-    return text("${S.current.liked_by_n_people(likesCount)}",
-        color: Colors.black);
+        return text(S.current.liked_by_n_people(likesCount),
+            color: Colors.black);
+      },
+    );
   }
 
   Widget carouselSlider() {

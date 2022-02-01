@@ -15,6 +15,7 @@ import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/images.dart';
 import 'package:galss/shared/recently_added_models.dart';
 import 'package:galss/shared/toggle_favorite_model.dart';
+import 'package:galss/shared/toggle_like_model.dart';
 
 class HomeSeekerCatalog extends StatefulWidget {
   const HomeSeekerCatalog({Key? key}) : super(key: key);
@@ -136,7 +137,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                         child: ListTile(
                           title: Text("${item.model?.fullName}"),
                           isThreeLine: true,
-                          trailing: ToggleFavoriteModel(model: item),
+                          trailing: ToggleLikeModel(model: item),
                           subtitle: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
