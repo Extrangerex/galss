@@ -86,6 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sign_up_form_for_galss_models":
             MessageLookupByLibrary.simpleMessage(""),
         "signin_form": MessageLookupByLibrary.simpleMessage(""),
+        "switch_anonymous_mode":
+            MessageLookupByLibrary.simpleMessage("Switch anonymous mode"),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city": MessageLookupByLibrary.simpleMessage("Unknown city"),

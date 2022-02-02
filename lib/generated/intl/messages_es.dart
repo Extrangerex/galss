@@ -108,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Formulario de Solicitud Para Modelos de Galss"),
         "signin_form": MessageLookupByLibrary.simpleMessage(
             "Formulario de Inicio de Sesión"),
+        "switch_anonymous_mode":
+            MessageLookupByLibrary.simpleMessage("Poner perfil anónimo"),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city":

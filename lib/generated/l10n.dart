@@ -629,6 +629,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Switch anonymous mode`
+  String get switch_anonymous_mode {
+    return Intl.message(
+      'Switch anonymous mode',
+      name: 'switch_anonymous_mode',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -38,7 +38,10 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
                 height: 10,
               ),
               displayName(),
+              profileStatusText(),
               userData(),
+              switchAnonymous(),
+              editProfileBtn()
             ],
           ),
         ),
@@ -81,38 +84,29 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
     );
   }
 
+  Widget switchAnonymous() {
+    return SwitchListTile(
+      value: false,
+      onChanged: (value) {},
+      title: Text(S.current.switch_anonymous_mode),
+    );
+  }
+
   Widget editProfileBtn() {
     return ElevatedButton(
         onPressed: () {}, child: Text(S.current.edit_profile));
   }
 
-  //
-  // Widget city() {
-  //   return BlocBuilder<UserBloc, UserState>(
-  //     builder: (context, userState) => BlocProvider(
-  //       create: (create) => CountryBloc()
-  //         ..add(FetchListCities(countryId: userState.user!.country!.id!)),
-  //       child:
-  //           BlocBuilder<CountryBloc, CountryState>(builder: (context, state) {
-  //         var cityId = userState.user?.seeker?.city;
-  //
-  //         if (state.cities == null) {
-  //           return Text(S.current.unknown_city);
-  //         }
-  //
-  //         if (state.cities.isEmpty || cityId == null) {
-  //           return Text(
-  //             S.current.unknown_city,
-  //             style: Theme.of(context).textTheme.caption,
-  //           );
-  //         }
-  //
-  //         return Text("${state.findCityById(cityId).name}",
-  //             style: Theme.of(context).textTheme.caption);
-  //       }),
-  //     ),
-  //   );
-  // }
+  Widget profileStatusText() {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8.0),
+          child: Text(state.user?.profileStatus ?? S.current.not_specified),
+        );
+      },
+    );
+  }
 
   Widget userData() {
     return BlocBuilder<UserBloc, UserState>(
@@ -123,6 +117,7 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
             child: Column(
               children: [
                 // city(),
+                Text("${state.user?.currentLocation?.name}"),
                 Text("${state.user?.country?.name}"),
               ],
             ),
