@@ -43,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("País"),
         "current_location":
             MessageLookupByLibrary.simpleMessage("Ubicación actúal"),
+        "edit_profile":
+            MessageLookupByLibrary.simpleMessage("Editar tu perfil"),
         "editar_mi_perfil":
             MessageLookupByLibrary.simpleMessage("Editar mi Perfil"),
         "error_field_required":

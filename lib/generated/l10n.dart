@@ -619,6 +619,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Edit your profile`
+  String get edit_profile {
+    return Intl.message(
+      'Edit your profile',
+      name: 'edit_profile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

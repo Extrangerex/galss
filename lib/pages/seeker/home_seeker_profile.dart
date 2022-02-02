@@ -39,7 +39,6 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
               ),
               displayName(),
               userData(),
-
             ],
           ),
         ),
@@ -82,32 +81,38 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
     );
   }
 
-  Widget city() {
-    return BlocBuilder<UserBloc, UserState>(
-      builder: (context, userState) => BlocProvider(
-        create: (create) => CountryBloc()
-          ..add(FetchListCities(countryId: userState.user!.country!.id!)),
-        child:
-            BlocBuilder<CountryBloc, CountryState>(builder: (context, state) {
-          var cityId = userState.user?.seeker?.city;
-
-          if (state.cities == null) {
-            return Text(S.current.unknown_city);
-          }
-
-          if (state.cities.isEmpty || cityId == null) {
-            return Text(
-              S.current.unknown_city,
-              style: Theme.of(context).textTheme.caption,
-            );
-          }
-
-          return Text("${state.findCityById(cityId).name}",
-              style: Theme.of(context).textTheme.caption);
-        }),
-      ),
-    );
+  Widget editProfileBtn() {
+    return ElevatedButton(
+        onPressed: () {}, child: Text(S.current.edit_profile));
   }
+
+  //
+  // Widget city() {
+  //   return BlocBuilder<UserBloc, UserState>(
+  //     builder: (context, userState) => BlocProvider(
+  //       create: (create) => CountryBloc()
+  //         ..add(FetchListCities(countryId: userState.user!.country!.id!)),
+  //       child:
+  //           BlocBuilder<CountryBloc, CountryState>(builder: (context, state) {
+  //         var cityId = userState.user?.seeker?.city;
+  //
+  //         if (state.cities == null) {
+  //           return Text(S.current.unknown_city);
+  //         }
+  //
+  //         if (state.cities.isEmpty || cityId == null) {
+  //           return Text(
+  //             S.current.unknown_city,
+  //             style: Theme.of(context).textTheme.caption,
+  //           );
+  //         }
+  //
+  //         return Text("${state.findCityById(cityId).name}",
+  //             style: Theme.of(context).textTheme.caption);
+  //       }),
+  //     ),
+  //   );
+  // }
 
   Widget userData() {
     return BlocBuilder<UserBloc, UserState>(

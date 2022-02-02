@@ -39,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "congrats": MessageLookupByLibrary.simpleMessage(""),
         "country": MessageLookupByLibrary.simpleMessage(""),
         "current_location": MessageLookupByLibrary.simpleMessage(""),
+        "edit_profile":
+            MessageLookupByLibrary.simpleMessage("Edit your profile"),
         "editar_mi_perfil": MessageLookupByLibrary.simpleMessage(""),
         "error_field_required": MessageLookupByLibrary.simpleMessage(""),
         "error_invalid_email": MessageLookupByLibrary.simpleMessage(""),

@@ -84,5 +84,6 @@
     }
     }
   },
-  "unknown_city": "Ciudad desconocida"
+  "unknown_city": "Ciudad desconocida",
+  "edit_profile": "Editar tu perfil"
 }
