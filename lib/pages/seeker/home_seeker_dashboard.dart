@@ -31,6 +31,7 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
         body: ImagedBackgroundContainer(
             child: Column(
           children: [
+            const Spacer(),
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               child: Row(

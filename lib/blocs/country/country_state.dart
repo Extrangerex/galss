@@ -13,11 +13,16 @@ class CountryState {
       this.cities = const []});
 
   City findCityById(int cityId) {
-    return cities.singleWhere((element) => element.id == cityId);
+    return cities.singleWhere(
+      (element) => element.id == cityId,
+      orElse: () => City(),
+    );
   }
 
   CountryState copyWith(
-      {List<Country>? countries, List<City>? cities, ApiFetchStatus? apiFetchStatus}) {
+      {List<Country>? countries,
+      List<City>? cities,
+      ApiFetchStatus? apiFetchStatus}) {
     return CountryState(
         countries: countries ?? this.countries,
         cities: cities ?? this.cities,

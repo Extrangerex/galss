@@ -82,7 +82,7 @@ class RecentlyAddedModels extends StatelessWidget {
                     "${HttpService.apiBaseUrl}/${user.profilePhoto?.urlPath}",
                 fit: BoxFit.cover,
                 errorWidget: (context, url, error) =>
-                    Image(image: placeHolderProfileImg),
+                    Image(image: profilePlaceholderImage),
               )),
           Positioned(
             child: Align(

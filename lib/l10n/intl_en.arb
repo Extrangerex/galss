@@ -82,5 +82,6 @@
     }
     }
   },
-  "unknown_city": "Unknown city"
-}
+  "unknown_city": "Unknown city",
+  "not_specified": "Not specified"
+  }

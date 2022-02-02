@@ -6,6 +6,7 @@ import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/city.dart';
+import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/country_service.dart';
 import 'package:galss/services/http_service.dart';
 
@@ -35,6 +36,8 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   FutureOr<void> _onFetchListCities(
       FetchListCities event, Emitter<CountryState> emit) async {
     emit(state.copyWith(apiFetchStatus: const ApiFetchingStatus()));
+
+    var countryId = event.countryId;
 
     try {
       await locator<HttpService>()

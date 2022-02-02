@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
 
-ImageProvider placeHolderProfileImg =
+ImageProvider profilePlaceholderImage =
     const AssetImage('assets/images/profile_avatar_placeholder_large.png');

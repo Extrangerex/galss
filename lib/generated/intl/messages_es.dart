@@ -69,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "my_profile": MessageLookupByLibrary.simpleMessage("Mi Perfil"),
         "name": MessageLookupByLibrary.simpleMessage("Nombre"),
         "nationality": MessageLookupByLibrary.simpleMessage("Nacionalidad"),
+        "not_specified":
+            MessageLookupByLibrary.simpleMessage("No especificado"),
         "oops": MessageLookupByLibrary.simpleMessage("Oops"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("Poner Perfil Anonimo"),

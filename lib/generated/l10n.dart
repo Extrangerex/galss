@@ -609,6 +609,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Not specified`
+  String get not_specified {
+    return Intl.message(
+      'Not specified',
+      name: 'not_specified',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

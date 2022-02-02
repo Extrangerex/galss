@@ -73,7 +73,7 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
                 imageUrl:
                     "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto}",
                 errorWidget: (context, url, error) =>
-                    CircleAvatar(backgroundImage: placeHolderProfileImg),
+                    CircleAvatar(backgroundImage: profilePlaceholderImage),
               ),
             ),
             title: Text("${chatFriend?.user?.seeker?.fullName}"),

@@ -134,7 +134,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                                   "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
                               fit: BoxFit.cover,
                               errorWidget: (context, url, error) => Image(
-                                image: placeHolderProfileImg,
+                                image: profilePlaceholderImage,
                                 fit: BoxFit.cover,
                               ),
                             ),

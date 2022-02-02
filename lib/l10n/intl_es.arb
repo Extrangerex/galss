@@ -61,6 +61,7 @@
       }
     }
   },
+  "not_specified": "No especificado",
   "you_talking_with_n": "Estas hablando con {targetName}...",
   "@you_talking_with_n": {
     "description": "Especificar el nombre del usuario con quien hablas",
