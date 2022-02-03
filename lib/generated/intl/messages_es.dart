@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "oops": MessageLookupByLibrary.simpleMessage("Oops"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("Poner Perfil Anonimo"),
+        "profile_status": MessageLookupByLibrary.simpleMessage("Estado"),
         "prompt_accept_terms_conditions": MessageLookupByLibrary.simpleMessage(
             "Acepto los Términos y Condiciones"),
         "prompt_all_fields_requeried": MessageLookupByLibrary.simpleMessage(

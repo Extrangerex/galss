@@ -85,5 +85,6 @@
   "unknown_city": "Unknown city",
   "not_specified": "Not specified",
   "edit_profile": "Edit your profile",
-  "switch_anonymous_mode": "Switch anonymous mode"
+  "switch_anonymous_mode": "Switch anonymous mode",
+  "profile_status": "Status"
   }

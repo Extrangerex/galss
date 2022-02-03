@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/city.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class UserEvent {
   const UserEvent();
@@ -13,6 +16,12 @@ class UserIsConnected extends UserEvent {
   const UserIsConnected({required this.authLoginData});
 }
 
+class UserAnonymousChanged extends UserEvent {
+  final bool anonymous;
+
+  UserAnonymousChanged({required this.anonymous});
+}
+
 class UserIsDisconnected extends UserEvent {}
 
 class FetchUserData extends UserEvent {
@@ -21,6 +30,11 @@ class FetchUserData extends UserEvent {
   const FetchUserData({this.userId});
 }
 
+class UserProfilePhotoChanged extends UserEvent {
+  final XFile imageToUpload;
+
+  const UserProfilePhotoChanged({required this.imageToUpload});
+}
 
 class UserModelNameChanged extends UserEvent {
   final String name;

@@ -86,6 +86,6 @@
   },
   "unknown_city": "Ciudad desconocida",
   "edit_profile": "Editar tu perfil",
-  "switch_anonymous_mode": "Poner perfil anónimo"
-
+  "switch_anonymous_mode": "Poner perfil anónimo",
+  "profile_status": "Estado"
 }

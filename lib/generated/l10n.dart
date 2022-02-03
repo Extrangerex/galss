@@ -639,6 +639,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Status`
+  String get profile_status {
+    return Intl.message(
+      'Status',
+      name: 'profile_status',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
