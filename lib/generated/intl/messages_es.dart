@@ -33,9 +33,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "action_sign_in_short":
             MessageLookupByLibrary.simpleMessage("Ingresar"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Agregar una foto"),
+        "add_your_new_state":
+            MessageLookupByLibrary.simpleMessage("Añade tu estado"),
         "birthdate":
             MessageLookupByLibrary.simpleMessage("Fecha de Nacimiento"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
+        "change_current_location":
+            MessageLookupByLibrary.simpleMessage("Cambiar tu ubicación actual"),
         "choose_your_subscription":
             MessageLookupByLibrary.simpleMessage("Elige tu plan"),
         "close_to_me": MessageLookupByLibrary.simpleMessage("Cerca de Mi"),
@@ -74,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_specified":
             MessageLookupByLibrary.simpleMessage("No especificado"),
         "oops": MessageLookupByLibrary.simpleMessage("Oops"),
+        "pick_a_city":
+            MessageLookupByLibrary.simpleMessage("Selecciona una ciudad"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("Poner Perfil Anonimo"),
         "profile_status": MessageLookupByLibrary.simpleMessage("Estado"),
@@ -102,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Añadidas Recientemente"),
         "repeat_password":
             MessageLookupByLibrary.simpleMessage("Repetir contraseña"),
+        "save": MessageLookupByLibrary.simpleMessage("Guardar"),
         "search": MessageLookupByLibrary.simpleMessage("Buscar"),
         "seeker": MessageLookupByLibrary.simpleMessage("Buscador"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Registrarse"),

@@ -86,5 +86,10 @@
   "not_specified": "Not specified",
   "edit_profile": "Edit your profile",
   "switch_anonymous_mode": "Switch anonymous mode",
-  "profile_status": "Status"
+  "profile_status": "Status",
+  "add_your_new_state": "Add a new profile status",
+  "save": "Save",
+  "cancel": "Cancel",
+  "change_current_location": "Change current location",
+  "pick_a_city": "Pick city"
   }

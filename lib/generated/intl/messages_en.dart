@@ -31,9 +31,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "action_sign_in": MessageLookupByLibrary.simpleMessage(""),
         "action_sign_in_short": MessageLookupByLibrary.simpleMessage(""),
         "add_photo": MessageLookupByLibrary.simpleMessage(""),
+        "add_your_new_state":
+            MessageLookupByLibrary.simpleMessage("Add a new profile status"),
         "annual": MessageLookupByLibrary.simpleMessage(""),
         "birthdate": MessageLookupByLibrary.simpleMessage(""),
-        "cancel": MessageLookupByLibrary.simpleMessage(""),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "change_current_location":
+            MessageLookupByLibrary.simpleMessage("Change current location"),
         "choose_your_subscription": MessageLookupByLibrary.simpleMessage(""),
         "close_to_me": MessageLookupByLibrary.simpleMessage(""),
         "congrats": MessageLookupByLibrary.simpleMessage(""),
@@ -63,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationality": MessageLookupByLibrary.simpleMessage(""),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not specified"),
         "oops": MessageLookupByLibrary.simpleMessage(""),
+        "pick_a_city": MessageLookupByLibrary.simpleMessage("Pick city"),
         "poner_perfil_anonimo": MessageLookupByLibrary.simpleMessage(""),
         "profile_status": MessageLookupByLibrary.simpleMessage("Status"),
         "prompt_accept_terms_conditions":
@@ -81,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prompt_terms_conditions": MessageLookupByLibrary.simpleMessage(""),
         "recently_added": MessageLookupByLibrary.simpleMessage(""),
         "repeat_password": MessageLookupByLibrary.simpleMessage(""),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage(""),
         "seeker": MessageLookupByLibrary.simpleMessage(""),
         "sign_up": MessageLookupByLibrary.simpleMessage(""),

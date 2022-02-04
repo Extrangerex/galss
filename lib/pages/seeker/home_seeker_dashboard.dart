@@ -10,7 +10,18 @@ import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/recently_added_models.dart';
 
 class HomeSeekerDashboard extends StatefulWidget {
-  const HomeSeekerDashboard({Key? key}) : super(key: key);
+  final Function() onMyProfileClicked;
+  final Function() onMyCatalogClicked;
+  final Function() onMyConnectionsClicked;
+  final Function() onCloseMeClicked;
+
+  const HomeSeekerDashboard(
+      {Key? key,
+      required this.onMyProfileClicked,
+      required this.onMyCatalogClicked,
+      required this.onMyConnectionsClicked,
+      required this.onCloseMeClicked})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeSeekerDashboardState();
@@ -39,13 +50,20 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
                 children: [
                   _btnIconLabel(
                       child: ImageBtn(
-                          image:
-                              iconImg(customIconImg: CustomIconImg.icMiPerfil)),
+                        image: iconImg(customIconImg: CustomIconImg.icMiPerfil),
+                        onPressed: () {
+                          widget.onMyProfileClicked();
+                        },
+                      ),
                       label: Text(S.current.my_profile)),
                   _btnIconLabel(
                       child: ImageBtn(
-                          image: iconImg(
-                              customIconImg: CustomIconImg.icCercaDeMi)),
+                        image:
+                            iconImg(customIconImg: CustomIconImg.icCercaDeMi),
+                        onPressed: () {
+                          widget.onCloseMeClicked();
+                        },
+                      ),
                       label: Text(S.current.close_to_me))
                 ],
               ),
@@ -57,13 +75,20 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
                 children: [
                   _btnIconLabel(
                       child: ImageBtn(
-                          image:
-                              iconImg(customIconImg: CustomIconImg.icCatalogo)),
+                        image: iconImg(customIconImg: CustomIconImg.icCatalogo),
+                        onPressed: () {
+                          widget.onMyCatalogClicked();
+                        },
+                      ),
                       label: Text(S.current.model_catalog)),
                   _btnIconLabel(
                       child: ImageBtn(
-                          image: iconImg(
-                              customIconImg: CustomIconImg.icConexiones)),
+                        image:
+                            iconImg(customIconImg: CustomIconImg.icConexiones),
+                        onPressed: () {
+                          widget.onMyConnectionsClicked();
+                        },
+                      ),
                       label: Text(S.current.my_connections))
                 ],
               ),

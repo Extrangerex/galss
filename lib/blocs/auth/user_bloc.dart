@@ -29,6 +29,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         }))));
 
     on<UserProfilePhotoChanged>(_updateProfilePhoto);
+
+    on<UserProfileStatusChanged>(_profileStatusChanged);
+
+    on<UserCurrentLocationChanged>(_currentLocationChanged);
   }
 
   FutureOr<void> _fetchUserData(
@@ -63,8 +67,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await locator<AuthService>()
           .repository
           .toggleAnonymous(userId!, isAnonymous: event.anonymous)
-          .then((value) => emit(
-              state.copyWith(actionFetchStatus: const ApiFetchSuccededStatus())))
+          .then((value) => emit(state.copyWith(
+              actionFetchStatus: const ApiFetchSuccededStatus())))
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
@@ -94,6 +98,52 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
+    } catch (e) {
+      emit(state.copyWith(
+          actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+  FutureOr<void> _profileStatusChanged(
+      UserProfileStatusChanged event, Emitter<UserState> emit) async {
+    emit(state.copyWith(actionFetchStatus: const ApiFetchingStatus()));
+
+    try {
+      var userId = (await locator<AuthService>().authData).userId;
+
+      await locator<AuthService>()
+          .repository
+          .changeProfileStatus(userId!, event.profileStatus)
+          .then((value) => value.data)
+          .then((value) => emit(state.copyWith(
+              actionFetchStatus: const ApiFetchSuccededStatus())))
+          .catchError((onError) => emit(state.copyWith(
+              actionFetchStatus:
+                  ApiFetchFailedStatus(exception: Exception(onError)))));
+    } catch (e) {
+      emit(state.copyWith(
+          actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+  FutureOr<void> _currentLocationChanged(
+      UserCurrentLocationChanged event, Emitter<UserState> emit) async {
+
+
+    emit(state.copyWith(actionFetchStatus: const ApiFetchingStatus()));
+
+    try {
+      var userId = (await locator<AuthService>().authData).userId;
+
+      await locator<AuthService>()
+          .repository
+          .changeCurrentLocation(userId!, event.city, event.user)
+          .then((value) => value.data)
+          .then((value) => emit(state.copyWith(
+          actionFetchStatus: const ApiFetchSuccededStatus())))
+          .catchError((onError) => emit(state.copyWith(
+          actionFetchStatus:
+          ApiFetchFailedStatus(exception: Exception(onError)))));
     } catch (e) {
       emit(state.copyWith(
           actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));

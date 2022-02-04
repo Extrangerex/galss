@@ -80,10 +80,10 @@ class S {
     );
   }
 
-  /// ``
+  /// `Cancel`
   String get cancel {
     return Intl.message(
-      '',
+      'Cancel',
       name: 'cancel',
       desc: '',
       args: [],
@@ -645,6 +645,46 @@ class S {
     return Intl.message(
       'Status',
       name: 'profile_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a new profile status`
+  String get add_your_new_state {
+    return Intl.message(
+      'Add a new profile status',
+      name: 'add_your_new_state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change current location`
+  String get change_current_location {
+    return Intl.message(
+      'Change current location',
+      name: 'change_current_location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pick city`
+  String get pick_a_city {
+    return Intl.message(
+      'Pick city',
+      name: 'pick_a_city',
       desc: '',
       args: [],
     );

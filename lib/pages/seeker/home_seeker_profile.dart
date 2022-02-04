@@ -5,10 +5,10 @@ import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
-import 'package:galss/blocs/country/country_bloc.dart';
-import 'package:galss/blocs/country/country_event.dart';
-import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/modals/edit_current_location_modal.dart';
+import 'package:galss/modals/edit_profile_status_modal.dart';
+import 'package:galss/models/country.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/shared/images.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,7 +33,7 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
         data: ThemeData.light(),
         child: Scaffold(
           backgroundColor: backgroundColor,
-          body: Column(
+          body: ListView(
             children: [
               profilePhoto(),
               const SizedBox(
@@ -43,7 +43,6 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
               profileStatusText(),
               userData(),
               switchAnonymous(),
-              editProfileBtn()
             ],
           ),
         ),
@@ -109,23 +108,41 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
     );
   }
 
-  Widget editProfileBtn() {
-    return ElevatedButton(
-        onPressed: () {}, child: Text(S.current.edit_profile));
-  }
-
   Widget profileStatusText() {
+    handleEditProfileStatus(BuildContext context) {
+      showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (builder) => const EditProfileStatusModal()).then((_) {
+        context.read<UserBloc>().add(const FetchUserData());
+      });
+    }
+
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return ListTile(
+          onTap: () {
+            handleEditProfileStatus(context);
+          },
           title: Text(S.current.profile_status),
           subtitle: Text(state.user?.profileStatus ?? S.current.not_specified),
+          trailing: const Icon(Icons.edit),
         );
       },
     );
   }
 
   Widget userData() {
+    handleEditCurrentLocation(BuildContext context, Country country) {
+      showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (builder) => EditCurrentLocationModal(country: country))
+          .then((_) {
+        context.read<UserBloc>().add(const FetchUserData());
+      });
+    }
+
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return SizedBox(
@@ -136,6 +153,10 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
                   title: Text(S.current.current_location),
                   subtitle: Text(state.user?.currentLocation?.name ??
                       S.current.not_specified),
+                  trailing: const Icon(Icons.edit),
+                  onTap: () {
+                    handleEditCurrentLocation(context, state.user!.country!);
+                  },
                 ),
                 ListTile(
                   title: Text(S.current.country),

@@ -24,14 +24,30 @@ class HomeSeeker extends StatefulWidget {
 }
 
 class _HomeSeekerState extends State<HomeSeeker> {
+  Widget handleHomeSeekerDashboard(BuildContext context) {
+    return HomeSeekerDashboard(onMyProfileClicked: () {
+      context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+          newIndex: 1, newWidget: HomeSeekerProfile()));
+    }, onMyCatalogClicked: () {
+      context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+          newIndex: 3, newWidget: HomeSeekerCatalog()));
+    }, onMyConnectionsClicked: () {
+      context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+          newIndex: 4, newWidget: HomeSeekerMyConnections()));
+    }, onCloseMeClicked: () {
+      context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+          newIndex: 2, newWidget: HomeSeekerCloseMe()));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
             create: (context) => DrawerBloc()
-              ..add(const DrawerWidgetChangedEvent(
-                  newIndex: 0, newWidget: HomeSeekerDashboard())))
+              ..add( DrawerWidgetChangedEvent(
+                  newIndex: 0, newWidget: handleHomeSeekerDashboard(context))))
       ],
       child: Scaffold(
           drawer: Drawer(
@@ -43,8 +59,9 @@ class _HomeSeekerState extends State<HomeSeeker> {
                       label: S.current.home,
                       onPressed: () {
                         context.read<DrawerBloc>().add(
-                            const DrawerWidgetChangedEvent(
-                                newIndex: 0, newWidget: HomeSeekerDashboard()));
+                             DrawerWidgetChangedEvent(
+                                newIndex: 0, newWidget: handleHomeSeekerDashboard(
+                                 context)));
                       },
                       selected: state.drawerIndex == 0,
                     ),

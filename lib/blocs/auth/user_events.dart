@@ -66,6 +66,13 @@ class UserCityChanged extends UserEvent {
   const UserCityChanged({required this.city});
 }
 
+class UserCurrentLocationChanged extends UserEvent {
+  final City city;
+  final User user;
+
+  const UserCurrentLocationChanged({required this.city, required this.user});
+}
+
 class FetchUserDataSucceed extends UserEvent {
   final User user;
 

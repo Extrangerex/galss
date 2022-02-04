@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_message.dart';
+import 'package:galss/models/city.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/services/http_service.dart';
 
@@ -26,6 +27,19 @@ class AuthRepository {
   Future<Response<dynamic>> changeProfilePhoto(int userId, String photo) {
     return http.post("${HttpService.apiUrl}/User/Photos/$userId",
         data: {"data": photo});
+  }
+
+  Future<Response<dynamic>> changeProfileStatus(
+      int userId, String profileStatus) {
+    return http
+        .put("${HttpService.apiUrl}/User/ProfileStatus/$userId/$profileStatus");
+  }
+
+  Future<Response<dynamic>> changeCurrentLocation(
+      int userId, City targetCity, User user) {
+    user.currentLocation = targetCity;
+
+    return http.put("${HttpService.apiUrl}/User/$userId", data: user.toJson());
   }
 
   Future<User> getUserInfo(int userId) async {

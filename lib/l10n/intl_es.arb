@@ -87,5 +87,10 @@
   "unknown_city": "Ciudad desconocida",
   "edit_profile": "Editar tu perfil",
   "switch_anonymous_mode": "Poner perfil anónimo",
-  "profile_status": "Estado"
+  "profile_status": "Estado",
+  "add_your_new_state": "Añade tu estado",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "change_current_location": "Cambiar tu ubicación actual",
+    "pick_a_city": "Selecciona una ciudad"
 }
