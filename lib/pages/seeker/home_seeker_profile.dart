@@ -7,6 +7,7 @@ import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/modals/edit_current_location_modal.dart';
+import 'package:galss/modals/edit_name_modal.dart';
 import 'package:galss/modals/edit_profile_status_modal.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/services/http_service.dart';
@@ -171,9 +172,20 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
   }
 
   Widget displayName() {
+    handleEditNameBtn(BuildContext context) {
+      showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (builder) => const EditNameModal()).then((_) {
+        context.read<UserBloc>().add(const FetchUserData());
+      });
+    }
+
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return ListTile(
+            onTap: () => handleEditNameBtn(context),
+            trailing: const Icon(Icons.edit),
             title: Text(S.current.name),
             subtitle: Text("${state.user?.fullName}"));
       },

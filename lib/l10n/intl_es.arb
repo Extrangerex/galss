@@ -92,5 +92,7 @@
   "save": "Guardar",
   "cancel": "Cancelar",
   "change_current_location": "Cambiar tu ubicación actual",
-    "pick_a_city": "Selecciona una ciudad"
+    "pick_a_city": "Selecciona una ciudad",
+      "add_new_name": "Agrega un nuevo nombre"
+
 }

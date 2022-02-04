@@ -42,6 +42,13 @@ class UserModelNameChanged extends UserEvent {
   const UserModelNameChanged({required this.name});
 }
 
+class UserNameChanged extends UserEvent {
+  final String name;
+  final User user;
+
+  const UserNameChanged({required this.name, required this.user});
+}
+
 class UserProfileStatusChanged extends UserEvent {
   final String profileStatus;
 

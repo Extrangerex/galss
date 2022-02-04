@@ -91,5 +91,6 @@
   "save": "Save",
   "cancel": "Cancel",
   "change_current_location": "Change current location",
-  "pick_a_city": "Pick city"
+  "pick_a_city": "Pick city",
+  "add_new_name": "Add a new name"
   }

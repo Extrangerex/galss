@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-abstract class DrawerEvent {
-  const DrawerEvent();
+abstract class NavigationEvent {
+  const NavigationEvent();
 }
 
-class DrawerWidgetChangedEvent extends DrawerEvent {
+class DrawerWidgetChangedEvent extends NavigationEvent {
   final Widget newWidget;
   final int newIndex;
 

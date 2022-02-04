@@ -689,6 +689,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Add a new name`
+  String get add_new_name {
+    return Intl.message(
+      'Add a new name',
+      name: 'add_new_name',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

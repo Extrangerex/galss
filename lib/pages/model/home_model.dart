@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:galss/blocs/drawer/drawer_bloc.dart';
-import 'package:galss/blocs/drawer/drawer_event.dart';
-import 'package:galss/blocs/drawer/drawer_state.dart';
 import 'package:galss/blocs/home_model/home_model_bloc.dart';
+import 'package:galss/blocs/navigation/navigation_bloc.dart';
+import 'package:galss/blocs/navigation/navigation_event.dart';
+import 'package:galss/blocs/navigation/navigation_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/pages/model/home_model_connections.dart';
 import 'package:galss/pages/model/home_model_landing.dart';
@@ -25,7 +25,7 @@ class _HomeModelState extends State<HomeModel> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => DrawerBloc()
+            create: (context) => NavigationBloc()
               ..add(const DrawerWidgetChangedEvent(
                   newIndex: 0, newWidget: HomeModelLanding()))),
         BlocProvider(
@@ -34,13 +34,13 @@ class _HomeModelState extends State<HomeModel> {
       ],
       child: Scaffold(
         drawer: _drawer(),
-        body: BlocBuilder<DrawerBloc, DrawerState>(
+        body: BlocBuilder<NavigationBloc, NavigationState>(
           builder: (context, state) {
-            if (state.drawerWidget == null) {
+            if (state.navigationWidget == null) {
               return const CircularProgressIndicator();
             }
 
-            return state.drawerWidget!;
+            return state.navigationWidget!;
           },
         ),
         appBar: AppBar(
@@ -58,9 +58,9 @@ class _HomeModelState extends State<HomeModel> {
 
   Widget _drawer() {
     return Drawer(
-      child: BlocBuilder<DrawerBloc, DrawerState>(
+      child: BlocBuilder<NavigationBloc, NavigationState>(
         builder: (context, state) {
-          var index = state.drawerIndex;
+          var index = state.navigationIndex;
 
           return ListView(
             children: [
@@ -68,14 +68,14 @@ class _HomeModelState extends State<HomeModel> {
                 label: S.current.home,
                 selected: index == 0,
                 onPressed: () {
-                  context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+                  context.read<NavigationBloc>().add(const DrawerWidgetChangedEvent(
                       newIndex: 0, newWidget: HomeModelLanding()));
                 },
               ),
               DrawerListItem(
                 label: S.current.my_profile,
                 onPressed: () {
-                  context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+                  context.read<NavigationBloc>().add(const DrawerWidgetChangedEvent(
                       newIndex: 1, newWidget: HomeModelProfile()));
                 },
                 selected: index == 1,
@@ -83,7 +83,7 @@ class _HomeModelState extends State<HomeModel> {
               DrawerListItem(
                 label: S.current.my_connections,
                 onPressed: () {
-                  context.read<DrawerBloc>().add(const DrawerWidgetChangedEvent(
+                  context.read<NavigationBloc>().add(const DrawerWidgetChangedEvent(
                       newIndex: 1, newWidget: HomeModelConnections()));
                 },
                 selected: index == 2,

@@ -33,6 +33,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserProfileStatusChanged>(_profileStatusChanged);
 
     on<UserCurrentLocationChanged>(_currentLocationChanged);
+
+    on<UserNameChanged>(_userNameChanged);
   }
 
   FutureOr<void> _fetchUserData(
@@ -128,8 +130,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   FutureOr<void> _currentLocationChanged(
       UserCurrentLocationChanged event, Emitter<UserState> emit) async {
-
-
     emit(state.copyWith(actionFetchStatus: const ApiFetchingStatus()));
 
     try {
@@ -140,10 +140,32 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .changeCurrentLocation(userId!, event.city, event.user)
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-          actionFetchStatus: const ApiFetchSuccededStatus())))
+              actionFetchStatus: const ApiFetchSuccededStatus())))
           .catchError((onError) => emit(state.copyWith(
-          actionFetchStatus:
-          ApiFetchFailedStatus(exception: Exception(onError)))));
+              actionFetchStatus:
+                  ApiFetchFailedStatus(exception: Exception(onError)))));
+    } catch (e) {
+      emit(state.copyWith(
+          actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+  FutureOr<void> _userNameChanged(
+      UserNameChanged event, Emitter<UserState> emit) async {
+    emit(state.copyWith(actionFetchStatus: const ApiFetchingStatus()));
+
+    try {
+      var userId = (await locator<AuthService>().authData).userId;
+
+      await locator<AuthService>()
+          .repository
+          .changeUsername(userId!, event.name, event.user)
+          .then((value) => value.data)
+          .then((value) => emit(state.copyWith(
+              actionFetchStatus: const ApiFetchSuccededStatus())))
+          .catchError((onError) => emit(state.copyWith(
+              actionFetchStatus:
+                  ApiFetchFailedStatus(exception: Exception(onError)))));
     } catch (e) {
       emit(state.copyWith(
           actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));

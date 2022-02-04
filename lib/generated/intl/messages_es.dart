@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Iniciar Sesión"),
         "action_sign_in_short":
             MessageLookupByLibrary.simpleMessage("Ingresar"),
+        "add_new_name":
+            MessageLookupByLibrary.simpleMessage("Agrega un nuevo nombre"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Agregar una foto"),
         "add_your_new_state":
             MessageLookupByLibrary.simpleMessage("Añade tu estado"),

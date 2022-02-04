@@ -3,6 +3,7 @@ import 'package:galss/main.dart';
 import 'package:galss/models/api_message.dart';
 import 'package:galss/models/city.dart';
 import 'package:galss/models/user.dart';
+import 'package:galss/models/user_type.dart';
 import 'package:galss/services/http_service.dart';
 
 class AuthRepository {
@@ -38,6 +39,18 @@ class AuthRepository {
   Future<Response<dynamic>> changeCurrentLocation(
       int userId, City targetCity, User user) {
     user.currentLocation = targetCity;
+
+    return http.put("${HttpService.apiUrl}/User/$userId", data: user.toJson());
+  }
+
+  Future<Response<dynamic>> changeUsername(int userId, String name, User user) {
+    if (user.type == UserType.seeker.index) {
+      user.seeker?.fullName = name;
+    }
+
+    if (user.type == UserType.model.index) {
+      user.model?.fullName = name;
+    }
 
     return http.put("${HttpService.apiUrl}/User/$userId", data: user.toJson());
   }
