@@ -89,7 +89,6 @@ class HomeSeekerCatalogBloc
           .then((value) => emit(state.copyWith(
               requestToggleModelStatus: const ApiFetchSuccededStatus())));
     } catch (e) {
-      print(e);
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
     }

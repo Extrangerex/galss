@@ -20,11 +20,11 @@ class SignUp extends StatelessWidget {
             width: 200,
           ),
           const SizedBox(
-            height: 10,
+            height: 60,
           ),
           _btnSeeker(),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           _btnModel()
         ],

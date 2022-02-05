@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fonts_with_asterisk_are_mandatory":
             MessageLookupByLibrary.simpleMessage(
                 "Las Fuentes que Tienen (*) Son Obligatorias"),
+        "greeting": MessageLookupByLibrary.simpleMessage("Hola"),
         "home": MessageLookupByLibrary.simpleMessage("Inicio"),
         "language": MessageLookupByLibrary.simpleMessage("Español"),
         "lastname": MessageLookupByLibrary.simpleMessage("Apellido"),
@@ -79,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationality": MessageLookupByLibrary.simpleMessage("Nacionalidad"),
         "not_specified":
             MessageLookupByLibrary.simpleMessage("No especificado"),
+        "not_valid_username_password": MessageLookupByLibrary.simpleMessage(
+            "Lo sentimos, no podemos encontrar una cuenta con esta dirección de correo electrónico. Inténtalo de nuevo o crea una nueva"),
         "oops": MessageLookupByLibrary.simpleMessage("Oops"),
         "pick_a_city":
             MessageLookupByLibrary.simpleMessage("Selecciona una ciudad"),
@@ -118,6 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Formulario de Solicitud Para Modelos de Galss"),
         "signin_form": MessageLookupByLibrary.simpleMessage(
             "Formulario de Inicio de Sesión"),
+        "something_went_wrong":
+            MessageLookupByLibrary.simpleMessage("Algo salió mal"),
         "switch_anonymous_mode":
             MessageLookupByLibrary.simpleMessage("Poner perfil anónimo"),
         "type_a_message_placeholder":

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
@@ -27,8 +28,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             {"emailAddress": state.username, "password": state.password}))
         .then((value) => emit(state.copyWith(
             formSubmissionStatus: FormSuccessStatus(payload: value.data))))
-        .catchError((onError) => emit(state.copyWith(
+        .catchError((onError) {
+      if (onError is DioError) {
+        emit(state.copyWith(
+            formSubmissionStatus: FormFailedStatus(
+                exception: Exception(onError),
+                status: onError.response!.statusCode!)));
+      } else {
+        emit(state.copyWith(
             formSubmissionStatus:
-                FormFailedStatus(exception: Exception(onError)))));
+                FormFailedStatus(exception: Exception(onError))));
+      }
+    });
   }
 }

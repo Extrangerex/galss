@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_bloc.dart';
@@ -14,7 +13,6 @@ import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/images.dart';
 import 'package:galss/shared/recently_added_models.dart';
-import 'package:galss/shared/toggle_favorite_model.dart';
 import 'package:galss/shared/toggle_like_model.dart';
 
 class HomeSeekerCatalog extends StatefulWidget {
@@ -120,10 +118,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                   },
                   child: Container(
                     decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: .25)
-                      )
-                    ),
+                        border: Border(bottom: BorderSide(width: .25))),
                     child: Row(
                       children: [
                         Expanded(
@@ -133,6 +128,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
                               imageUrl:
                                   "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
                               fit: BoxFit.cover,
+                              height: 128,
                               errorWidget: (context, url, error) => Image(
                                 image: profilePlaceholderImage,
                                 fit: BoxFit.cover,

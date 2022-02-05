@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
+import 'package:galss/blocs/chat_room/chat_room_bloc.dart';
+import 'package:galss/blocs/chat_room/chat_room_event.dart';
+import 'package:galss/blocs/chat_room/chat_room_state.dart';
+import 'package:galss/blocs/chats/chat_bloc.dart';
+import 'package:galss/blocs/chats/chat_event.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
@@ -16,6 +22,7 @@ import 'package:galss/models/user.dart';
 import 'package:galss/pages/seeker/home_seeker_connections.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/full_screen_image.dart';
 import 'package:galss/shared/toggle_favorite_model.dart';
 import 'package:galss/shared/toggle_like_model.dart';
 
@@ -44,6 +51,9 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
         BlocProvider(
             create: (create) =>
                 UserBloc()..add(FetchUserData(userId: widget.userModel.id))),
+        BlocProvider(
+            create: (create) => ChatBloc()..add(const ChatGetChatsEvent())),
+        BlocProvider(create: (create) => ChatRoomBloc()),
       ],
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -113,17 +123,33 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
                               .add(FetchUserData(userId: widget.userModel.id));
                         },
                       ),
-                      IconButton(
-                          onPressed: () {
+                      BlocListener<ChatRoomBloc, ChatRoomState>(
+                        listener: (context, state) {
+                          // TODO: implement listener
+                          if (state.greetingFetchStatus
+                              is ApiFetchSuccededStatus) {
                             locator<NavigationService>()
                                 .navigatorKey
                                 .currentState
                                 ?.push(MaterialPageRoute(
                                     builder: (builder) =>
                                         const HomeSeekerMyConnections()));
+                          }
+                        },
+                        child: BlocBuilder<ChatRoomBloc, ChatRoomState>(
+                          builder: (context, state) {
+                            return IconButton(
+                                onPressed: () async {
+                                  context.read<ChatRoomBloc>().add(
+                                      ChatSentGreetingEvent(
+                                          toUserId: widget.userModel.id!,
+                                          greeting: S.current.greeting));
+                                },
+                                iconSize: 34,
+                                icon: const Icon(Icons.chat));
                           },
-                          iconSize: 34,
-                          icon: const Icon(Icons.chat)),
+                        ),
+                      ),
                     ],
                   );
                 },
@@ -186,10 +212,26 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
 
       return CarouselSlider(
           items: photos
-              .map((e) => SizedBox.expand(
-                    child: Image.network(
-                      "${HttpService.apiBaseUrl}/${e.urlPath!}",
-                      fit: BoxFit.cover,
+              .map((e) => GestureDetector(
+                    onTap: () {
+                      locator<NavigationService>()
+                          .navigatorKey
+                          .currentState
+                          ?.push(MaterialPageRoute(builder: (_) {
+                        return FullScreenImage(
+                          imageUrl: "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                          tag: e.fileName.toString(),
+                        );
+                      }));
+                    },
+                    child: Hero(
+                      tag: e.fileName.toString(),
+                      child: SizedBox.expand(
+                        child: Image.network(
+                          "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ))
               .toList(),

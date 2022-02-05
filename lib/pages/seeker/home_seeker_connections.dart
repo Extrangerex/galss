@@ -7,8 +7,6 @@ import 'package:galss/blocs/chats/chat_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
-import 'package:galss/shared/images.dart';
-import 'package:galss/theme/variables.dart';
 
 import '../../main.dart';
 import '../chat_room.dart';
@@ -37,7 +35,15 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
             centerTitle: true,
             // backgroundColor: Colors.transparent,
           ),
-          body: _rooms(),
+          body: BlocBuilder<ChatBloc, ChatState>(
+            builder: (context, state) {
+              return RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<ChatBloc>().add(const ChatGetChatsEvent());
+                  },
+                  child: _rooms());
+            },
+          ),
         ),
       ),
     );
@@ -46,7 +52,7 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
   Widget _rooms() {
     return BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
       return ListView.builder(
-        shrinkWrap: true,
+        // shrinkWrap: true,
         itemCount: state.rooms.length,
         itemBuilder: (context, index) {
           var e = state.rooms[index];
@@ -55,23 +61,20 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
 
           return Container(
             decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: .25)
-              )
-            ),
+                border: Border(bottom: BorderSide(width: .25))),
             child: ListTile(
-              onTap: () {
-                locator<NavigationService>().navigatorKey.currentState?.push(
-                    MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
-              },
-              leading: CircleAvatar(
-                backgroundColor: Colors.black12,
-                backgroundImage: CachedNetworkImageProvider(
-                    "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}"),
-              ),
-              title: Text("${chatFriend?.user?.model?.fullName}"),
-              subtitle: Text("${e.lastMessage}")
-            ),
+                onTap: () {
+                  locator<NavigationService>().navigatorKey.currentState?.push(
+                      MaterialPageRoute(
+                          builder: (builder) => ChatRoom(chat: e)));
+                },
+                leading: CircleAvatar(
+                  backgroundColor: Colors.black12,
+                  backgroundImage: CachedNetworkImageProvider(
+                      "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}"),
+                ),
+                title: Text("${chatFriend?.user?.model?.fullName}"),
+                subtitle: Text("${e.lastMessage}")),
           );
         },
       );

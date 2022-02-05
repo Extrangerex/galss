@@ -28,7 +28,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final _scaffoldMessagerKey = GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
@@ -36,12 +37,23 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  void showSnack(String title) {
+    final snackBar = SnackBar(
+        content: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 15,
+      ),
+    ));
+    scaffoldMessengerKey.currentState?.showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ScaffoldMessenger(
-        key: _scaffoldMessagerKey,
-        child: MultiBlocProvider(
+    return ScaffoldMessenger(
+      key: scaffoldMessengerKey,
+      child: Scaffold(
+        body: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => UserBloc()),
             BlocProvider(create: (context) => LoginBloc())
@@ -69,9 +81,13 @@ class _LoginState extends State<Login> {
               authLoginData: ApiLogin.fromJson(
                   (state.formState as FormSuccessStatus).payload)));
         } else if (state.formState is FormFailedStatus) {
-          _scaffoldMessagerKey.currentState?.showSnackBar(SnackBar(
-              content: Text(
-                  (state.formState as FormFailedStatus).exception.toString())));
+          final statusCode = (state.formState as FormFailedStatus).status;
+
+          if (statusCode == 404 || statusCode == 400) {
+            showSnack(S.current.not_valid_username_password);
+          } else {
+            showSnack(S.current.something_went_wrong);
+          }
         }
       },
       child: Form(
@@ -86,8 +102,11 @@ class _LoginState extends State<Login> {
             const SizedBox(
               height: 10,
             ),
-            _usernameField(),
-            _passwordField(),
+            ListTile(title: _usernameField()),
+            ListTile(title: _passwordField()),
+            const SizedBox(
+              height: 60,
+            ),
             _loginBtn(),
             _signupBtn()
           ],

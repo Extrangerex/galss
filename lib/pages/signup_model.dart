@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
-import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
@@ -13,7 +12,6 @@ import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
-import 'package:galss/shared/input_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:intl/intl.dart';
 
@@ -51,8 +49,8 @@ class _SignUpModelState extends State<SignUpModel> {
                   SignUpBloc(SignUpState(userType: UserType.model)))
         ],
         child: ImagedBackgroundContainer(
-            child: Padding(
-          padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+          // padding: const EdgeInsets.all(16.0),
           child: _form(),
         )),
       ),
@@ -81,8 +79,8 @@ class _SignUpModelState extends State<SignUpModel> {
               const SizedBox(
                 height: 16,
               ),
-              InputContainer(
-                child: Row(
+              ListTile(
+                title: Row(
                   children: [
                     Flexible(child: _nameField()),
                     const SizedBox(
@@ -92,11 +90,14 @@ class _SignUpModelState extends State<SignUpModel> {
                   ],
                 ),
               ),
-              InputContainer(child: _emailField()),
-              InputContainer(child: _countryField()),
-              InputContainer(child: _passwordField()),
+              ListTile(title: _emailField()),
+              _countryField(),
+              ListTile(title: _passwordField()),
+              const SizedBox(
+                height: 60,
+              ),
               Text(S.current.prompt_terms_conditions),
-              InputContainer(child: _termsAndConditionsField()),
+              ListTile(title: _termsAndConditionsField()),
               _btnSubmit()
             ],
           ),
@@ -212,6 +213,29 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _countryField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
+        return ListTile(
+          title: Text(S.current.country),
+          subtitle: DropdownButton<Country>(
+              items: context
+                  .read<CountryBloc>()
+                  .state
+                  .countries
+                  .map((e) => DropdownMenuItem<Country>(
+                        child: Text(e.name!),
+                        value: e,
+                      ))
+                  .toList(),
+              isExpanded: true,
+              value: state.country,
+              isDense: true,
+              onChanged: (v) {
+                if (v == null) return;
+                context
+                    .read<SignUpBloc>()
+                    .add(SignUpCountryChanged(country: v));
+              }),
+        );
+
         return Theme(
           data: ThemeData(brightness: Brightness.light),
           child: Column(

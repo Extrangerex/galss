@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
+import 'package:galss/blocs/chat_room/chat_room_bloc.dart';
+import 'package:galss/blocs/chats/chat_bloc.dart';
+import 'package:galss/blocs/chats/chat_event.dart';
 import 'package:galss/blocs/home_model/home_model_bloc.dart';
 import 'package:galss/blocs/navigation/navigation_bloc.dart';
 import 'package:galss/blocs/navigation/navigation_event.dart';
@@ -10,7 +13,6 @@ import 'package:galss/blocs/navigation/navigation_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/pages/model/home_model_connections.dart';
 import 'package:galss/pages/model/home_model_landing.dart';
-import 'package:galss/pages/model/home_model_profile.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
@@ -40,7 +42,7 @@ class _HomeModelState extends State<HomeModel> {
         BlocProvider(create: (context) => HomeModelBloc()),
         BlocProvider(
           create: (context) => UserBloc()..add(const FetchUserData()),
-        )
+        ),
       ],
       child: Scaffold(
         drawer: _drawer(),
@@ -60,7 +62,15 @@ class _HomeModelState extends State<HomeModel> {
             image: logo,
             width: 50,
           ),
-          actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.chat))],
+          actions: [
+            IconButton(
+                onPressed: () {
+                  locator<NavigationService>().navigatorKey.currentState?.push(
+                      MaterialPageRoute(
+                          builder: (builder) => const HomeModelConnections()));
+                },
+                icon: const Icon(Icons.chat))
+          ],
         ),
       ),
     );

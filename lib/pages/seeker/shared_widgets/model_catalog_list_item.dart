@@ -43,6 +43,7 @@ class ModelCatalogListItem extends StatelessWidget{
                   imageUrl:
                   "${HttpService.apiBaseUrl}/${userModel.profilePhoto?.urlPath}",
                   fit: BoxFit.cover,
+                  height: 128,
                   errorWidget: (context, url, error) => Image(
                     image: profilePlaceholderImage,
                     fit: BoxFit.cover,

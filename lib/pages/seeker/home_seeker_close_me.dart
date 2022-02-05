@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_bloc.dart';
@@ -13,8 +12,6 @@ import 'package:galss/pages/model_viewer_profile.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/images.dart';
-import 'package:galss/shared/recently_added_models.dart';
-import 'package:galss/shared/toggle_favorite_model.dart';
 import 'package:galss/shared/toggle_like_model.dart';
 
 class HomeSeekerCloseMe extends StatefulWidget {
@@ -35,8 +32,8 @@ class _HomeSeekerCloseMeState extends State<HomeSeekerCloseMe> {
         BlocProvider(
             create: (create) => UserBloc()..add(const FetchUserData())),
         BlocProvider(
-          create: (create) => HomeSeekerCatalogBloc()
-            ..add(const HomeSeekerGetCloseMeEvent()),
+          create: (create) =>
+              HomeSeekerCatalogBloc()..add(const HomeSeekerGetCloseMeEvent()),
         )
       ],
       child: Theme(
@@ -62,69 +59,67 @@ class _HomeSeekerCloseMeState extends State<HomeSeekerCloseMe> {
   Widget _models() {
     return BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
         builder: (context, state) => ListView.builder(
-          shrinkWrap: true,
-          itemCount: state.models.length,
-          itemBuilder: (context, index) {
-            var item = state.models[index];
+              shrinkWrap: true,
+              itemCount: state.models.length,
+              itemBuilder: (context, index) {
+                var item = state.models[index];
 
-            return InkWell(
-              onTap: () {
-                locator<NavigationService>()
-                    .navigatorKey
-                    .currentState
-                    ?.push(MaterialPageRoute(
-                    builder: (builder) =>
-                        ModelViewerProfile(userModel: item)));
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(width: .25)
-                    )
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        constraints: const BoxConstraints(minHeight: 128),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                          "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) => Image(
-                            image: profilePlaceholderImage,
-                            fit: BoxFit.cover,
+                return InkWell(
+                  onTap: () {
+                    locator<NavigationService>()
+                        .navigatorKey
+                        .currentState
+                        ?.push(MaterialPageRoute(
+                            builder: (builder) =>
+                                ModelViewerProfile(userModel: item)));
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        border: Border(bottom: BorderSide(width: .25))),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            constraints: const BoxConstraints(minHeight: 128),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "${HttpService.apiBaseUrl}/${item.profilePhoto?.urlPath}",
+                              fit: BoxFit.cover,
+                              height: 128,
+                              errorWidget: (context, url, error) => Image(
+                                image: profilePlaceholderImage,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: ListTile(
-                        title: Text("${item.model?.fullName}"),
-                        isThreeLine: true,
-                        trailing: ToggleLikeModel(model: item),
-                        subtitle: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${item.currentLocation?.name}"),
-                            Text("${item.country?.name}"),
-                            Text(
-                              "${item.profileStatus}",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12),
-                            )
-                          ],
+                        Expanded(
+                          flex: 2,
+                          child: ListTile(
+                            title: Text("${item.model?.fullName}"),
+                            isThreeLine: true,
+                            trailing: ToggleLikeModel(model: item),
+                            subtitle: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("${item.currentLocation?.name}"),
+                                Text("${item.country?.name}"),
+                                Text(
+                                  "${item.profileStatus}",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 12),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ));
+                  ),
+                );
+              },
+            ));
   }
 }

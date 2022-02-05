@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
@@ -12,9 +11,6 @@ import 'package:galss/pages/chat_room.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/cached_circle_avatar.dart';
-import 'package:galss/shared/images.dart';
-import 'package:galss/shared/logo.dart';
-import 'package:galss/theme/variables.dart';
 
 class HomeModelConnections extends StatefulWidget {
   const HomeModelConnections({Key? key}) : super(key: key);
@@ -39,7 +35,6 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
             title: title(),
             elevation: 0,
             centerTitle: true,
-            backgroundColor: Colors.transparent,
           ),
           body: _rooms(),
         ),
@@ -51,7 +46,6 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
     return BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
       return Text(
         S.current.you_have_n_connections(state.rooms.length),
-        style: TextStyle(color: primaryColor),
       );
     });
   }

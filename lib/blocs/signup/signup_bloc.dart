@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
@@ -56,8 +55,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         "login": {"emailAddress": state.email, "password": state.password}
       });
 
-      debugPrint(body.toString());
-
       var response = await repository.signUp(body);
 
       if (response.statusCode == 409) {
@@ -68,8 +65,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     } catch (e) {
       emit(
           state.copyWith(formState: FormFailedStatus(exception: Exception(e))));
-
-      print(e);
     }
   }
 

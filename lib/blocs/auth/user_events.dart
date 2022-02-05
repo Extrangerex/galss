@@ -30,6 +30,10 @@ class FetchUserData extends UserEvent {
   const FetchUserData({this.userId});
 }
 
+class NewChatEvent extends UserEvent {
+
+}
+
 class UserProfilePhotoChanged extends UserEvent {
   final XFile imageToUpload;
 

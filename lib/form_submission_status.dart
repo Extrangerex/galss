@@ -18,6 +18,7 @@ class FormSuccessStatus extends FormSubmissionStatus {
 
 class FormFailedStatus extends FormSubmissionStatus {
   final Exception? exception;
+  final int status;
 
-  const FormFailedStatus({this.exception});
+  const FormFailedStatus({this.exception, this.status = 500});
 }

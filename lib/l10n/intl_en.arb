@@ -94,5 +94,8 @@
   "pick_a_city": "Pick city",
   "add_new_name": "Add a new name",
   "your_likes": "Likes",
-  "your_favorites": "Your favorites"
+  "your_favorites": "Your favorites",
+  "greeting": "Hey",
+  "not_valid_username_password": "Sorry, we can't find an account with this email address. Please try again or create a new one",
+  "something_went_wrong": "Something went wrong"
   }

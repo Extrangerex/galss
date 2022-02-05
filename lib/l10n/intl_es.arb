@@ -96,6 +96,8 @@
       "add_new_name": "Agrega un nuevo nombre",
 
   "your_likes": "Tus likes",
-  "your_favorites": "Tus favoritas/os"
-
+  "your_favorites": "Tus favoritas/os",
+  "greeting": "Hola",
+  "not_valid_username_password": "Lo sentimos, no podemos encontrar una cuenta con esta dirección de correo electrónico. Inténtalo de nuevo o crea una nueva",
+  "something_went_wrong": "Algo salió mal"
 }

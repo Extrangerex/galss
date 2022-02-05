@@ -719,6 +719,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Hey`
+  String get greeting {
+    return Intl.message(
+      'Hey',
+      name: 'greeting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, we can't find an account with this email address. Please try again or create a new one`
+  String get not_valid_username_password {
+    return Intl.message(
+      'Sorry, we can\'t find an account with this email address. Please try again or create a new one',
+      name: 'not_valid_username_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get something_went_wrong {
+    return Intl.message(
+      'Something went wrong',
+      name: 'something_went_wrong',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finder": MessageLookupByLibrary.simpleMessage(""),
         "fonts_with_asterisk_are_mandatory":
             MessageLookupByLibrary.simpleMessage(""),
+        "greeting": MessageLookupByLibrary.simpleMessage("Hey"),
         "home": MessageLookupByLibrary.simpleMessage(""),
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "lastname": MessageLookupByLibrary.simpleMessage(""),
@@ -67,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage(""),
         "nationality": MessageLookupByLibrary.simpleMessage(""),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not specified"),
+        "not_valid_username_password": MessageLookupByLibrary.simpleMessage(
+            "Sorry, we can\'t find an account with this email address. Please try again or create a new one"),
         "oops": MessageLookupByLibrary.simpleMessage(""),
         "pick_a_city": MessageLookupByLibrary.simpleMessage("Pick city"),
         "poner_perfil_anonimo": MessageLookupByLibrary.simpleMessage(""),
@@ -94,6 +97,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sign_up_form_for_galss_models":
             MessageLookupByLibrary.simpleMessage(""),
         "signin_form": MessageLookupByLibrary.simpleMessage(""),
+        "something_went_wrong":
+            MessageLookupByLibrary.simpleMessage("Something went wrong"),
         "switch_anonymous_mode":
             MessageLookupByLibrary.simpleMessage("Switch anonymous mode"),
         "type_a_message_placeholder":

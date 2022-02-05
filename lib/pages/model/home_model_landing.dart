@@ -6,16 +6,22 @@ import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
+import 'package:galss/blocs/chats/chat_bloc.dart';
+import 'package:galss/blocs/chats/chat_event.dart';
+import 'package:galss/blocs/chats/chat_state.dart';
 import 'package:galss/blocs/home_model/home_model_bloc.dart';
 import 'package:galss/blocs/home_model/home_model_event.dart';
 import 'package:galss/blocs/home_model/home_model_state.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/main.dart';
 import 'package:galss/modals/edit_current_location_modal.dart';
 import 'package:galss/modals/edit_name_modal.dart';
 import 'package:galss/modals/edit_profile_status_modal.dart';
 import 'package:galss/models/photo.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/services/http_service.dart';
+import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/full_screen_image.dart';
 import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/variables.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +35,9 @@ class HomeModelLanding extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => UserBloc()..add(const FetchUserData()),
-        )
+        ),
+        BlocProvider(
+            create: (create) => ChatBloc()..add(const ChatGetChatsEvent()))
       ],
       child: Scaffold(
         body: Padding(
@@ -45,10 +53,19 @@ class HomeModelLanding extends StatelessWidget {
             _locationTile(),
             _nationalityTile(),
             _description(),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [Flexible(child: _likesCount())],
+              children: [
+                Flexible(child: _likesCount()),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(child: chatCount())
+              ],
             )
           ]),
         ),
@@ -63,15 +80,54 @@ class HomeModelLanding extends StatelessWidget {
 
         return CarouselSlider(
             items: photos
-                .map((e) => SizedBox.expand(
-                      child: Image.network(
-                        "${HttpService.apiBaseUrl}/${e.urlPath!}",
-                        fit: BoxFit.cover,
+                .map((e) => GestureDetector(
+                      onTap: () {
+                        locator<NavigationService>()
+                            .navigatorKey
+                            .currentState
+                            ?.push(MaterialPageRoute(builder: (_) {
+                          return FullScreenImage(
+                            imageUrl: "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                            tag: e.fileName.toString(),
+                          );
+                        }));
+                      },
+                      child: Hero(
+                        tag: e.fileName.toString(),
+                        child: SizedBox.expand(
+                          child: Image.network(
+                            "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                            alignment: Alignment.topCenter,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ))
                 .toList(),
             options: CarouselOptions(
                 height: 200, viewportFraction: 1, enableInfiniteScroll: false));
+      },
+    );
+  }
+
+  Widget chatCount() {
+    return BlocBuilder<ChatBloc, ChatState>(
+      builder: (context, state) {
+        final chatCount = state.rooms.length;
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.chat,
+                size: 32,
+              ),
+            ),
+            Text(chatCount.toString())
+          ],
+        );
       },
     );
   }
@@ -104,23 +160,6 @@ class HomeModelLanding extends StatelessWidget {
       },
     ));
   }
-
-  Widget _editProfileBtn({required BuildContext context}) => ElevatedButton(
-      style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(holoGreenDark),
-          textStyle:
-              MaterialStateProperty.all(const TextStyle(color: Colors.white))),
-      onPressed: () {},
-      child: Text(S.current.editar_mi_perfil));
-
-  Widget _connectionsBtn({required BuildContext context}) => ElevatedButton(
-      style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(Theme.of(context).primaryColor),
-          textStyle:
-              MaterialStateProperty.all(const TextStyle(color: Colors.white))),
-      onPressed: () {},
-      child: Text(S.current.my_connections));
 
   Widget _nameTile() => BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
@@ -179,32 +218,22 @@ class HomeModelLanding extends StatelessWidget {
       builder: (context, state) {
         var likesCount = state.user?.model?.likesCount ?? 0;
 
-        return Card(
-          child: ListTile(
-
-            // tileColor: Theme.of(context).primaryColor,
-              title: Text(likesCount.toString()),
-              leading: const Icon(FontAwesomeIcons.heart)),
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(
+                FontAwesomeIcons.heart,
+                size: 32,
+              ),
+            ),
+            Text(likesCount.toString())
+          ],
         );
       },
     );
   }
-
-  // Widget _favCount() {
-  //   return BlocBuilder<UserBloc, UserState>(
-  //     builder: (context, state) {
-  //       var likesCount = state.user;
-  //
-  //       return Card(
-  //         child: ListTile(
-  //
-  //           // tileColor: Theme.of(context).primaryColor,
-  //             title: Text(likesCount.toString()),
-  //             leading: const Icon(FontAwesomeIcons.heart)),
-  //       );
-  //     },
-  //   );
-  // }
 
   Widget _description() {
     return BlocBuilder<UserBloc, UserState>(

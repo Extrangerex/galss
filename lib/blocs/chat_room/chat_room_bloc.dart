@@ -16,6 +16,8 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
     on<ChatMessageChanged>(
         (event, emit) => emit(state.copyWith(msgToSend: event.message)));
     on<ChatSentMessageEvent>(_postChatMessage);
+
+    on<ChatSentGreetingEvent>(_postChatGreeting);
   }
 
   FutureOr<void> _fetchGetChatHistory(
@@ -41,7 +43,9 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
 
   FutureOr<void> _postChatMessage(
       ChatSentMessageEvent event, Emitter<ChatRoomState> emit) async {
-    emit(state.copyWith(sentMessageFetchStatus: const ApiFetchingStatus()));
+    emit(state.copyWith(
+        sentMessageFetchStatus: const ApiFetchingStatus(),
+        greetingFetchStatus: const ApiFetchInitialStatus()));
 
     final userData = await locator<AuthService>().authData;
 
@@ -58,6 +62,30 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
       emit(state.copyWith(
           sentMessageFetchStatus:
               ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+  FutureOr<void> _postChatGreeting(
+      ChatSentGreetingEvent event, Emitter<ChatRoomState> emit) async {
+    emit(state.copyWith(greetingFetchStatus: const ApiFetchingStatus()));
+
+    final userData = await locator<AuthService>().authData;
+
+    try {
+      await locator<HttpService>()
+          .http
+          .post("${HttpService.apiUrl}/Chat", data: {
+            "fromUserId": userData.userId,
+            "message": event.greeting,
+            "toUserId": event.toUserId
+          })
+          .then((value) => value.data)
+          .then((value) => ApiMessage.fromJson(value))
+          .then((value) => emit(state.copyWith(
+              greetingFetchStatus: const ApiFetchSuccededStatus())));
+    } catch (e) {
+      emit(state.copyWith(
+          greetingFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
     }
   }
 }

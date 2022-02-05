@@ -11,14 +11,10 @@ class ChatGetChatHistoryEvent extends ChatRoomEvent {
 }
 
 class ChatSentGreetingEvent extends ChatRoomEvent {
-  final int fromUserId;
   final int toUserId;
-  final String greeting;
+  final String? greeting;
 
-  const ChatSentGreetingEvent(
-      {required this.fromUserId,
-      required this.toUserId,
-      required this.greeting});
+  const ChatSentGreetingEvent({required this.toUserId, this.greeting});
 }
 
 class ChatMessageChanged extends ChatRoomEvent {
