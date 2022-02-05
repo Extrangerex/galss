@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +11,6 @@ import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/blocs/chat_room/chat_room_bloc.dart';
 import 'package:galss/blocs/chat_room/chat_room_event.dart';
 import 'package:galss/blocs/chat_room/chat_room_state.dart';
-import 'package:galss/blocs/chats/chat_bloc.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/api_chat.dart';
 import 'package:galss/models/user.dart';
@@ -18,7 +19,7 @@ import 'package:galss/theme/variables.dart';
 class ChatRoom extends StatefulWidget {
   final Chat chat;
 
-  const ChatRoom({Key? key, required this.chat}): super(key: key);
+  const ChatRoom({Key? key, required this.chat}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ChatRoomState();
@@ -27,6 +28,8 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   final TextEditingController _msgTextEditingController =
       TextEditingController();
+  Timer? chatTimer;
+  late ChatRoomBloc _chatRoomBloc;
 
   BubbleStyle styleSomebody = BubbleStyle(
     nip: BubbleNip.leftCenter,
@@ -49,22 +52,36 @@ class _ChatRoomState extends State<ChatRoom> {
   );
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  void initState() {
+    super.initState();
 
+    _chatRoomBloc = ChatRoomBloc();
+    chatTimer = Timer.periodic(const Duration(seconds: 4), _getNewChats);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    chatTimer?.cancel();
+    _chatRoomBloc.close();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
               create: (create) => UserBloc()..add(const FetchUserData())),
           BlocProvider(
-              create: (create) => ChatRoomBloc()
+              create: (create) => _chatRoomBloc
                 ..add(ChatGetChatHistoryEvent(roomId: widget.chat.id!)))
         ],
         child: Scaffold(
             appBar: AppBar(
               title: title(),
             ),
-            body: Container(margin: const EdgeInsets.only(top: 8.0), child: chat()),
+            body: Container(
+                margin: const EdgeInsets.only(top: 8.0), child: chat()),
             bottomSheet: bottomSheet()));
   }
 
@@ -72,9 +89,12 @@ class _ChatRoomState extends State<ChatRoom> {
     return BlocListener<ChatRoomBloc, ChatRoomState>(
       listener: (context, state) {
         if (state.sentMessageFetchStatus is ApiFetchSuccededStatus) {
-          context.read<ChatRoomBloc>().add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
+          context
+              .read<ChatRoomBloc>()
+              .add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
           _msgTextEditingController.text = "";
-          context.read<ChatRoomBloc>().emit(state.copyWith(sentMessageFetchStatus: const ApiFetchInitialStatus()));
+          context.read<ChatRoomBloc>().emit(state.copyWith(
+              sentMessageFetchStatus: const ApiFetchInitialStatus()));
         }
       },
       child: Container(
@@ -105,7 +125,6 @@ class _ChatRoomState extends State<ChatRoom> {
                         context.read<ChatRoomBloc>().add(ChatSentMessageEvent(
                             message: state.msgToSend ?? "",
                             roomId: widget.chat.id!));
-
                       },
                       icon: const FaIcon(FontAwesomeIcons.paperPlane)))
             ],
@@ -146,15 +165,17 @@ class _ChatRoomState extends State<ChatRoom> {
 
   Widget title() {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-
-
-
       User? getChatFriend() {
-        return widget.chat.chatMembers?.firstWhere((element) => element.user?.id != state.user?.id).user;
+        return widget.chat.chatMembers
+            ?.firstWhere((element) => element.user?.id != state.user?.id)
+            .user;
       }
-
 
       return Text(S.current.you_talking_with_n("${getChatFriend()?.fullName}"));
     });
+  }
+
+  void _getNewChats(Timer timer) {
+    // _chatRoomBloc.add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
   }
 }

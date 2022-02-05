@@ -53,8 +53,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Editar tu perfil"),
         "editar_mi_perfil":
             MessageLookupByLibrary.simpleMessage("Editar mi Perfil"),
+        "email_in_use": MessageLookupByLibrary.simpleMessage(
+            "Este correo electrónico ya está en uso"),
         "error_field_required":
             MessageLookupByLibrary.simpleMessage("Este campo es requerido"),
+        "error_inactive_account": MessageLookupByLibrary.simpleMessage(
+            "Tu cuenta aun está inactiva. Si tienes una inquietud duda queja o sugerencia, puedes contactarnos galssapp@gmail.com"),
         "error_invalid_email": MessageLookupByLibrary.simpleMessage(
             "Esta dirección de correo electrónico no es válida"),
         "error_invalid_password": MessageLookupByLibrary.simpleMessage(
@@ -125,12 +129,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Algo salió mal"),
         "switch_anonymous_mode":
             MessageLookupByLibrary.simpleMessage("Poner perfil anónimo"),
+        "technically_there_is_nothing_wrong_but":
+            MessageLookupByLibrary.simpleMessage(
+                "Técnicamente no hay nada malo, pero como que algo no cuadra"),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city":
             MessageLookupByLibrary.simpleMessage("Ciudad desconocida"),
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
         "you_have_n_connections": m1,
+        "you_must_specify_country": MessageLookupByLibrary.simpleMessage(
+            "Debes colocar tu país de origen"),
         "you_talking_with_n": m2,
         "your_favorites":
             MessageLookupByLibrary.simpleMessage("Tus favoritas/os"),

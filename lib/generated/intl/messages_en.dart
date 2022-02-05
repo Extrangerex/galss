@@ -47,7 +47,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit_profile":
             MessageLookupByLibrary.simpleMessage("Edit your profile"),
         "editar_mi_perfil": MessageLookupByLibrary.simpleMessage(""),
+        "email_in_use": MessageLookupByLibrary.simpleMessage(""),
         "error_field_required": MessageLookupByLibrary.simpleMessage(""),
+        "error_inactive_account": MessageLookupByLibrary.simpleMessage(""),
         "error_invalid_email": MessageLookupByLibrary.simpleMessage(""),
         "error_invalid_password": MessageLookupByLibrary.simpleMessage(""),
         "exit": MessageLookupByLibrary.simpleMessage(""),
@@ -101,11 +103,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Something went wrong"),
         "switch_anonymous_mode":
             MessageLookupByLibrary.simpleMessage("Switch anonymous mode"),
+        "technically_there_is_nothing_wrong_but":
+            MessageLookupByLibrary.simpleMessage(""),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city": MessageLookupByLibrary.simpleMessage("Unknown city"),
         "yearly": MessageLookupByLibrary.simpleMessage(""),
         "you_have_n_connections": m1,
+        "you_must_specify_country": MessageLookupByLibrary.simpleMessage(""),
         "you_talking_with_n": m2,
         "your_favorites":
             MessageLookupByLibrary.simpleMessage("Your favorites"),

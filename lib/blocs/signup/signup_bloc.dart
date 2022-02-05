@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
@@ -57,12 +58,20 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       var response = await repository.signUp(body);
 
+      print(response.statusCode);
+
       if (response.statusCode == 409) {
       } else if (response.statusCode == 200) {
         emit(state.copyWith(
             formState: FormSuccessStatus(payload: response.data)));
       } else if (response.statusCode == 400) {}
     } catch (e) {
+      if (e is DioError) {
+        emit(state.copyWith(
+            formState: FormFailedStatus(
+                exception: Exception(e), status: e.response!.statusCode!)));
+        return;
+      }
       emit(
           state.copyWith(formState: FormFailedStatus(exception: Exception(e))));
     }

@@ -99,5 +99,9 @@
   "your_favorites": "Tus favoritas/os",
   "greeting": "Hola",
   "not_valid_username_password": "Lo sentimos, no podemos encontrar una cuenta con esta dirección de correo electrónico. Inténtalo de nuevo o crea una nueva",
-  "something_went_wrong": "Algo salió mal"
+  "something_went_wrong": "Algo salió mal",
+    "you_must_specify_country": "Debes colocar tu país de origen",
+  "email_in_use": "Este correo electrónico ya está en uso",
+  "technically_there_is_nothing_wrong_but": "Técnicamente no hay nada malo, pero como que algo no cuadra",
+  "error_inactive_account": "Tu cuenta aun está inactiva. Si tienes una inquietud duda queja o sugerencia, puedes contactarnos galssapp@gmail.com"
 }

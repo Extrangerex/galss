@@ -33,7 +33,6 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -85,9 +84,14 @@ class _LoginState extends State<Login> {
 
           if (statusCode == 404 || statusCode == 400) {
             showSnack(S.current.not_valid_username_password);
+          } else if (statusCode == 403) {
+            showSnack(S.current.error_inactive_account);
           } else {
             showSnack(S.current.something_went_wrong);
           }
+
+          context.read<LoginBloc>().add(const LoginFormStatusChanged(
+              formSubmissionStatus: InitialFormStatus()));
         }
       },
       child: Form(

@@ -49,6 +49,8 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
 
     final userData = await locator<AuthService>().authData;
 
+    print({"fromUserId": userData.userId, "message": event.message});
+
     try {
       await locator<HttpService>()
           .http

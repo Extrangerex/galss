@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
+import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
@@ -25,6 +26,19 @@ class SignupSeeker extends StatefulWidget {
 class _SignupSeekerState extends State<SignupSeeker> {
   final _formKey = GlobalKey<FormState>();
   final _dobController = TextEditingController();
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+
+  void showSnack(String title) {
+    final snackBar = SnackBar(
+        content: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 15,
+      ),
+    ));
+    scaffoldMessengerKey.currentState?.showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +52,26 @@ class _SignupSeekerState extends State<SignupSeeker> {
                   SignUpState(userType: UserType.seeker),
                 ))
       ],
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          title: const Image(
-            image: logo,
-            width: 50,
+      child: ScaffoldMessenger(
+        key: scaffoldMessengerKey,
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            title: const Image(
+              image: logo,
+              width: 50,
+            ),
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
           ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
+          body: ImagedBackgroundContainer(
+              child: SafeArea(
+            child: ListView(
+              children: [_signUpForm()],
+            ),
+          )),
         ),
-        body: ImagedBackgroundContainer(
-            child: SafeArea(
-          child: ListView(
-            children: [_signUpForm()],
-          ),
-        )),
       ),
     );
   }
@@ -63,9 +80,19 @@ class _SignupSeekerState extends State<SignupSeeker> {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state.formState is FormSuccessStatus) {
-          locator<NavigationService>().pushRemoveUntil(
-              '/signup/seeker/subscribe',
+          locator<NavigationService>().pushRemoveUntil('/',
               arguments: (state.formState as FormSuccessStatus).payload);
+        } else if (state.formState is FormFailedStatus) {
+          final data = state.formState as FormFailedStatus;
+
+          if (data.status == 409) {
+            showSnack('${S.current.oops}, ${S.current.email_in_use}');
+          } else if (data.status == 400) {
+            showSnack(
+                '${S.current.oops}, ${S.current.technically_there_is_nothing_wrong_but}');
+          } else {
+            showSnack('${S.current.oops}, ${S.current.something_went_wrong}');
+          }
         }
       },
       child: Form(
@@ -100,6 +127,11 @@ class _SignupSeekerState extends State<SignupSeeker> {
         return ElevatedButton(
             onPressed: () {
               if (!_formKey.currentState!.validate()) return;
+
+              if (!state.licenseTermsAccepted) {
+                showSnack(S.current.prompt_must_accept_terms_conditions);
+                return;
+              }
 
               context.read<SignUpBloc>().add(SignUpFormSubmitted());
             },
@@ -146,7 +178,8 @@ class _SignupSeekerState extends State<SignupSeeker> {
         DateTime.now().subtract(const Duration(days: 365 * 18));
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (blocContext, state) {
-        return GestureDetector(
+        return TextFormField(
+          controller: _dobController,
           onTap: () async {
             var result = await showDatePicker(
               context: blocContext,
@@ -165,13 +198,11 @@ class _SignupSeekerState extends State<SignupSeeker> {
               _dobController.text = DateFormat("yyyy-MM-dd").format(result);
             });
           },
-          child: TextFormField(
-            controller: _dobController,
-            validator: (value) =>
-                (value ?? "").isEmpty ? S.current.error_field_required : null,
-            decoration:
-                InputDecoration(enabled: false, hintText: S.current.birthdate),
-          ),
+          readOnly: true,
+          enableInteractiveSelection: false,
+          validator: (value) =>
+              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          decoration: InputDecoration(hintText: S.current.birthdate),
         );
       },
     );
@@ -210,22 +241,21 @@ class _SignupSeekerState extends State<SignupSeeker> {
   }
 
   Widget _countryField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(
+    return BlocBuilder<CountryBloc, CountryState>(
       builder: (context, state) {
         return ListTile(
-          title: Text(S.current.country),
-          subtitle: DropdownButton<Country>(
-              items: context
-                  .read<CountryBloc>()
-                  .state
-                  .countries
+          title: DropdownButtonFormField<Country>(
+              validator: (v) =>
+                  v == null ? S.current.error_field_required : null,
+              hint: Text(S.current.country),
+              items: state.countries
                   .map((e) => DropdownMenuItem<Country>(
                         child: Text(e.name!),
                         value: e,
                       ))
                   .toList(),
               isExpanded: true,
-              value: state.country,
+              value: context.read<SignUpBloc>().state.country,
               isDense: true,
               // hint: Text(S.current.country),
               onChanged: (v) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
+import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/blocs/signup/signup_bloc.dart';
 import 'package:galss/blocs/signup/signup_event.dart';
 import 'package:galss/blocs/signup/signup_state.dart';
@@ -25,34 +26,49 @@ class SignUpModel extends StatefulWidget {
 class _SignUpModelState extends State<SignUpModel> {
   final _formKey = GlobalKey<FormState>();
   final _dobController = TextEditingController();
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+
+  void showSnack(String title) {
+    final snackBar = SnackBar(
+        content: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 15,
+      ),
+    ));
+    scaffoldMessengerKey.currentState?.showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: const Image(
-          image: logo,
-          width: 75,
+    return ScaffoldMessenger(
+      key: scaffoldMessengerKey,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Image(
+            image: logo,
+            width: 75,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (create) => CountryBloc()..add(const FetchListCountry())),
-          BlocProvider(
-              create: (create) =>
-                  SignUpBloc(SignUpState(userType: UserType.model)))
-        ],
-        child: ImagedBackgroundContainer(
-            child: SizedBox(
-          // padding: const EdgeInsets.all(16.0),
-          child: _form(),
-        )),
+        extendBodyBehindAppBar: true,
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+                create: (create) =>
+                    CountryBloc()..add(const FetchListCountry())),
+            BlocProvider(
+                create: (create) =>
+                    SignUpBloc(SignUpState(userType: UserType.model)))
+          ],
+          child: ImagedBackgroundContainer(
+              child: SizedBox(
+            child: _form(),
+          )),
+        ),
       ),
     );
   }
@@ -64,6 +80,17 @@ class _SignUpModelState extends State<SignUpModel> {
           locator<NavigationService>()
               .pushRemoveUntil('/signup/model/succeded');
           return;
+        } else if (state.formState is FormFailedStatus) {
+          final data = state.formState as FormFailedStatus;
+
+          if (data.status == 409) {
+            showSnack('${S.current.oops}, ${S.current.email_in_use}');
+          } else if (data.status == 400) {
+            showSnack(
+                '${S.current.oops}, ${S.current.technically_there_is_nothing_wrong_but}');
+          } else {
+            showSnack('${S.current.oops}, ${S.current.something_went_wrong}');
+          }
         }
       },
       child: SingleChildScrollView(
@@ -71,11 +98,6 @@ class _SignUpModelState extends State<SignUpModel> {
           key: _formKey,
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Text(S.current.sign_up_form_for_galss_models),
-              // ),
-              // Text(S.current.fonts_with_asterisk_are_mandatory),
               const SizedBox(
                 height: 16,
               ),
@@ -94,9 +116,8 @@ class _SignUpModelState extends State<SignUpModel> {
               _countryField(),
               ListTile(title: _passwordField()),
               const SizedBox(
-                height: 60,
+                height: 120,
               ),
-              Text(S.current.prompt_terms_conditions),
               ListTile(title: _termsAndConditionsField()),
               _btnSubmit()
             ],
@@ -109,6 +130,8 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _nameField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
       return TextFormField(
+        validator: (value) =>
+            (value ?? "").isEmpty ? S.current.error_field_required : null,
         decoration: InputDecoration(hintText: S.current.name),
         onChanged: (v) =>
             context.read<SignUpBloc>().add(SignUpNameChanged(name: v)),
@@ -119,6 +142,9 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _passwordField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
       return TextFormField(
+        obscureText: true,
+        validator: (value) =>
+            (value ?? "").isEmpty ? S.current.error_field_required : null,
         decoration: InputDecoration(hintText: S.current.prompt_password),
         onChanged: (v) =>
             context.read<SignUpBloc>().add(SignUpPasswordChanged(password: v)),
@@ -129,6 +155,8 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _emailField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
       return TextFormField(
+        validator: (value) =>
+            (value ?? "").isEmpty ? S.current.error_field_required : null,
         decoration: InputDecoration(hintText: S.current.prompt_email),
         onChanged: (v) =>
             context.read<SignUpBloc>().add(SignUpEmailChanged(email: v)),
@@ -141,7 +169,7 @@ class _SignUpModelState extends State<SignUpModel> {
         DateTime.now().subtract(const Duration(days: 365 * 18));
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (blocContext, state) {
-        return GestureDetector(
+        return TextFormField(
           onTap: () async {
             var result = await showDatePicker(
               context: blocContext,
@@ -160,11 +188,11 @@ class _SignUpModelState extends State<SignUpModel> {
               _dobController.text = DateFormat("yyyy-MM-dd").format(result);
             });
           },
-          child: TextFormField(
-            controller: _dobController,
-            decoration:
-                InputDecoration(enabled: false, hintText: S.current.birthdate),
-          ),
+          validator: (value) =>
+              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          controller: _dobController,
+          readOnly: true,
+          decoration: InputDecoration(hintText: S.current.birthdate),
         );
       },
     );
@@ -180,6 +208,11 @@ class _SignUpModelState extends State<SignUpModel> {
         return ElevatedButton(
             onPressed: () {
               if (!_formKey.currentState!.validate()) return;
+
+              if (!state.licenseTermsAccepted) {
+                showSnack(S.current.prompt_must_accept_terms_conditions);
+                return;
+              }
 
               context.read<SignUpBloc>().add(SignUpFormSubmitted());
             },
@@ -211,22 +244,21 @@ class _SignUpModelState extends State<SignUpModel> {
   }
 
   Widget _countryField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(
+    return BlocBuilder<CountryBloc, CountryState>(
       builder: (context, state) {
         return ListTile(
-          title: Text(S.current.country),
-          subtitle: DropdownButton<Country>(
-              items: context
-                  .read<CountryBloc>()
-                  .state
-                  .countries
+          subtitle: DropdownButtonFormField<Country>(
+              validator: (v) =>
+                  v == null ? S.current.error_field_required : null,
+              hint: Text(S.current.country),
+              items: state.countries
                   .map((e) => DropdownMenuItem<Country>(
                         child: Text(e.name!),
                         value: e,
                       ))
                   .toList(),
               isExpanded: true,
-              value: state.country,
+              value: context.read<SignUpBloc>().state.country,
               isDense: true,
               onChanged: (v) {
                 if (v == null) return;
@@ -234,36 +266,6 @@ class _SignUpModelState extends State<SignUpModel> {
                     .read<SignUpBloc>()
                     .add(SignUpCountryChanged(country: v));
               }),
-        );
-
-        return Theme(
-          data: ThemeData(brightness: Brightness.light),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(S.current.country),
-              DropdownButton<Country>(
-                  items: context
-                      .read<CountryBloc>()
-                      .state
-                      .countries
-                      .map((e) => DropdownMenuItem<Country>(
-                            child: Text(e.name!),
-                            value: e,
-                          ))
-                      .toList(),
-                  isExpanded: true,
-                  value: state.country,
-                  hint: Text(S.current.country),
-                  isDense: true,
-                  onChanged: (v) {
-                    if (v == null) return;
-                    context
-                        .read<SignUpBloc>()
-                        .add(SignUpCountryChanged(country: v));
-                  }),
-            ],
-          ),
         );
       },
     );

@@ -97,5 +97,9 @@
   "your_favorites": "Your favorites",
   "greeting": "Hey",
   "not_valid_username_password": "Sorry, we can't find an account with this email address. Please try again or create a new one",
-  "something_went_wrong": "Something went wrong"
+  "something_went_wrong": "Something went wrong",
+  "you_must_specify_country": "",
+  "email_in_use": "",
+  "technically_there_is_nothing_wrong_but": "",
+  "error_inactive_account": ""
   }

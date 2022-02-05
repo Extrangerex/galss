@@ -749,6 +749,46 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get you_must_specify_country {
+    return Intl.message(
+      '',
+      name: 'you_must_specify_country',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get email_in_use {
+    return Intl.message(
+      '',
+      name: 'email_in_use',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get technically_there_is_nothing_wrong_but {
+    return Intl.message(
+      '',
+      name: 'technically_there_is_nothing_wrong_but',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get error_inactive_account {
+    return Intl.message(
+      '',
+      name: 'error_inactive_account',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
