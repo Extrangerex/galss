@@ -127,6 +127,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
         "you_have_n_connections": m1,
         "you_talking_with_n": m2,
+        "your_favorites":
+            MessageLookupByLibrary.simpleMessage("Tus favoritas/os"),
+        "your_likes": MessageLookupByLibrary.simpleMessage("Tus likes"),
         "your_request_was_received_see_you_in_48hr":
             MessageLookupByLibrary.simpleMessage(
                 "Su Solicitud fue recibida correctamente. \n Antes de las 48 horas le estaremos \n confirmando.")

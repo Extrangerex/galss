@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
@@ -9,6 +10,9 @@ import 'package:galss/blocs/home_model/home_model_bloc.dart';
 import 'package:galss/blocs/home_model/home_model_event.dart';
 import 'package:galss/blocs/home_model/home_model_state.dart';
 import 'package:galss/generated/l10n.dart';
+import 'package:galss/modals/edit_current_location_modal.dart';
+import 'package:galss/modals/edit_name_modal.dart';
+import 'package:galss/modals/edit_profile_status_modal.dart';
 import 'package:galss/models/photo.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/services/http_service.dart';
@@ -30,39 +34,23 @@ class HomeModelLanding extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              carouselSlider(),
-              Column(
-                children: [
-                  _addPhotoBtn(),
-                ],
-              ),
-              _nameTile(),
-              _locationTile(),
-              _nationalityTile(),
-              // Row(
-              //   children: [_nameTile(), _locationTile()],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [_nationalityTile()],
-              // ),
-              _description(),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Expanded(child: _editProfileBtn(context: context)),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(child: _connectionsBtn(context: context))
-                ],
-              )
-            ],
-          ),
+          child: ListView(children: [
+            carouselSlider(),
+            Column(
+              children: [
+                _addPhotoBtn(),
+              ],
+            ),
+            _nameTile(),
+            _locationTile(),
+            _nationalityTile(),
+            _description(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [Flexible(child: _likesCount())],
+            )
+          ]),
         ),
       ),
     );
@@ -89,7 +77,12 @@ class HomeModelLanding extends StatelessWidget {
   }
 
   Widget _addPhotoBtn() {
-    return BlocBuilder<HomeModelBloc, HomeModelState>(
+    return BlocListener<HomeModelBloc, HomeModelState>(
+        listener: (context, state) {
+      if (state.fetchStatus is ApiFetchSuccededStatus) {
+        context.read<UserBloc>().add(const FetchUserData());
+      }
+    }, child: BlocBuilder<HomeModelBloc, HomeModelState>(
       builder: (context, state) {
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -109,14 +102,8 @@ class HomeModelLanding extends StatelessWidget {
               label: Text(S.current.add_photo)),
         );
       },
-    );
+    ));
   }
-
-  Widget _listTile({required String title, required String subtitle}) =>
-      ListTile(
-        title: Text(title),
-        subtitle: Text(subtitle),
-      );
 
   Widget _editProfileBtn({required BuildContext context}) => ElevatedButton(
       style: ButtonStyle(
@@ -137,33 +124,110 @@ class HomeModelLanding extends StatelessWidget {
 
   Widget _nameTile() => BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
+          handleNameChange() {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (builder) => const EditNameModal()).then((_) {
+              context.read<UserBloc>().add(const FetchUserData());
+            });
+          }
+
           var name = state.user?.model?.fullName ?? "";
-          return _listTile(title: S.current.name, subtitle: name);
+          return ListTile(
+            title: Text(S.current.name),
+            subtitle: Text(name),
+            trailing: const Icon(Icons.edit),
+            onTap: () => handleNameChange(),
+          );
         },
       );
 
   Widget _locationTile() => BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
+          handleEditCurrentLocation() {
+            showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (builder) =>
+                        EditCurrentLocationModal(country: state.user!.country!))
+                .then((_) {
+              context.read<UserBloc>().add(const FetchUserData());
+            });
+          }
+
           var name = state.user?.currentLocation?.name ?? "";
-          return _listTile(title: S.current.current_location, subtitle: name);
+          return ListTile(
+            title: Text(S.current.current_location),
+            subtitle: Text(name),
+            trailing: const Icon(Icons.edit),
+            onTap: () => handleEditCurrentLocation(),
+          );
         },
       );
 
   Widget _nationalityTile() => BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           var name = state.user?.country?.name ?? "";
-          return _listTile(title: S.current.nationality, subtitle: name);
-        },
-      );
-
-  Widget _description() => BlocBuilder<UserBloc, UserState>(
-        builder: (context, state) {
-          var profileStatus = state.user?.profileStatus ?? "";
-
           return ListTile(
-            tileColor: Theme.of(context).primaryColor,
-            title: Text(profileStatus),
-          );
+              title: Text(S.current.nationality), subtitle: Text(name));
         },
       );
+
+  Widget _likesCount() {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        var likesCount = state.user?.model?.likesCount ?? 0;
+
+        return Card(
+          child: ListTile(
+
+            // tileColor: Theme.of(context).primaryColor,
+              title: Text(likesCount.toString()),
+              leading: const Icon(FontAwesomeIcons.heart)),
+        );
+      },
+    );
+  }
+
+  // Widget _favCount() {
+  //   return BlocBuilder<UserBloc, UserState>(
+  //     builder: (context, state) {
+  //       var likesCount = state.user;
+  //
+  //       return Card(
+  //         child: ListTile(
+  //
+  //           // tileColor: Theme.of(context).primaryColor,
+  //             title: Text(likesCount.toString()),
+  //             leading: const Icon(FontAwesomeIcons.heart)),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Widget _description() {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        var profileStatus = state.user?.profileStatus ?? "";
+
+        handleDescriptionChange() {
+          showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (builder) => const EditProfileStatusModal()).then((_) {
+            context.read<UserBloc>().add(const FetchUserData());
+          });
+        }
+
+        return ListTile(
+          // tileColor: Theme.of(context).primaryColor,
+          title: Text(S.current.profile_status),
+          subtitle: Text(profileStatus),
+          trailing: const Icon(Icons.edit),
+          onTap: () => handleDescriptionChange(),
+        );
+      },
+    );
+  }
 }

@@ -122,9 +122,9 @@ class _ChatRoomState extends State<ChatRoom> {
         itemCount: state.chatMessages.length,
         itemBuilder: (context, index) {
           var item = state.chatMessages[index];
-          var isCreator = partner?.user?.id != item.userId;
+          var somebody = item.userId != context.read<UserBloc>().state.user?.id;
 
-          if (isCreator) {
+          if (somebody) {
             return ListTile(
               title: Bubble(
                 style: styleSomebody,
@@ -144,14 +144,17 @@ class _ChatRoomState extends State<ChatRoom> {
     });
   }
 
-  ChatMembers? get partner {
-    return widget.chat.chatMembers
-        ?.singleWhere((element) => element.isCreator == false);
-  }
-
   Widget title() {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-      return Text(S.current.you_talking_with_n("${partner?.user?.fullName}"));
+
+
+
+      User? getChatFriend() {
+        return widget.chat.chatMembers?.firstWhere((element) => element.user?.id != state.user?.id).user;
+      }
+
+
+      return Text(S.current.you_talking_with_n("${getChatFriend()?.fullName}"));
     });
   }
 }

@@ -15,6 +15,7 @@ import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/input_container.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:intl/intl.dart';
 
 class SignUpModel extends StatefulWidget {
   const SignUpModel({Key? key}) : super(key: key);
@@ -44,8 +45,7 @@ class _SignUpModelState extends State<SignUpModel> {
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (create) =>
-                  CountryBloc()..add(const FetchListCountry())),
+              create: (create) => CountryBloc()..add(const FetchListCountry())),
           BlocProvider(
               create: (create) =>
                   SignUpBloc(SignUpState(userType: UserType.model)))
@@ -69,56 +69,70 @@ class _SignUpModelState extends State<SignUpModel> {
         }
       },
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(S.current.sign_up_form_for_galss_models),
-            // ),
-            // Text(S.current.fonts_with_asterisk_are_mandatory),
-            const SizedBox(
-              height: 16,
-            ),
-            InputContainer(
-              child: Row(
-                children: [
-                  Flexible(child: _nameField()),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(child: _dobField()),
-                ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Text(S.current.sign_up_form_for_galss_models),
+              // ),
+              // Text(S.current.fonts_with_asterisk_are_mandatory),
+              const SizedBox(
+                height: 16,
               ),
-            ),
-            InputContainer(child: _emailField()),
-            InputContainer(child: _countryField()),
-            InputContainer(child: _passwordField()),
-            Text(S.current.prompt_terms_conditions),
-            InputContainer(child: _termsAndConditionsField()),
-            _btnSubmit()
-          ],
+              InputContainer(
+                child: Row(
+                  children: [
+                    Flexible(child: _nameField()),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(child: _dobField()),
+                  ],
+                ),
+              ),
+              InputContainer(child: _emailField()),
+              InputContainer(child: _countryField()),
+              InputContainer(child: _passwordField()),
+              Text(S.current.prompt_terms_conditions),
+              InputContainer(child: _termsAndConditionsField()),
+              _btnSubmit()
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _nameField() {
-    return TextFormField(
-      decoration: InputDecoration(hintText: S.current.name),
-    );
+    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+      return TextFormField(
+        decoration: InputDecoration(hintText: S.current.name),
+        onChanged: (v) =>
+            context.read<SignUpBloc>().add(SignUpNameChanged(name: v)),
+      );
+    });
   }
 
   Widget _passwordField() {
-    return TextFormField(
-      obscureText: true,
-      decoration: InputDecoration(hintText: S.current.prompt_password),
-    );
+    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+      return TextFormField(
+        decoration: InputDecoration(hintText: S.current.prompt_password),
+        onChanged: (v) =>
+            context.read<SignUpBloc>().add(SignUpPasswordChanged(password: v)),
+      );
+    });
   }
 
   Widget _emailField() {
-    return TextFormField(
-      decoration: InputDecoration(hintText: S.current.prompt_email),
-    );
+    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+      return TextFormField(
+        decoration: InputDecoration(hintText: S.current.prompt_email),
+        onChanged: (v) =>
+            context.read<SignUpBloc>().add(SignUpEmailChanged(email: v)),
+      );
+    });
   }
 
   Widget _dobField() {
@@ -142,7 +156,7 @@ class _SignUpModelState extends State<SignUpModel> {
                 .add(SignUpDateOfBirthChanged(dob: result));
 
             setState(() {
-              _dobController.text = result.toString();
+              _dobController.text = DateFormat("yyyy-MM-dd").format(result);
             });
           },
           child: TextFormField(
@@ -214,7 +228,6 @@ class _SignUpModelState extends State<SignUpModel> {
                             value: e,
                           ))
                       .toList(),
-                  // underline: const SizedBox.shrink(),
                   isExpanded: true,
                   value: state.country,
                   hint: Text(S.current.country),

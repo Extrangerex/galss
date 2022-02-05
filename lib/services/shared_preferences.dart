@@ -13,6 +13,15 @@ class SharedPreferencesService {
   }
 
   /// ----------------------------------------------------------
+  /// Delete an item
+  /// ----------------------------------------------------------
+  Future<bool?> deleteItem(String name) async {
+    final SharedPreferences prefs = await _prefs;
+
+    return prefs.remove(name);
+  }
+
+  /// ----------------------------------------------------------
   /// Generic routine to saves an application preference
   /// ----------------------------------------------------------
   Future<bool> setItem(String name, String value) async {

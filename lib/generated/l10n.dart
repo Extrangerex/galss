@@ -699,6 +699,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Likes`
+  String get your_likes {
+    return Intl.message(
+      'Likes',
+      name: 'your_likes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your favorites`
+  String get your_favorites {
+    return Intl.message(
+      'Your favorites',
+      name: 'your_favorites',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

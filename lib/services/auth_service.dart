@@ -19,4 +19,10 @@ class AuthService {
 
     return ApiLogin.fromJson(jsonDecode(jsonString ?? "{}"));
   }
+
+  Future<bool> signOut() async {
+    return (await locator<SharedPreferencesService>()
+            .deleteItem(SharedPrefs.authData) ??
+        false);
+  }
 }

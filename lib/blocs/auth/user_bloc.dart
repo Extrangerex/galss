@@ -167,6 +167,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
     } catch (e) {
+      print(e.toString());
       emit(state.copyWith(
           actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
     }

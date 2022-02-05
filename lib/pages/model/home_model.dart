@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/blocs/auth/user_bloc.dart';
+import 'package:galss/blocs/auth/user_events.dart';
+import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/blocs/home_model/home_model_bloc.dart';
 import 'package:galss/blocs/navigation/navigation_bloc.dart';
 import 'package:galss/blocs/navigation/navigation_event.dart';
@@ -8,9 +11,15 @@ import 'package:galss/generated/l10n.dart';
 import 'package:galss/pages/model/home_model_connections.dart';
 import 'package:galss/pages/model/home_model_landing.dart';
 import 'package:galss/pages/model/home_model_profile.dart';
+import 'package:galss/services/auth_service.dart';
+import 'package:galss/services/http_service.dart';
+import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/cached_circle_avatar.dart';
 import 'package:galss/shared/drawer_list_item.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/variables.dart';
+
+import '../../main.dart';
 
 class HomeModel extends StatefulWidget {
   const HomeModel({Key? key}) : super(key: key);
@@ -28,8 +37,9 @@ class _HomeModelState extends State<HomeModel> {
             create: (context) => NavigationBloc()
               ..add(const DrawerWidgetChangedEvent(
                   newIndex: 0, newWidget: HomeModelLanding()))),
+        BlocProvider(create: (context) => HomeModelBloc()),
         BlocProvider(
-          create: (context) => HomeModelBloc(),
+          create: (context) => UserBloc()..add(const FetchUserData()),
         )
       ],
       child: Scaffold(
@@ -56,6 +66,21 @@ class _HomeModelState extends State<HomeModel> {
     );
   }
 
+  Widget header() {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        return UserAccountsDrawerHeader(
+          accountName: Text(state.user?.fullName ?? S.current.not_specified),
+          accountEmail: null,
+          currentAccountPicture: CachedCircleAvatar(
+            url:
+                "${HttpService.apiBaseUrl}/${state.user?.profilePhoto?.urlPath}",
+          ),
+        );
+      },
+    );
+  }
+
   Widget _drawer() {
     return Drawer(
       child: BlocBuilder<NavigationBloc, NavigationState>(
@@ -64,33 +89,43 @@ class _HomeModelState extends State<HomeModel> {
 
           return ListView(
             children: [
+              header(),
               DrawerListItem(
                 label: S.current.home,
                 selected: index == 0,
                 onPressed: () {
-                  context.read<NavigationBloc>().add(const DrawerWidgetChangedEvent(
-                      newIndex: 0, newWidget: HomeModelLanding()));
+                  context.read<NavigationBloc>().add(
+                      const DrawerWidgetChangedEvent(
+                          newIndex: 0, newWidget: HomeModelLanding()));
                 },
               ),
-              DrawerListItem(
-                label: S.current.my_profile,
-                onPressed: () {
-                  context.read<NavigationBloc>().add(const DrawerWidgetChangedEvent(
-                      newIndex: 1, newWidget: HomeModelProfile()));
-                },
-                selected: index == 1,
-              ),
+              // DrawerListItem(
+              //   label: S.current.my_profile,
+              //   onPressed: () {
+              //     context.read<NavigationBloc>().add(
+              //         const DrawerWidgetChangedEvent(
+              //             newIndex: 1, newWidget: HomeModelProfile()));
+              //   },
+              //   selected: index == 1,
+              // ),
               DrawerListItem(
                 label: S.current.my_connections,
                 onPressed: () {
-                  context.read<NavigationBloc>().add(const DrawerWidgetChangedEvent(
-                      newIndex: 1, newWidget: HomeModelConnections()));
+                  context.read<NavigationBloc>().add(
+                      const DrawerWidgetChangedEvent(
+                          newIndex: 1, newWidget: HomeModelConnections()));
                 },
                 selected: index == 2,
               ),
               DrawerListItem(
                 label: S.current.exit,
-                onPressed: () {},
+                onPressed: () {
+                  locator<AuthService>().signOut().then((value) {
+                    if (value) {
+                      return locator<NavigationService>().pushRemoveUntil('/');
+                    }
+                  });
+                },
               )
             ],
           );

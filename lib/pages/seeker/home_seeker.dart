@@ -12,7 +12,10 @@ import 'package:galss/pages/seeker/home_seeker_catalog.dart';
 import 'package:galss/pages/seeker/home_seeker_close_me.dart';
 import 'package:galss/pages/seeker/home_seeker_connections.dart';
 import 'package:galss/pages/seeker/home_seeker_dashboard.dart';
+import 'package:galss/pages/seeker/home_seeker_favorites.dart';
+import 'package:galss/pages/seeker/home_seeker_likes.dart';
 import 'package:galss/pages/seeker/home_seeker_profile.dart';
+import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/drawer_list_item.dart';
@@ -135,7 +138,14 @@ class _HomeSeekerState extends State<HomeSeeker> {
                         ),
                         DrawerListItem(
                           label: S.current.exit,
-                          onPressed: () {},
+                          onPressed: () {
+                            locator<AuthService>().signOut().then((value) {
+                              if (value) {
+                                return locator<NavigationService>()
+                                    .pushRemoveUntil('/');
+                              }
+                            });
+                          },
                         ),
                       ],
                     );
@@ -163,23 +173,54 @@ class _HomeSeekerState extends State<HomeSeeker> {
                       icon: const Icon(Icons.chat))
                 ],
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                unselectedFontSize: 0,
-                selectedFontSize: 0,
-                currentIndex: 1,
-                iconSize: 28,
-                unselectedIconTheme:
-                    IconThemeData(color: Theme.of(context).primaryColor),
-                selectedIconTheme: IconThemeData(color: Colors.grey.shade500),
-                items: const [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: 'null'),
-                  BottomNavigationBarItem(
-                      icon: FaIcon(FontAwesomeIcons.heart), label: 'null'),
-                  BottomNavigationBarItem(icon: Icon(Icons.star), label: 'null')
-                ],
-                backgroundColor: Colors.white,
-              ),
+              bottomNavigationBar: BlocBuilder<NavigationBloc, NavigationState>(
+                  builder: (context, state) {
+                int currentIndex() {
+                  if (state.navigationIndex == 5) {
+                    return 1;
+                  } else if (state.navigationIndex == 6) {
+                    return 2;
+                  }
+
+                  return 0;
+                }
+
+                return BottomNavigationBar(
+                  unselectedFontSize: 0,
+                  selectedFontSize: 0,
+                  currentIndex: currentIndex(),
+                  iconSize: 28,
+                  onTap: (item) {
+                    if (item == 1) {
+                      context.read<NavigationBloc>().add(
+                          const DrawerWidgetChangedEvent(
+                              newIndex: 5, newWidget: HomeSeekerLikes()));
+                    } else if (item == 2) {
+                      context.read<NavigationBloc>().add(
+                          const DrawerWidgetChangedEvent(
+                              newIndex: 6, newWidget: HomeSeekerFavorites()));
+                    } else {
+                      context.read<NavigationBloc>().add(
+                          DrawerWidgetChangedEvent(
+                              newIndex: 0,
+                              newWidget: HomeSeekerDashboard(
+                                  drawerBloc: context.read<NavigationBloc>())));
+                    }
+                  },
+                  unselectedIconTheme:
+                      IconThemeData(color: Theme.of(context).primaryColor),
+                  selectedIconTheme: IconThemeData(color: Colors.grey.shade500),
+                  items: const [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.home), label: 'null'),
+                    BottomNavigationBarItem(
+                        icon: FaIcon(FontAwesomeIcons.heart), label: 'null'),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.star), label: 'null')
+                  ],
+                  backgroundColor: Colors.white,
+                );
+              }),
               body: BlocBuilder<NavigationBloc, NavigationState>(
                 builder: (context, state) {
                   if (state.navigationWidget == null) {

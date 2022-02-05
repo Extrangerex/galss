@@ -92,5 +92,7 @@
   "cancel": "Cancel",
   "change_current_location": "Change current location",
   "pick_a_city": "Pick city",
-  "add_new_name": "Add a new name"
+  "add_new_name": "Add a new name",
+  "your_likes": "Likes",
+  "your_favorites": "Your favorites"
   }

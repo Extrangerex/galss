@@ -102,6 +102,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "yearly": MessageLookupByLibrary.simpleMessage(""),
         "you_have_n_connections": m1,
         "you_talking_with_n": m2,
+        "your_favorites":
+            MessageLookupByLibrary.simpleMessage("Your favorites"),
+        "your_likes": MessageLookupByLibrary.simpleMessage("Likes"),
         "your_request_was_received_see_you_in_48hr":
             MessageLookupByLibrary.simpleMessage("")
       };

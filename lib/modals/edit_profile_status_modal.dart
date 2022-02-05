@@ -60,11 +60,13 @@ class _EditProfileStatusModalState extends State<EditProfileStatusModal> {
                 Row(
                   children: [
                     const Spacer(),
-                    TextButton(
-                        onPressed: () {
-                          handleChangeProfileStatus(context);
-                        },
-                        child: Text(S.current.save)),
+                    BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                      return TextButton(
+                          onPressed: () {
+                            handleChangeProfileStatus(context);
+                          },
+                          child: Text(S.current.save));
+                    }),
                     const SizedBox(
                       width: 10,
                     ),

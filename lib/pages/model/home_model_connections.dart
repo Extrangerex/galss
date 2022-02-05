@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galss/blocs/auth/user_bloc.dart';
+import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/chats/chat_bloc.dart';
 import 'package:galss/blocs/chats/chat_event.dart';
 import 'package:galss/blocs/chats/chat_state.dart';
@@ -9,6 +11,7 @@ import 'package:galss/main.dart';
 import 'package:galss/pages/chat_room.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/cached_circle_avatar.dart';
 import 'package:galss/shared/images.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/variables.dart';
@@ -26,7 +29,8 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (create) => ChatBloc()..add(const ChatGetChatsEvent()))
+            create: (create) => ChatBloc()..add(const ChatGetChatsEvent())),
+        BlocProvider(create: (create) => UserBloc()..add(const FetchUserData()))
       ],
       child: Theme(
         data: ThemeData.light(),
@@ -60,21 +64,17 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
         itemBuilder: (context, index) {
           var e = state.rooms[index];
           var chatFriend = e.chatMembers
-              ?.singleWhere((element) => element.isCreator == false);
+              ?.singleWhere((element) => element.isCreator == true);
 
           return ListTile(
-
             onTap: () {
-              locator<NavigationService>().navigatorKey.currentState?.push(MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
+              locator<NavigationService>().navigatorKey.currentState?.push(
+                  MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
             },
-            leading: CircleAvatar(
-              backgroundColor: Colors.black12,
-              child: CachedNetworkImage(
-                imageUrl:
-                    "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto}",
-                errorWidget: (context, url, error) =>
-                    CircleAvatar(backgroundImage: profilePlaceholderImage),
-              ),
+            leading: CachedCircleAvatar(
+              url:
+                  "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}",
+              imgRadius: null,
             ),
             title: Text("${chatFriend?.user?.seeker?.fullName}"),
             subtitle: Column(
