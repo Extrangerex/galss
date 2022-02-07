@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:galss/api_fetch_status.dart';
@@ -17,11 +16,11 @@ import 'package:galss/blocs/country/country_event.dart';
 import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
-import 'package:galss/models/photo.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/pages/seeker/home_seeker_connections.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/carousel_with_indicators.dart';
 import 'package:galss/shared/full_screen_image.dart';
 import 'package:galss/shared/toggle_favorite_model.dart';
 import 'package:galss/shared/toggle_like_model.dart';
@@ -125,7 +124,6 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
                       ),
                       BlocListener<ChatRoomBloc, ChatRoomState>(
                         listener: (context, state) {
-                          // TODO: implement listener
                           if (state.greetingFetchStatus
                               is ApiFetchSuccededStatus) {
                             locator<NavigationService>()
@@ -210,33 +208,37 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       var photos = state.user?.photos ?? [];
 
-      return CarouselSlider(
-          items: photos
-              .map((e) => GestureDetector(
-                    onTap: () {
-                      locator<NavigationService>()
-                          .navigatorKey
-                          .currentState
-                          ?.push(MaterialPageRoute(builder: (_) {
-                        return FullScreenImage(
-                          imageUrl: "${HttpService.apiBaseUrl}/${e.urlPath!}",
-                          tag: e.fileName.toString(),
-                        );
-                      }));
-                    },
-                    child: Hero(
-                      tag: e.fileName.toString(),
-                      child: SizedBox.expand(
-                        child: Image.network(
-                          "${HttpService.apiBaseUrl}/${e.urlPath!}",
-                          fit: BoxFit.cover,
+      return Theme(
+        data: ThemeData.light(),
+        child: CarouselWithIndicator(
+            items: photos
+                .map((e) => GestureDetector(
+                      onTap: () {
+                        locator<NavigationService>()
+                            .navigatorKey
+                            .currentState
+                            ?.push(MaterialPageRoute(builder: (_) {
+                          return FullScreenImage(
+                            imageUrl: "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                            tag: e.fileName.toString(),
+                          );
+                        }));
+                      },
+                      child: Hero(
+                        tag: e.fileName.toString(),
+                        child: SizedBox.expand(
+                          child: Image.network(
+                            "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                          ),
                         ),
                       ),
-                    ),
-                  ))
-              .toList(),
-          options: CarouselOptions(
-              height: 300, viewportFraction: 1, enableInfiniteScroll: false));
+                    ))
+                .toList(),
+            options: CarouselOptions(
+                height: 300, viewportFraction: 1, enableInfiniteScroll: false)),
+      );
     });
   }
 }

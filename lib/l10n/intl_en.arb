@@ -82,6 +82,16 @@
     }
     }
   },
+  "n_people_liked_you": "{likesCount} people liked you",
+  "@n_people_liked_you": {
+    "description": "Show likes count of a model",
+    "placeholders": {
+    "likesCount": {
+    "type": "int",
+    "example": "10"
+    }
+    }
+  },
   "unknown_city": "Unknown city",
   "not_specified": "Not specified",
   "edit_profile": "Edit your profile",

@@ -600,6 +600,16 @@ class S {
     );
   }
 
+  /// `{likesCount} people liked you`
+  String n_people_liked_you(int likesCount) {
+    return Intl.message(
+      '$likesCount people liked you',
+      name: 'n_people_liked_you',
+      desc: 'Show likes count of a model',
+      args: [likesCount],
+    );
+  }
+
   /// `Unknown city`
   String get unknown_city {
     return Intl.message(

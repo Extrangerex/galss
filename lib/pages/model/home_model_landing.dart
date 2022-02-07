@@ -21,10 +21,13 @@ import 'package:galss/models/photo.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/carousel_with_indicators.dart';
 import 'package:galss/shared/full_screen_image.dart';
 import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/variables.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'home_model_connections.dart';
 
 class HomeModelLanding extends StatelessWidget {
   const HomeModelLanding({Key? key}) : super(key: key);
@@ -40,34 +43,36 @@ class HomeModelLanding extends StatelessWidget {
             create: (create) => ChatBloc()..add(const ChatGetChatsEvent()))
       ],
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(children: [
-            carouselSlider(),
-            Column(
-              children: [
-                _addPhotoBtn(),
-              ],
-            ),
-            _nameTile(),
-            _locationTile(),
-            _nationalityTile(),
-            _description(),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(child: _likesCount()),
-                const SizedBox(
-                  width: 10,
-                ),
-                Flexible(child: chatCount())
-              ],
-            )
-          ]),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(children: [
+              carouselSlider(),
+              Column(
+                children: [
+                  _addPhotoBtn(),
+                ],
+              ),
+              _nameTile(),
+              _locationTile(),
+              _nationalityTile(),
+              _description(),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(child: _likesCount()),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(child: chatCount())
+                ],
+              )
+            ]),
+          ),
         ),
       ),
     );
@@ -78,7 +83,7 @@ class HomeModelLanding extends StatelessWidget {
       builder: (context, state) {
         List<Photo> photos = state.user?.photos ?? [];
 
-        return CarouselSlider(
+        return CarouselWithIndicator(
             items: photos
                 .map((e) => GestureDetector(
                       onTap: () {
@@ -105,7 +110,7 @@ class HomeModelLanding extends StatelessWidget {
                     ))
                 .toList(),
             options: CarouselOptions(
-                height: 200, viewportFraction: 1, enableInfiniteScroll: false));
+                viewportFraction: 1, enableInfiniteScroll: false));
       },
     );
   }
@@ -115,18 +120,25 @@ class HomeModelLanding extends StatelessWidget {
       builder: (context, state) {
         final chatCount = state.rooms.length;
 
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.chat,
-                size: 32,
+        return InkWell(
+          onTap: () {
+            locator<NavigationService>().navigatorKey.currentState?.push(
+                MaterialPageRoute(
+                    builder: (builder) => const HomeModelConnections()));
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.chat,
+                  size: 32,
+                ),
               ),
-            ),
-            Text(chatCount.toString())
-          ],
+              Text(chatCount.toString())
+            ],
+          ),
         );
       },
     );
@@ -218,18 +230,35 @@ class HomeModelLanding extends StatelessWidget {
       builder: (context, state) {
         var likesCount = state.user?.model?.likesCount ?? 0;
 
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                FontAwesomeIcons.heart,
-                size: 32,
+        return InkWell(
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (builder) => Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                child: ListTile(
+                    leading: Icon(
+                      FontAwesomeIcons.solidHeart,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    title: Text(S.current.n_people_liked_you(likesCount))),
               ),
-            ),
-            Text(likesCount.toString())
-          ],
+            );
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  FontAwesomeIcons.heart,
+                  size: 32,
+                ),
+              ),
+              Text(likesCount.toString())
+            ],
+          ),
         );
       },
     );

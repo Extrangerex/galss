@@ -36,7 +36,15 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
             elevation: 0,
             centerTitle: true,
           ),
-          body: _rooms(),
+          body: BlocBuilder<ChatBloc, ChatState>(
+            builder: (context, state) {
+              return RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<ChatBloc>().add(const ChatGetChatsEvent());
+                  },
+                  child: _rooms());
+            },
+          ),
         ),
       ),
     );
@@ -60,22 +68,22 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
           var chatFriend = e.chatMembers
               ?.singleWhere((element) => element.isCreator == true);
 
-          return ListTile(
-            onTap: () {
-              locator<NavigationService>().navigatorKey.currentState?.push(
-                  MaterialPageRoute(builder: (builder) => ChatRoom(chat: e)));
-            },
-            leading: CachedCircleAvatar(
-              url:
-                  "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}",
-              imgRadius: null,
-            ),
-            title: Text("${chatFriend?.user?.seeker?.fullName}"),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text("${e.lastMessage}"), const Divider()],
-            ),
-            isThreeLine: true,
+          return Container(
+            decoration: const BoxDecoration(
+                border: Border(bottom: BorderSide(width: .25))),
+            child: ListTile(
+                onTap: () {
+                  locator<NavigationService>().navigatorKey.currentState?.push(
+                      MaterialPageRoute(
+                          builder: (builder) => ChatRoom(chat: e)));
+                },
+                leading: CachedCircleAvatar(
+                  url:
+                      "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}",
+                  imgRadius: null,
+                ),
+                title: Text("${chatFriend?.user?.seeker?.fullName}"),
+                subtitle: Text("${e.lastMessage}")),
           );
         },
       );

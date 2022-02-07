@@ -7,10 +7,16 @@ class CachedCircleAvatar extends StatelessWidget {
   final double? imgRadius;
   final String url;
 
-  const CachedCircleAvatar({Key? key, required this.url, this.imgRadius = 64}) : super(key: key);
+  const CachedCircleAvatar({Key? key, required this.url, this.imgRadius = 64})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final placeHolder = CircleAvatar(
+      backgroundImage: profilePlaceholderImage,
+      radius: imgRadius,
+    );
+
     // TODO: implement build
     return CachedNetworkImage(
       imageBuilder: (context, imageProvider) => CircleAvatar(
@@ -18,10 +24,8 @@ class CachedCircleAvatar extends StatelessWidget {
         radius: imgRadius,
       ),
       imageUrl: url,
-      errorWidget: (context, url, error) => CircleAvatar(
-        backgroundImage: profilePlaceholderImage,
-        radius: imgRadius,
-      ),
+      placeholder: (context, url) => placeHolder,
+      errorWidget: (context, url, error) => placeHolder,
     );
   }
 }

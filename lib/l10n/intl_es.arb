@@ -84,6 +84,17 @@
     }
     }
   },
+  
+  "n_people_liked_you": "Les has gustado a {likesCount} personas",
+  "@n_people_liked_you": {
+    "description": "Muestra la cantidad de likes a una modelo",
+    "placeholders": {
+    "likesCount": {
+    "type": "int",
+    "example": "10"
+    }
+    }
+  },
   "unknown_city": "Ciudad desconocida",
   "edit_profile": "Editar tu perfil",
   "switch_anonymous_mode": "Poner perfil anónimo",

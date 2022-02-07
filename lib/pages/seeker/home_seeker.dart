@@ -51,190 +51,221 @@ class _HomeSeekerState extends State<HomeSeeker> {
       ],
       child: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
-          return Scaffold(
-              onDrawerChanged: (isOpened) {
-                if (isOpened) {
-                  context.read<UserBloc>().add(const FetchUserData());
-                }
-              },
-              drawer: Drawer(
-                child: BlocBuilder<NavigationBloc, NavigationState>(
-                  builder: (context, state) {
-                    return ListView(
-                      children: [
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            return UserAccountsDrawerHeader(
-                              accountEmail: null,
-                              accountName: Text(state.user?.fullName ??
-                                  S.current.not_specified),
-                              currentAccountPicture: CachedNetworkImage(
-                                imageBuilder: (context, imageProvider) =>
-                                    CircleAvatar(
-                                  backgroundImage: imageProvider,
-                                  radius: imgRadius,
+          return WillPopScope(
+            onWillPop: () async {
+              return false;
+            },
+            child: Scaffold(
+                onDrawerChanged: (isOpened) {
+                  if (isOpened) {
+                    context.read<UserBloc>().add(const FetchUserData());
+                  }
+                },
+                drawer: Drawer(
+                  child: BlocBuilder<NavigationBloc, NavigationState>(
+                    builder: (context, state) {
+                      return ListView(
+                        children: [
+                          BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
+                              return UserAccountsDrawerHeader(
+                                accountEmail: null,
+                                accountName: Text(state.user?.fullName ??
+                                    S.current.not_specified),
+                                currentAccountPicture: CachedNetworkImage(
+                                  imageBuilder: (context, imageProvider) =>
+                                      CircleAvatar(
+                                    backgroundImage: imageProvider,
+                                    radius: imgRadius,
+                                  ),
+                                  imageUrl:
+                                      "${HttpService.apiBaseUrl}/${state.user?.profilePhoto?.urlPath}",
+                                  errorWidget: (context, url, error) =>
+                                      CircleAvatar(
+                                    backgroundImage: profilePlaceholderImage,
+                                    radius: imgRadius,
+                                  ),
                                 ),
-                                imageUrl:
-                                    "${HttpService.apiBaseUrl}/${state.user?.profilePhoto?.urlPath}",
-                                errorWidget: (context, url, error) =>
-                                    CircleAvatar(
-                                  backgroundImage: profilePlaceholderImage,
-                                  radius: imgRadius,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        DrawerListItem(
-                          label: S.current.home,
-                          onPressed: () {
-                            context.read<NavigationBloc>().add(
-                                DrawerWidgetChangedEvent(
-                                    newIndex: 0,
-                                    newWidget:
-                                        handleHomeSeekerDashboard(context)));
-                          },
-                          selected: state.navigationIndex == 0,
-                        ),
-                        DrawerListItem(
-                          label: S.current.my_profile,
-                          onPressed: () {
-                            context.read<NavigationBloc>().add(
-                                const DrawerWidgetChangedEvent(
-                                    newIndex: 1,
-                                    newWidget: HomeSeekerProfile()));
-                          },
-                          selected: state.navigationIndex == 1,
-                        ),
-                        DrawerListItem(
-                          label: S.current.close_to_me,
-                          onPressed: () {
-                            context.read<NavigationBloc>().add(
-                                const DrawerWidgetChangedEvent(
-                                    newIndex: 2,
-                                    newWidget: HomeSeekerCloseMe()));
-                          },
-                          selected: state.navigationIndex == 2,
-                        ),
-                        DrawerListItem(
-                          label: S.current.model_catalog,
-                          onPressed: () {
-                            context.read<NavigationBloc>().add(
-                                const DrawerWidgetChangedEvent(
-                                    newIndex: 3,
-                                    newWidget: HomeSeekerCatalog()));
-                          },
-                          selected: state.navigationIndex == 3,
-                        ),
-                        DrawerListItem(
-                          label: S.current.my_connections,
-                          onPressed: () {
-                            context.read<NavigationBloc>().add(
-                                const DrawerWidgetChangedEvent(
-                                    newIndex: 4,
-                                    newWidget: HomeSeekerMyConnections()));
-                          },
-                          selected: state.navigationIndex == 4,
-                        ),
-                        DrawerListItem(
-                          label: S.current.exit,
-                          onPressed: () {
-                            locator<AuthService>().signOut().then((value) {
-                              if (value) {
-                                return locator<NavigationService>()
-                                    .pushRemoveUntil('/');
-                              }
-                            });
-                          },
-                        ),
-                      ],
-                    );
-                  },
+                              );
+                            },
+                          ),
+                          DrawerListItem(
+                            label: S.current.home,
+                            onPressed: () {
+                              context.read<NavigationBloc>().add(
+                                  DrawerWidgetChangedEvent(
+                                      newIndex: 0,
+                                      newWidget:
+                                          handleHomeSeekerDashboard(context)));
+                            },
+                            selected: state.navigationIndex == 0,
+                          ),
+                          DrawerListItem(
+                            label: S.current.my_profile,
+                            onPressed: () {
+                              context.read<NavigationBloc>().add(
+                                  const DrawerWidgetChangedEvent(
+                                      newIndex: 1,
+                                      newWidget: HomeSeekerProfile()));
+                            },
+                            selected: state.navigationIndex == 1,
+                          ),
+                          DrawerListItem(
+                            label: S.current.close_to_me,
+                            onPressed: () {
+                              context.read<NavigationBloc>().add(
+                                  const DrawerWidgetChangedEvent(
+                                      newIndex: 2,
+                                      newWidget: HomeSeekerCloseMe()));
+                            },
+                            selected: state.navigationIndex == 2,
+                          ),
+                          DrawerListItem(
+                            label: S.current.model_catalog,
+                            onPressed: () {
+                              context.read<NavigationBloc>().add(
+                                  const DrawerWidgetChangedEvent(
+                                      newIndex: 3,
+                                      newWidget: HomeSeekerCatalog()));
+                            },
+                            selected: state.navigationIndex == 3,
+                          ),
+                          DrawerListItem(
+                            label: S.current.my_connections,
+                            onPressed: () {
+                              context.read<NavigationBloc>().add(
+                                  const DrawerWidgetChangedEvent(
+                                      newIndex: 4,
+                                      newWidget: HomeSeekerMyConnections()));
+                            },
+                            selected: state.navigationIndex == 4,
+                          ),
+                          DrawerListItem(
+                            label: S.current.exit,
+                            onPressed: () {
+                              locator<AuthService>().signOut().then((value) {
+                                if (value) {
+                                  return locator<NavigationService>()
+                                      .pushRemoveUntil('/');
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-              appBar: AppBar(
-                title: const Image(
-                  image: logo,
-                  width: 50,
+                appBar: AppBar(
+                  title: const Image(
+                    image: logo,
+                    width: 50,
+                  ),
+                  centerTitle: true,
+                  backgroundColor: Colors.transparent,
+                  elevation: 1,
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          locator<NavigationService>()
+                              .navigatorKey
+                              .currentState
+                              ?.push(MaterialPageRoute(
+                                  builder: (builder) =>
+                                      const HomeSeekerMyConnections()));
+                        },
+                        icon: const Icon(Icons.chat))
+                  ],
                 ),
-                centerTitle: true,
-                backgroundColor: Colors.transparent,
-                elevation: 1,
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        locator<NavigationService>()
-                            .navigatorKey
-                            .currentState
-                            ?.push(MaterialPageRoute(
-                                builder: (builder) =>
-                                    const HomeSeekerMyConnections()));
-                      },
-                      icon: const Icon(Icons.chat))
-                ],
-              ),
-              bottomNavigationBar: BlocBuilder<NavigationBloc, NavigationState>(
-                  builder: (context, state) {
-                int currentIndex() {
-                  if (state.navigationIndex == 5) {
-                    return 1;
-                  } else if (state.navigationIndex == 6) {
-                    return 2;
+                bottomNavigationBar:
+                    BlocBuilder<NavigationBloc, NavigationState>(
+                        builder: (context, state) {
+                  int currentIndex() {
+                    if (state.navigationIndex == 5) {
+                      return 3;
+                    } else if (state.navigationIndex == 6) {
+                      return 4;
+                    } else if (state.navigationIndex == 3) {
+                      return 2;
+                    } else if (state.navigationIndex == 2) {
+                      return 1;
+                    }
+
+                    return 0;
                   }
 
-                  return 0;
-                }
-
-                return BottomNavigationBar(
-                  unselectedFontSize: 0,
-                  selectedFontSize: 0,
-                  currentIndex: currentIndex(),
-                  iconSize: 28,
-                  onTap: (item) {
-                    if (item == 1) {
-                      context.read<NavigationBloc>().add(
-                          const DrawerWidgetChangedEvent(
-                              newIndex: 5, newWidget: HomeSeekerLikes()));
-                    } else if (item == 2) {
-                      context.read<NavigationBloc>().add(
-                          const DrawerWidgetChangedEvent(
-                              newIndex: 6, newWidget: HomeSeekerFavorites()));
-                    } else {
+                  return Theme(
+                    data: ThemeData.light(),
+                    child: BottomNavigationBar(
+                      unselectedFontSize: 0,
+                      selectedFontSize: 0,
+                      type: BottomNavigationBarType.fixed,
+                      currentIndex: currentIndex(),
+                      iconSize: 28,
+                      onTap: (item) {
+                        if (item == 3) {
+                          context.read<NavigationBloc>().add(
+                              const DrawerWidgetChangedEvent(
+                                  newIndex: 5, newWidget: HomeSeekerLikes()));
+                        } else if (item == 4) {
+                          context.read<NavigationBloc>().add(
+                              const DrawerWidgetChangedEvent(
+                                  newIndex: 6,
+                                  newWidget: HomeSeekerFavorites()));
+                        } else if (item == 2) {
+                          context.read<NavigationBloc>().add(
+                              const DrawerWidgetChangedEvent(
+                                  newIndex: 3, newWidget: HomeSeekerCatalog()));
+                        } else if (item == 1) {
+                          context.read<NavigationBloc>().add(
+                              const DrawerWidgetChangedEvent(
+                                  newIndex: 2, newWidget: HomeSeekerCloseMe()));
+                        } else {
+                          context.read<NavigationBloc>().add(
+                              DrawerWidgetChangedEvent(
+                                  newIndex: 0,
+                                  newWidget: HomeSeekerDashboard(
+                                      drawerBloc:
+                                          context.read<NavigationBloc>())));
+                        }
+                      },
+                      unselectedIconTheme:
+                          IconThemeData(color: Colors.grey.shade500),
+                      selectedIconTheme:
+                          IconThemeData(color: Theme.of(context).primaryColor),
+                      items: const [
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.home), label: 'null'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.location_on), label: 'null'),
+                        BottomNavigationBarItem(
+                            icon: Icon(FontAwesomeIcons.bookOpen),
+                            label: 'null'),
+                        BottomNavigationBarItem(
+                            icon: FaIcon(FontAwesomeIcons.heart),
+                            label: 'null'),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.star), label: 'null')
+                      ],
+                    ),
+                  );
+                }),
+                body: BlocBuilder<NavigationBloc, NavigationState>(
+                  builder: (context, state) {
+                    if (state.navigationWidget == null) {
                       context.read<NavigationBloc>().add(
                           DrawerWidgetChangedEvent(
                               newIndex: 0,
-                              newWidget: HomeSeekerDashboard(
-                                  drawerBloc: context.read<NavigationBloc>())));
+                              newWidget: handleHomeSeekerDashboard(context)));
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
-                  },
-                  unselectedIconTheme:
-                      IconThemeData(color: Theme.of(context).primaryColor),
-                  selectedIconTheme: IconThemeData(color: Colors.grey.shade500),
-                  items: const [
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.home), label: 'null'),
-                    BottomNavigationBarItem(
-                        icon: FaIcon(FontAwesomeIcons.heart), label: 'null'),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.star), label: 'null')
-                  ],
-                  backgroundColor: Colors.white,
-                );
-              }),
-              body: BlocBuilder<NavigationBloc, NavigationState>(
-                builder: (context, state) {
-                  if (state.navigationWidget == null) {
-                    context.read<NavigationBloc>().add(DrawerWidgetChangedEvent(
-                        newIndex: 0,
-                        newWidget: handleHomeSeekerDashboard(context)));
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
 
-                  return state.navigationWidget!;
-                },
-              ));
+                    return state.navigationWidget!;
+                  },
+                )),
+          );
         },
       ),
     );

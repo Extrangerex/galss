@@ -3,9 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/blocs/auth/user_bloc.dart';
 import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
-import 'package:galss/blocs/chat_room/chat_room_bloc.dart';
-import 'package:galss/blocs/chats/chat_bloc.dart';
-import 'package:galss/blocs/chats/chat_event.dart';
 import 'package:galss/blocs/home_model/home_model_bloc.dart';
 import 'package:galss/blocs/navigation/navigation_bloc.dart';
 import 'package:galss/blocs/navigation/navigation_event.dart';
@@ -38,39 +35,45 @@ class _HomeModelState extends State<HomeModel> {
         BlocProvider(
             create: (context) => NavigationBloc()
               ..add(const DrawerWidgetChangedEvent(
-                  newIndex: 0, newWidget: HomeModelLanding()))),
+                  newIndex: 2, newWidget: HomeModelConnections()))),
         BlocProvider(create: (context) => HomeModelBloc()),
         BlocProvider(
           create: (context) => UserBloc()..add(const FetchUserData()),
         ),
       ],
-      child: Scaffold(
-        drawer: _drawer(),
-        body: BlocBuilder<NavigationBloc, NavigationState>(
-          builder: (context, state) {
-            if (state.navigationWidget == null) {
-              return const CircularProgressIndicator();
-            }
+      child: WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+          drawer: _drawer(),
+          body: BlocBuilder<NavigationBloc, NavigationState>(
+            builder: (context, state) {
+              if (state.navigationWidget == null) {
+                return const CircularProgressIndicator();
+              }
 
-            return state.navigationWidget!;
-          },
-        ),
-        appBar: AppBar(
-          backgroundColor: toolbarColor,
-          centerTitle: true,
-          title: const Image(
-            image: logo,
-            width: 50,
+              return state.navigationWidget!;
+            },
           ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  locator<NavigationService>().navigatorKey.currentState?.push(
-                      MaterialPageRoute(
-                          builder: (builder) => const HomeModelConnections()));
-                },
-                icon: const Icon(Icons.chat))
-          ],
+          appBar: AppBar(
+            backgroundColor: toolbarColor,
+            centerTitle: true,
+            title: const Image(
+              image: logo,
+              width: 50,
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    locator<NavigationService>()
+                        .navigatorKey
+                        .currentState
+                        ?.push(MaterialPageRoute(
+                            builder: (builder) =>
+                                const HomeModelConnections()));
+                  },
+                  icon: const Icon(Icons.chat))
+            ],
+          ),
         ),
       ),
     );
@@ -123,7 +126,7 @@ class _HomeModelState extends State<HomeModel> {
                 onPressed: () {
                   context.read<NavigationBloc>().add(
                       const DrawerWidgetChangedEvent(
-                          newIndex: 1, newWidget: HomeModelConnections()));
+                          newIndex: 2, newWidget: HomeModelConnections()));
                 },
                 selected: index == 2,
               ),

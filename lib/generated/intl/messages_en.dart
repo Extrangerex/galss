@@ -22,9 +22,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(likesCount) => "${likesCount} people liked it";
 
-  static String m1(roomsLength) => "You have ${roomsLength} connections";
+  static String m1(likesCount) => "${likesCount} people liked you";
 
-  static String m2(targetName) => "Talking to ${targetName}...";
+  static String m2(roomsLength) => "You have ${roomsLength} connections";
+
+  static String m3(targetName) => "Talking to ${targetName}...";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -67,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "montly": MessageLookupByLibrary.simpleMessage(""),
         "my_connections": MessageLookupByLibrary.simpleMessage(""),
         "my_profile": MessageLookupByLibrary.simpleMessage(""),
+        "n_people_liked_you": m1,
         "name": MessageLookupByLibrary.simpleMessage(""),
         "nationality": MessageLookupByLibrary.simpleMessage(""),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not specified"),
@@ -109,9 +112,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city": MessageLookupByLibrary.simpleMessage("Unknown city"),
         "yearly": MessageLookupByLibrary.simpleMessage(""),
-        "you_have_n_connections": m1,
+        "you_have_n_connections": m2,
         "you_must_specify_country": MessageLookupByLibrary.simpleMessage(""),
-        "you_talking_with_n": m2,
+        "you_talking_with_n": m3,
         "your_favorites":
             MessageLookupByLibrary.simpleMessage("Your favorites"),
         "your_likes": MessageLookupByLibrary.simpleMessage("Likes"),

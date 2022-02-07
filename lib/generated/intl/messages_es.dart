@@ -22,9 +22,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(likesCount) => "Les ha gustado a ${likesCount} persona(s)";
 
-  static String m1(roomsLength) => "Tienes ${roomsLength} conexion(es)";
+  static String m1(likesCount) => "Les has gustado a ${likesCount} personas";
 
-  static String m2(targetName) => "Estas hablando con ${targetName}...";
+  static String m2(roomsLength) => "Tienes ${roomsLength} conexion(es)";
+
+  static String m3(targetName) => "Estas hablando con ${targetName}...";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -80,6 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "my_connections":
             MessageLookupByLibrary.simpleMessage("Mis conexiones"),
         "my_profile": MessageLookupByLibrary.simpleMessage("Mi Perfil"),
+        "n_people_liked_you": m1,
         "name": MessageLookupByLibrary.simpleMessage("Nombre"),
         "nationality": MessageLookupByLibrary.simpleMessage("Nacionalidad"),
         "not_specified":
@@ -137,10 +140,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_city":
             MessageLookupByLibrary.simpleMessage("Ciudad desconocida"),
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
-        "you_have_n_connections": m1,
+        "you_have_n_connections": m2,
         "you_must_specify_country": MessageLookupByLibrary.simpleMessage(
             "Debes colocar tu país de origen"),
-        "you_talking_with_n": m2,
+        "you_talking_with_n": m3,
         "your_favorites":
             MessageLookupByLibrary.simpleMessage("Tus favoritas/os"),
         "your_likes": MessageLookupByLibrary.simpleMessage("Tus likes"),
