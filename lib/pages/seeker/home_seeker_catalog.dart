@@ -52,11 +52,13 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
             ),
             titleSpacing: 8,
           ),
-          body: Column(
-            children: [
-              Theme(data: ThemeData.dark(), child: const RecentlyAddedModels()),
-              _models(),
-            ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Theme(data: ThemeData.dark(), child: const RecentlyAddedModels()),
+                _models(),
+              ],
+            ),
           ),
         ),
       ),

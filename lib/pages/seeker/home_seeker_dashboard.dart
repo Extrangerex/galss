@@ -37,70 +37,73 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
       ],
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        body: ImagedBackgroundContainer(
-            child: Column(
-          children: [
-            const Spacer(),
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _btnIconLabel(
-                      child: ImageBtn(
-                        image: iconImg(customIconImg: CustomIconImg.icMiPerfil),
-                        onPressed: () {
-                          widget.drawerBloc.add(const DrawerWidgetChangedEvent(
-                              newIndex: 1, newWidget: HomeSeekerProfile()));
-                        },
-                      ),
-                      label: Text(S.current.my_profile)),
-                  _btnIconLabel(
-                      child: ImageBtn(
-                        image:
-                            iconImg(customIconImg: CustomIconImg.icCercaDeMi),
-                        onPressed: () {
-                          widget.drawerBloc.add(const DrawerWidgetChangedEvent(
-                              newIndex: 2, newWidget: HomeSeekerCloseMe()));
-                        },
-                      ),
-                      label: Text(S.current.close_to_me))
-                ],
+        body: SingleChildScrollView(
+          child: ImagedBackgroundContainer(
+            size: MediaQuery.of(context).size,
+              child: Column(
+                      children: [
+              const Spacer(),
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _btnIconLabel(
+                        child: ImageBtn(
+                          image: iconImg(customIconImg: CustomIconImg.icMiPerfil),
+                          onPressed: () {
+                            widget.drawerBloc.add(const DrawerWidgetChangedEvent(
+                                newIndex: 1, newWidget: HomeSeekerProfile()));
+                          },
+                        ),
+                        label: Text(S.current.my_profile)),
+                    _btnIconLabel(
+                        child: ImageBtn(
+                          image:
+                              iconImg(customIconImg: CustomIconImg.icCercaDeMi),
+                          onPressed: () {
+                            widget.drawerBloc.add(const DrawerWidgetChangedEvent(
+                                newIndex: 2, newWidget: HomeSeekerCloseMe()));
+                          },
+                        ),
+                        label: Text(S.current.close_to_me))
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _btnIconLabel(
-                      child: ImageBtn(
-                        image: iconImg(customIconImg: CustomIconImg.icCatalogo),
-                        onPressed: () {
-                          widget.drawerBloc.add(const DrawerWidgetChangedEvent(
-                              newIndex: 3, newWidget: HomeSeekerCatalog()));
-                        },
-                      ),
-                      label: Text(S.current.model_catalog)),
-                  _btnIconLabel(
-                      child: ImageBtn(
-                        image:
-                            iconImg(customIconImg: CustomIconImg.icConexiones),
-                        onPressed: () {
-                          widget.drawerBloc.add(const DrawerWidgetChangedEvent(
-                              newIndex: 4,
-                              newWidget: HomeSeekerMyConnections()));
-                        },
-                      ),
-                      label: Text(S.current.my_connections))
-                ],
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _btnIconLabel(
+                        child: ImageBtn(
+                          image: iconImg(customIconImg: CustomIconImg.icCatalogo),
+                          onPressed: () {
+                            widget.drawerBloc.add(const DrawerWidgetChangedEvent(
+                                newIndex: 3, newWidget: HomeSeekerCatalog()));
+                          },
+                        ),
+                        label: Text(S.current.model_catalog)),
+                    _btnIconLabel(
+                        child: ImageBtn(
+                          image:
+                              iconImg(customIconImg: CustomIconImg.icConexiones),
+                          onPressed: () {
+                            widget.drawerBloc.add(const DrawerWidgetChangedEvent(
+                                newIndex: 4,
+                                newWidget: HomeSeekerMyConnections()));
+                          },
+                        ),
+                        label: Text(S.current.my_connections))
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-            const RecentlyAddedModels()
-            // Flexible(flex: 1, child: SizedBox(height: 100,child: RecentlyAddedModels()))
-          ],
-        )),
+              const Spacer(),
+              const RecentlyAddedModels()
+              // Flexible(flex: 1, child: SizedBox(height: 100,child: RecentlyAddedModels()))
+                      ],
+                    )),
+        ),
       ),
     );
   }
