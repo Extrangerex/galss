@@ -1,0 +1,75 @@
+{
+  "identifier" : "1881F2DE",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "0D065BE3",
+      "localizations" : [
+
+      ],
+      "name" : "subscription_group",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "9.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "B71E6F55",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.iscodeablesolutions.apps.galss.subscriptions.montly\n",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Galss montly subscription",
+          "subscriptionGroupID" : "0D065BE3",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "79.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "A4AF4A21",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.iscodeablesolutions.apps.galss.subscriptions.yearly\n",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Galss yearly subscription",
+          "subscriptionGroupID" : "0D065BE3",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "subscriptionOffersKeyPair" : {
+    "id" : "9760EC77",
+    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgbf9xDVjtKDY5sogQtuBCkv1+fvLXB5tVqz6z82UH+LugCgYIKoZIzj0DAQehRANCAAS6gxh3Lgw6cPxhWkF6qu4T9JBNy1PvWjM0UQ95Id0J1hGSDUCiOBxG4vbYJRUN7bZh73agAvflD4yLRS98F1eW"
+  },
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

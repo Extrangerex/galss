@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>12882114036-k57q35adku9ft1j4ccfco51a164bd311.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.12882114036-k57q35adku9ft1j4ccfco51a164bd311</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCTEP1Gm5D_5fqaW2uEmx7b63JP7V3yt5U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>12882114036</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.iscodeablesolutions.apps.galss</string>
+	<key>PROJECT_ID</key>
+	<string>galssapp-205313</string>
+	<key>STORAGE_BUCKET</key>
+	<string>galssapp-205313.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:12882114036:ios:3877f6132de08c98</string>
+	<key>DATABASE_URL</key>
+	<string>https://galssapp-205313.firebaseio.com</string>
+</dict>
+</plist>
