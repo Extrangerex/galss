@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:galss/config/constants.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
+import 'package:galss/models/api_message.dart';
 import 'package:galss/repository/auth_repository.dart';
 import 'package:galss/services/shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
@@ -16,17 +17,16 @@ class AuthService {
     return (await authData).userId != null;
   }
 
-  Future<bool?> postNewDeviceToken(String deviceToken) async {
+  Future<ApiMessage?> postNewDeviceToken(String? deviceToken) async {
     final userData = await authData;
 
     if (userData.userId == null) {
-      return false;
+      return null;
     }
 
-    print('device token sending...');
-
-    return (await repository.postNewDeviceToken(userData.userId!, deviceToken))
-        .data;
+    return ApiMessage.fromJson(
+        (await repository.postNewDeviceToken(userData.userId!, deviceToken))
+            .data);
   }
 
   Future<ApiLogin> get authData async {

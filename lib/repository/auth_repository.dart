@@ -19,8 +19,8 @@ class AuthRepository {
     return http.post('${HttpService.apiUrl}/Login/SignUp', data: data);
   }
 
-  Future<Response<bool>> postNewDeviceToken(
-      int userId, String deviceToken) async {
+  Future<Response<dynamic>> postNewDeviceToken(
+      int userId, String? deviceToken) async {
     return http.post("${HttpService.apiUrl}/User/DeviceToken/$userId",
         data: {"token": deviceToken});
   }

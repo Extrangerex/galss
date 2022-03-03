@@ -54,7 +54,6 @@ dependencies:
   firebase_messaging: ^11.2.6
   rxdart: ^0.27.3
   flutter_local_notifications: ^9.3.3
-  package_info_plus: ^1.4.0
 
 dev_dependencies:
   flutter_test:
