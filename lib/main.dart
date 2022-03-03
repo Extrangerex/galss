@@ -1,10 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:galss/blocs/auth/user_bloc.dart';
-import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/user_type.dart';
