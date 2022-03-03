@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:galss/firebase_options.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/user_type.dart';
@@ -15,6 +17,7 @@ import 'package:galss/services/shared_preferences.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/variables.dart';
+import 'package:galss/services/firebase_messaging_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -28,11 +31,14 @@ void setupLocator() {
   locator.registerSingleton<NavigationService>(NavigationService());
   locator
       .registerSingleton<SharedPreferencesService>(SharedPreferencesService());
+  locator
+      .registerSingleton<FirebaseMessagingService>(FirebaseMessagingService());
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Purchases.setDebugLogsEnabled(true);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   if (Platform.isAndroid) {
     await Purchases.setup("goog_OzclXrIoLpROpKJugNkUIFniBRz");

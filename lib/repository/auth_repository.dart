@@ -20,7 +20,7 @@ class AuthRepository {
   }
 
   Future<Response<bool>> postNewDeviceToken(
-      String userId, String deviceToken) async {
+      int userId, String deviceToken) async {
     return http.post("${HttpService.apiUrl}/User/DeviceToken/$userId",
         data: {"token": deviceToken});
   }
