@@ -14,6 +14,7 @@ import 'package:galss/blocs/chat_room/chat_room_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/api_chat.dart';
 import 'package:galss/models/user.dart';
+import 'package:galss/services/firebase_messaging_service.dart';
 import 'package:galss/theme/variables.dart';
 
 class ChatRoom extends StatefulWidget {
@@ -57,7 +58,10 @@ class _ChatRoomState extends State<ChatRoom> {
     super.initState();
 
     _chatRoomBloc = ChatRoomBloc();
-    chatTimer = Timer.periodic(const Duration(seconds: 4), _getNewChats);
+
+    onMessageReceived.listen((value) {
+      _chatRoomBloc.add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
+    });
   }
 
   @override
@@ -193,9 +197,5 @@ class _ChatRoomState extends State<ChatRoom> {
 
       return Text(S.current.you_talking_with_n("${getChatFriend()?.fullName}"));
     });
-  }
-
-  void _getNewChats(Timer timer) {
-    // _chatRoomBloc.add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
   }
 }

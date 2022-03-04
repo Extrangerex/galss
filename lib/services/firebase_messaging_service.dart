@@ -1,19 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:galss/config/constants.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
-import 'package:galss/models/user_type.dart';
 import 'package:galss/pages/chat_room.dart';
 import 'package:galss/repository/chat_repository.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/shared_preferences.dart';
+import 'package:rxdart/rxdart.dart';
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
 AndroidNotificationChannel androidNotificationChannel =
@@ -26,10 +24,10 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
+BehaviorSubject<RemoteMessage> onMessageReceived = BehaviorSubject();
+
 class FirebaseMessagingService {
-  FirebaseMessagingService() {
-    firebaseMessaging.setForegroundNotificationPresentationOptions(badge: true);
-  }
+  FirebaseMessagingService() {}
 
   Future load() async {
     final deviceToken = await firebaseMessaging.getToken();
@@ -52,6 +50,9 @@ class FirebaseMessagingService {
     var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
     flutterLocalNotificationsPlugin.initialize(initSetting);
 
+    firebaseMessaging.setForegroundNotificationPresentationOptions(
+        badge: true, alert: true);
+
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
@@ -66,10 +67,7 @@ class FirebaseMessagingService {
     var generalNotificationDetails =
         NotificationDetails(android: androidDetails, iOS: iosDetails);
     FirebaseMessaging.onMessageOpenedApp.listen((event) async {
-      final user = await locator<AuthService>().authData;
       final notificationData = event.data;
-
-      debugPrint(jsonEncode(notificationData));
 
       if (notificationData['notificationType'] != 'chat') {
         return;
@@ -88,6 +86,7 @@ class FirebaseMessagingService {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
 
+      onMessageReceived.add(message);
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(notification.hashCode,
             notification.title, notification.body, generalNotificationDetails);
