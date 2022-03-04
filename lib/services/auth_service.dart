@@ -17,8 +17,9 @@ class AuthService {
     return (await authData).userId != null;
   }
 
-  Future<ApiMessage?> postNewDeviceToken(String? deviceToken) async {
-    final userData = await authData;
+  Future<ApiMessage?> postNewDeviceToken(String? deviceToken,
+      {ApiLogin? apiLogin}) async {
+    final userData = apiLogin ?? await authData;
 
     if (userData.userId == null) {
       return null;

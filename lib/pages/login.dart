@@ -15,6 +15,7 @@ import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/shared_preferences.dart';
+import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/button_styles.dart';
@@ -96,9 +97,10 @@ class _LoginState extends State<Login> {
       },
       child: Form(
         key: _formKey,
-        child: Column(
+        child: ColumnSpacing(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          spacing: 8,
+          items: [
             const Image(
               image: logo,
               width: 200,
@@ -108,9 +110,6 @@ class _LoginState extends State<Login> {
             ),
             ListTile(title: _usernameField()),
             ListTile(title: _passwordField()),
-            const SizedBox(
-              height: 60,
-            ),
             _loginBtn(),
             _signupBtn()
           ],
@@ -121,26 +120,44 @@ class _LoginState extends State<Login> {
 
   Widget _passwordField() {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-      return TextFormField(
+      return _inputField(
+          child: TextFormField(
         obscureText: true,
-        decoration: InputDecoration(hintText: S.current.prompt_password),
+        decoration: InputDecoration(
+            hintText: S.current.prompt_password, border: InputBorder.none),
         validator: (value) => null,
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginPasswordChanged(password: value)),
-      );
+      ));
     });
+  }
+
+  Widget _inputField({required Widget child, ThemeData? data}) {
+    return Theme(
+      data: data ?? ThemeData.light(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.black12)),
+        child: child,
+      ),
+    );
   }
 
   Widget _usernameField() {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-      return TextFormField(
+      return _inputField(
+          child: TextFormField(
         validator: (value) => null,
-        decoration: InputDecoration(hintText: S.current.prompt_email),
+        decoration: InputDecoration(
+            hintText: S.current.prompt_email, border: InputBorder.none),
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginUsernameChanged(username: value)),
-      );
+      ));
     });
   }
 

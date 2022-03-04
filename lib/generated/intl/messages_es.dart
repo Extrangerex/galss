@@ -135,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "technically_there_is_nothing_wrong_but":
             MessageLookupByLibrary.simpleMessage(
                 "Técnicamente no hay nada malo, pero como que algo no cuadra"),
+        "terms_conditions_accept_disclaimer": MessageLookupByLibrary.simpleMessage(
+            "Al marcar esta casilla, confirmo que he leído y acepto estar sujeto a la política de términos y condiciones."),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city":

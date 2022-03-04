@@ -17,7 +17,9 @@ import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/user.dart';
+import 'package:galss/pages/chat_room.dart';
 import 'package:galss/pages/seeker/home_seeker_connections.dart';
+import 'package:galss/repository/chat_repository.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/carousel_with_indicators.dart';
@@ -126,12 +128,20 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
                         listener: (context, state) {
                           if (state.greetingFetchStatus
                               is ApiFetchSuccededStatus) {
-                            locator<NavigationService>()
-                                .navigatorKey
-                                .currentState
-                                ?.push(MaterialPageRoute(
-                                    builder: (builder) =>
-                                        const HomeSeekerMyConnections()));
+                            final chatIdResponse = state.greetingFetchStatus
+                                as ApiFetchSuccededStatus;
+
+                            ChatRepository()
+                                .fetchChatById(chatIdResponse.payload)
+                                .then((value) {
+                              locator<NavigationService>()
+                                  .navigatorKey
+                                  .currentState
+                                  ?.push(MaterialPageRoute(
+                                      builder: (builder) => ChatRoom(
+                                            chat: value,
+                                          )));
+                            });
                           }
                         },
                         child: BlocBuilder<ChatRoomBloc, ChatRoomState>(

@@ -12,6 +12,7 @@ import 'package:galss/main.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:intl/intl.dart';
@@ -73,6 +74,20 @@ class _SignUpModelState extends State<SignUpModel> {
     );
   }
 
+  Widget _inputField({required Widget child, ThemeData? data}) {
+    return Theme(
+      data: data ?? ThemeData.light(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.black12)),
+        child: child,
+      ),
+    );
+  }
+
   Widget _form() {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
@@ -96,8 +111,8 @@ class _SignUpModelState extends State<SignUpModel> {
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
+          child: ColumnSpacing(
+            items: [
               const SizedBox(
                 height: 16,
               ),
@@ -113,11 +128,8 @@ class _SignUpModelState extends State<SignUpModel> {
                 ),
               ),
               ListTile(title: _emailField()),
-              _countryField(),
+              ListTile(title: _countryField()),
               ListTile(title: _passwordField()),
-              const SizedBox(
-                height: 120,
-              ),
               ListTile(title: _termsAndConditionsField()),
               _btnSubmit()
             ],
@@ -129,37 +141,47 @@ class _SignUpModelState extends State<SignUpModel> {
 
   Widget _nameField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
-      return TextFormField(
-        validator: (value) =>
-            (value ?? "").isEmpty ? S.current.error_field_required : null,
-        decoration: InputDecoration(hintText: S.current.name),
-        onChanged: (v) =>
-            context.read<SignUpBloc>().add(SignUpNameChanged(name: v)),
+      return _inputField(
+        child: TextFormField(
+          validator: (value) =>
+              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          decoration: InputDecoration(
+              hintText: S.current.name, border: InputBorder.none),
+          onChanged: (v) =>
+              context.read<SignUpBloc>().add(SignUpNameChanged(name: v)),
+        ),
       );
     });
   }
 
   Widget _passwordField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
-      return TextFormField(
-        obscureText: true,
-        validator: (value) =>
-            (value ?? "").isEmpty ? S.current.error_field_required : null,
-        decoration: InputDecoration(hintText: S.current.prompt_password),
-        onChanged: (v) =>
-            context.read<SignUpBloc>().add(SignUpPasswordChanged(password: v)),
+      return _inputField(
+        child: TextFormField(
+          obscureText: true,
+          validator: (value) =>
+              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          decoration: InputDecoration(
+              hintText: S.current.prompt_password, border: InputBorder.none),
+          onChanged: (v) => context
+              .read<SignUpBloc>()
+              .add(SignUpPasswordChanged(password: v)),
+        ),
       );
     });
   }
 
   Widget _emailField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
-      return TextFormField(
-        validator: (value) =>
-            (value ?? "").isEmpty ? S.current.error_field_required : null,
-        decoration: InputDecoration(hintText: S.current.prompt_email),
-        onChanged: (v) =>
-            context.read<SignUpBloc>().add(SignUpEmailChanged(email: v)),
+      return _inputField(
+        child: TextFormField(
+          validator: (value) =>
+              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          decoration: InputDecoration(
+              hintText: S.current.prompt_email, border: InputBorder.none),
+          onChanged: (v) =>
+              context.read<SignUpBloc>().add(SignUpEmailChanged(email: v)),
+        ),
       );
     });
   }
@@ -169,30 +191,34 @@ class _SignUpModelState extends State<SignUpModel> {
         DateTime.now().subtract(const Duration(days: 365 * 18));
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (blocContext, state) {
-        return TextFormField(
-          onTap: () async {
-            var result = await showDatePicker(
-              context: blocContext,
-              initialDate: legalDatetime,
-              firstDate: legalDatetime.subtract(const Duration(days: 365 * 80)),
-              lastDate: legalDatetime,
-            );
+        return _inputField(
+          child: TextFormField(
+            onTap: () async {
+              var result = await showDatePicker(
+                context: blocContext,
+                initialDate: legalDatetime,
+                firstDate:
+                    legalDatetime.subtract(const Duration(days: 365 * 80)),
+                lastDate: legalDatetime,
+              );
 
-            if (result == null) return;
+              if (result == null) return;
 
-            blocContext
-                .read<SignUpBloc>()
-                .add(SignUpDateOfBirthChanged(dob: result));
+              blocContext
+                  .read<SignUpBloc>()
+                  .add(SignUpDateOfBirthChanged(dob: result));
 
-            setState(() {
-              _dobController.text = DateFormat("yyyy-MM-dd").format(result);
-            });
-          },
-          validator: (value) =>
-              (value ?? "").isEmpty ? S.current.error_field_required : null,
-          controller: _dobController,
-          readOnly: true,
-          decoration: InputDecoration(hintText: S.current.birthdate),
+              setState(() {
+                _dobController.text = DateFormat("yyyy-MM-dd").format(result);
+              });
+            },
+            validator: (value) =>
+                (value ?? "").isEmpty ? S.current.error_field_required : null,
+            controller: _dobController,
+            readOnly: true,
+            decoration: InputDecoration(
+                hintText: S.current.birthdate, border: InputBorder.none),
+          ),
         );
       },
     );
@@ -224,20 +250,19 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _termsAndConditionsField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        return ListTile(
-          title: Text(S.current.prompt_accept_terms_conditions),
-          trailing: Checkbox(
-            // selected: state.licenseTermsAccepted,
-            value: state.licenseTermsAccepted,
-            activeColor: Theme.of(context).primaryColor,
-            shape: const CircleBorder(),
-            onChanged: (v) {
-              if (v == null) return;
+        return CheckboxListTile(
+          selected: state.licenseTermsAccepted,
+          title: Text(S.current.terms_conditions_accept_disclaimer),
+          controlAffinity: ListTileControlAffinity.leading,
+          value: state.licenseTermsAccepted,
+          activeColor: Theme.of(context).primaryColor,
+          shape: const CircleBorder(),
+          onChanged: (v) {
+            if (v == null) return;
 
-              context.read<SignUpBloc>().add(
-                  SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
-            },
-          ),
+            context.read<SignUpBloc>().add(
+                SignUpLicenseTermsAcceptedChanged(licenseTermsAccepted: v));
+          },
         );
       },
     );
@@ -246,8 +271,8 @@ class _SignUpModelState extends State<SignUpModel> {
   Widget _countryField() {
     return BlocBuilder<CountryBloc, CountryState>(
       builder: (context, state) {
-        return ListTile(
-          subtitle: DropdownButtonFormField<Country>(
+        return _inputField(
+          child: DropdownButtonFormField<Country>(
               validator: (v) =>
                   v == null ? S.current.error_field_required : null,
               hint: Text(S.current.country),
@@ -260,6 +285,7 @@ class _SignUpModelState extends State<SignUpModel> {
               isExpanded: true,
               value: context.read<SignUpBloc>().state.country,
               isDense: true,
+              decoration: const InputDecoration(border: InputBorder.none),
               onChanged: (v) {
                 if (v == null) return;
                 context

@@ -43,38 +43,45 @@ class _HomeModelState extends State<HomeModel> {
       ],
       child: WillPopScope(
         onWillPop: () async => false,
-        child: Scaffold(
-          drawer: _drawer(),
-          body: BlocBuilder<NavigationBloc, NavigationState>(
-            builder: (context, state) {
-              if (state.navigationWidget == null) {
-                return const CircularProgressIndicator();
-              }
+        child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+          return Scaffold(
+            drawer: _drawer(),
+            body: BlocBuilder<NavigationBloc, NavigationState>(
+              builder: (context, state) {
+                if (state.navigationWidget == null) {
+                  return const CircularProgressIndicator();
+                }
 
-              return state.navigationWidget!;
-            },
-          ),
-          appBar: AppBar(
-            backgroundColor: toolbarColor,
-            centerTitle: true,
-            title: const Image(
-              image: logo,
-              width: 50,
+                return state.navigationWidget!;
+              },
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    locator<NavigationService>()
-                        .navigatorKey
-                        .currentState
-                        ?.push(MaterialPageRoute(
-                            builder: (builder) =>
-                                const HomeModelConnections()));
-                  },
-                  icon: const Icon(Icons.chat))
-            ],
-          ),
-        ),
+            onDrawerChanged: (isOpened) {
+              if (isOpened) {
+                context.read<UserBloc>().add(const FetchUserData());
+              }
+            },
+            appBar: AppBar(
+              backgroundColor: toolbarColor,
+              centerTitle: true,
+              title: const Image(
+                image: logo,
+                width: 50,
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      locator<NavigationService>()
+                          .navigatorKey
+                          .currentState
+                          ?.push(MaterialPageRoute(
+                              builder: (builder) =>
+                                  const HomeModelConnections()));
+                    },
+                    icon: const Icon(Icons.chat))
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

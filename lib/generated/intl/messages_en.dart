@@ -108,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Switch anonymous mode"),
         "technically_there_is_nothing_wrong_but":
             MessageLookupByLibrary.simpleMessage(""),
+        "terms_conditions_accept_disclaimer":
+            MessageLookupByLibrary.simpleMessage(""),
         "type_a_message_placeholder":
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city": MessageLookupByLibrary.simpleMessage("Unknown city"),

@@ -30,6 +30,7 @@ class _ChatRoomState extends State<ChatRoom> {
       TextEditingController();
   Timer? chatTimer;
   late ChatRoomBloc _chatRoomBloc;
+  final ScrollController _scrollController = ScrollController();
 
   BubbleStyle styleSomebody = BubbleStyle(
     nip: BubbleNip.leftCenter,
@@ -77,12 +78,27 @@ class _ChatRoomState extends State<ChatRoom> {
                 ..add(ChatGetChatHistoryEvent(roomId: widget.chat.id!)))
         ],
         child: Scaffold(
-            appBar: AppBar(
-              title: title(),
-            ),
-            body: Container(
-                margin: const EdgeInsets.only(top: 8.0), child: chat()),
-            bottomSheet: bottomSheet()));
+          appBar: AppBar(
+            title: title(),
+          ),
+          body: Container(
+              margin: const EdgeInsets.only(top: 8.0),
+              child: Column(
+                children: [
+                  Expanded(child: chat()),
+                  bottomSheet(),
+                ],
+              )),
+        ));
+  }
+
+  void chatScrollUp() async {
+    await _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(
+            milliseconds:
+                (_scrollController.position.maxScrollExtent / 2).round()),
+        curve: Curves.easeOutCirc);
   }
 
   Widget bottomSheet() {
@@ -100,6 +116,7 @@ class _ChatRoomState extends State<ChatRoom> {
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.only(top: 16),
         child: Theme(
           data: ThemeData.light(),
           child: Row(
@@ -137,10 +154,13 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget chat() {
     return BlocBuilder<ChatRoomBloc, ChatRoomState>(builder: (context, state) {
       return ListView.builder(
-        shrinkWrap: true,
+        reverse: true,
+        controller: _scrollController,
+        physics: const ClampingScrollPhysics(),
         itemCount: state.chatMessages.length,
         itemBuilder: (context, index) {
-          var item = state.chatMessages[index];
+          var item =
+              state.chatMessages[(state.chatMessages.length - 1) - index];
           var somebody = item.userId != context.read<UserBloc>().state.user?.id;
 
           if (somebody) {

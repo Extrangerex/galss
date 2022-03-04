@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/chat_room/chat_room_event.dart';
@@ -49,7 +51,8 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
 
     final userData = await locator<AuthService>().authData;
 
-    print({"fromUserId": userData.userId, "message": event.message});
+    debugPrint(
+        jsonEncode({"fromUserId": userData.userId, "message": event.message}));
 
     try {
       await locator<HttpService>()
@@ -82,9 +85,9 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
             "toUserId": event.toUserId
           })
           .then((value) => value.data)
-          .then((value) => ApiMessage.fromJson(value))
           .then((value) => emit(state.copyWith(
-              greetingFetchStatus: const ApiFetchSuccededStatus())));
+              greetingFetchStatus:
+                  ApiFetchSuccededStatus(payload: value['chatId']))));
     } catch (e) {
       emit(state.copyWith(
           greetingFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));

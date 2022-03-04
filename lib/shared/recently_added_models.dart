@@ -45,7 +45,6 @@ class RecentlyAddedModels extends StatelessWidget {
               height: 180,
               color: Colors.transparent,
               child: ListView(
-                physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 children: state.models
                     .map((e) => InkWell(

@@ -799,6 +799,16 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get terms_conditions_accept_disclaimer {
+    return Intl.message(
+      '',
+      name: 'terms_conditions_accept_disclaimer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

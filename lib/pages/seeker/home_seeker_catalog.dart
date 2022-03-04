@@ -53,9 +53,12 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
             titleSpacing: 8,
           ),
           body: SingleChildScrollView(
+            primary: true,
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Theme(data: ThemeData.dark(), child: const RecentlyAddedModels()),
+                Theme(
+                    data: ThemeData.dark(), child: const RecentlyAddedModels()),
                 _models(),
               ],
             ),
@@ -105,6 +108,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
     return BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
         builder: (context, state) => ListView.builder(
               shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
               itemCount: state.models.length,
               itemBuilder: (context, index) {
                 var item = state.models[index];

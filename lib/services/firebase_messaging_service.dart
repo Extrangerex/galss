@@ -1,61 +1,97 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:galss/config/constants.dart';
 import 'package:galss/main.dart';
+import 'package:galss/models/api_login.dart';
+import 'package:galss/models/user_type.dart';
+import 'package:galss/pages/chat_room.dart';
+import 'package:galss/repository/chat_repository.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:galss/services/navigation_service.dart';
+import 'package:galss/services/shared_preferences.dart';
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
-late AndroidNotificationChannel channel;
+AndroidNotificationChannel androidNotificationChannel =
+    const AndroidNotificationChannel('android_notification_channel_01', 'galss',
+        importance: Importance.high);
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message.data);
-}
+FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
 class FirebaseMessagingService {
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  StreamSubscription? streamSubscription;
-
   FirebaseMessagingService() {
-    load();
+    firebaseMessaging.setForegroundNotificationPresentationOptions(badge: true);
   }
 
   Future load() async {
     final deviceToken = await firebaseMessaging.getToken();
 
-    final tokenUpdateResponse =
-        await locator<AuthService>().postNewDeviceToken(deviceToken);
+    final authData =
+        await SharedPreferencesService().getItem(SharedPrefs.authData);
+
+    final tokenUpdateResponse = await locator<AuthService>().postNewDeviceToken(
+        deviceToken,
+        apiLogin: ApiLogin.fromJson(jsonDecode(authData ?? "{}")));
 
     debugPrint("${tokenUpdateResponse?.message}");
 
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    initMessaging();
+  }
+
+  Future<void> initMessaging() async {
+    var androiInit = const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iosInit = const IOSInitializationSettings();
+    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
+    flutterLocalNotificationsPlugin.initialize(initSetting);
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
+        ?.createNotificationChannel(androidNotificationChannel);
 
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    var androidDetails = AndroidNotificationDetails(
+        androidNotificationChannel.id, androidNotificationChannel.name,
+        channelShowBadge: true,
+        visibility: NotificationVisibility.public,
+        priority: Priority.max);
+    var iosDetails = const IOSNotificationDetails();
+    var generalNotificationDetails =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
+    FirebaseMessaging.onMessageOpenedApp.listen((event) async {
+      final user = await locator<AuthService>().authData;
+      final notificationData = event.data;
 
-    await initialize();
-  }
+      debugPrint(jsonEncode(notificationData));
 
-  Future initialize() async {
-    await firebaseMessaging.getInitialMessage();
+      if (notificationData['notificationType'] != 'chat') {
+        return;
+      }
 
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  }
+      final chatRoomId = notificationData['chatId'];
 
-  dispose() {
-    streamSubscription?.cancel();
+      final chatId =
+          await ChatRepository().fetchChatById(int.parse(chatRoomId));
+
+      locator<NavigationService>().navigatorKey.currentState?.push(
+          MaterialPageRoute(builder: (builder) => ChatRoom(chat: chatId)));
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(notification.hashCode,
+            notification.title, notification.body, generalNotificationDetails);
+      }
+    });
   }
 }

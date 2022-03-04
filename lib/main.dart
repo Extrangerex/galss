@@ -47,6 +47,8 @@ Future<void> main() async {
   }
 
   setupLocator();
+
+  await locator<FirebaseMessagingService>().load();
   runApp(const MyApp());
 }
 

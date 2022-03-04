@@ -41,7 +41,7 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
                   onRefresh: () async {
                     context.read<ChatBloc>().add(const ChatGetChatsEvent());
                   },
-                  child: _rooms());
+                  child: SizedBox(child: _rooms()));
             },
           ),
         ),
@@ -52,10 +52,9 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
   Widget _rooms() {
     return BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
       return ListView.builder(
-        // shrinkWrap: true,
         itemCount: state.rooms.length,
         itemBuilder: (context, index) {
-          var e = state.rooms[index];
+          var e = state.rooms[(state.rooms.length - 1) - index];
           var chatFriend = e.chatMembers
               ?.singleWhere((element) => element.isCreator == false);
 
