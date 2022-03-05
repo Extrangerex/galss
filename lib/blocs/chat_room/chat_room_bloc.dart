@@ -62,7 +62,8 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
           .then((value) => value.data)
           .then((value) => ApiMessage.fromJson(value))
           .then((value) => emit(state.copyWith(
-              sentMessageFetchStatus: const ApiFetchSuccededStatus())));
+              sentMessageFetchStatus: const ApiFetchSuccededStatus(),
+              msgToSend: "")));
     } catch (e) {
       emit(state.copyWith(
           sentMessageFetchStatus:

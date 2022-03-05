@@ -38,6 +38,7 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         body: ImagedBackgroundContainer(
+          size: MediaQuery.of(context).size,
           child: CustomScrollView(slivers: [
             SliverFillRemaining(
               child: Column(

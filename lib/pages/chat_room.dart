@@ -143,6 +143,10 @@ class _ChatRoomState extends State<ChatRoom> {
               BlocBuilder<ChatRoomBloc, ChatRoomState>(
                   builder: (context, state) => IconButton(
                       onPressed: () {
+                        if (state.msgToSend?.isEmpty ?? true) {
+                          return;
+                        }
+
                         context.read<ChatRoomBloc>().add(ChatSentMessageEvent(
                             message: state.msgToSend ?? "",
                             roomId: widget.chat.id!));
