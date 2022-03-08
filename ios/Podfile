@@ -41,6 +41,5 @@ post_install do |installer|
       build_configuration.build_settings['ENABLE_BITCODE'] = 'NO'
       build_configuration.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
     end
-    flutter_additional_ios_build_settings(target)
   end
 end
