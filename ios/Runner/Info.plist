@@ -43,6 +43,11 @@
 	<false/>
 	<key>FirebaseAppDelegateProxyEnabled </key>
 	<true/>
-	
+	<key>NSCameraUsageDescription</key>
+	<string>Used to take a profile photo</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to capture audio for upload videos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to chosse a profile picture from gallery</string>
 </dict>
 </plist>
