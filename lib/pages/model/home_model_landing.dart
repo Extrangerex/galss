@@ -147,7 +147,7 @@ class HomeModelLanding extends StatelessWidget {
   Widget _addPhotoBtn() {
     return BlocListener<HomeModelBloc, HomeModelState>(
         listener: (context, state) {
-      if (state.fetchStatus is ApiFetchSuccededStatus) {
+      if (state.fetchStatus is ApiFetchSucceededStatus) {
         context.read<UserBloc>().add(const FetchUserData());
       }
     }, child: BlocBuilder<HomeModelBloc, HomeModelState>(

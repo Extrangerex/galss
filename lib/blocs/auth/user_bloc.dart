@@ -53,7 +53,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         .repository
         .getUserInfo(userId!)
         .then((value) => emit(state.copyWith(
-            user: value, apiFetchStatus: const ApiFetchSuccededStatus())))
+            user: value, apiFetchStatus: const ApiFetchSucceededStatus())))
         .catchError((onError) => emit(state.copyWith(
             apiFetchStatus:
                 ApiFetchFailedStatus(exception: Exception(onError)))));
@@ -70,7 +70,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .repository
           .toggleAnonymous(userId!, isAnonymous: event.anonymous)
           .then((value) => emit(state.copyWith(
-              actionFetchStatus: const ApiFetchSuccededStatus())))
+              actionFetchStatus: const ApiFetchSucceededStatus())))
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
@@ -96,7 +96,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .changeProfilePhoto(userId!, b64EncodedImage)
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-              actionFetchStatus: const ApiFetchSuccededStatus())))
+              actionFetchStatus: const ApiFetchSucceededStatus())))
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
@@ -118,7 +118,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .changeProfileStatus(userId!, event.profileStatus)
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-              actionFetchStatus: const ApiFetchSuccededStatus())))
+              actionFetchStatus: const ApiFetchSucceededStatus())))
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
@@ -140,10 +140,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .changeCurrentLocation(userId!, event.city, event.user)
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-              actionFetchStatus: const ApiFetchSuccededStatus())))
-          .catchError((onError) => emit(state.copyWith(
-              actionFetchStatus:
-                  ApiFetchFailedStatus(exception: Exception(onError)))));
+              actionFetchStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -162,7 +159,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .changeUsername(userId!, event.name, event.user)
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-              actionFetchStatus: const ApiFetchSuccededStatus())))
+              actionFetchStatus: const ApiFetchSucceededStatus())))
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));

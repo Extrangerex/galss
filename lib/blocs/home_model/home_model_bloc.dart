@@ -31,7 +31,7 @@ class HomeModelBloc extends Bloc<HomeModelEvent, HomeModelState> {
         .post('${HttpService.apiUrl}/User/Photos/${userData.userId}',
             data: {"data": base64encodedImage})
         .then((value) => emit(
-            state.copyWith(apiFetchStatus: const ApiFetchSuccededStatus())))
+            state.copyWith(apiFetchStatus: const ApiFetchSucceededStatus())))
         .onError((error, stackTrace) => emit(state.copyWith(
             apiFetchStatus:
                 ApiFetchFailedStatus(exception: Exception(error)))));

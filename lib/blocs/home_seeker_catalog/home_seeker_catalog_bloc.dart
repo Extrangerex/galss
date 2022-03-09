@@ -37,7 +37,7 @@ class HomeSeekerCatalogBloc
           .then((value) => value.map((e) => User.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
               models: value,
-              fetchModelStatus: const ApiFetchSuccededStatus())));
+              fetchModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -57,7 +57,7 @@ class HomeSeekerCatalogBloc
           .then((value) => value.map((e) => User.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
               models: value,
-              fetchModelStatus: const ApiFetchSuccededStatus())));
+              fetchModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -78,7 +78,7 @@ class HomeSeekerCatalogBloc
                 '${HttpService.apiUrl}/User/Favorites/${userAuth.userId}/${event.model.id}')
             .then((value) => value.data)
             .then((value) => emit(state.copyWith(
-                requestToggleModelStatus: const ApiFetchSuccededStatus())));
+                requestToggleModelStatus: const ApiFetchSucceededStatus())));
         return;
       }
       await locator<HttpService>()
@@ -87,7 +87,7 @@ class HomeSeekerCatalogBloc
               '${HttpService.apiUrl}/User/Favorites/${userAuth.userId}/${event.model.id}')
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-              requestToggleModelStatus: const ApiFetchSuccededStatus())));
+              requestToggleModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -108,7 +108,7 @@ class HomeSeekerCatalogBloc
                 '${HttpService.apiUrl}/User/Likes/${event.model.id}/${userAuth.userId}')
             .then((value) => value.data)
             .then((value) => emit(state.copyWith(
-                requestToggleModelStatus: const ApiFetchSuccededStatus())));
+                requestToggleModelStatus: const ApiFetchSucceededStatus())));
         return;
       }
       await locator<HttpService>()
@@ -117,7 +117,7 @@ class HomeSeekerCatalogBloc
               '${HttpService.apiUrl}/User/Likes/${event.model.id}/${userAuth.userId}')
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
-              requestToggleModelStatus: const ApiFetchSuccededStatus())));
+              requestToggleModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -139,7 +139,7 @@ class HomeSeekerCatalogBloc
           .then((value) => value.map((e) => User.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
               models: value,
-              fetchModelStatus: const ApiFetchSuccededStatus())));
+              fetchModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -163,7 +163,7 @@ class HomeSeekerCatalogBloc
           .then((value) => value.map((e) => UserFavorite.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
               favorites: value,
-              fetchModelStatus: const ApiFetchSuccededStatus())));
+              fetchModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -186,7 +186,8 @@ class HomeSeekerCatalogBloc
           .then((value) => List.from(value))
           .then((value) => value.map((e) => UserLike.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
-              likes: value, fetchModelStatus: const ApiFetchSuccededStatus())));
+              likes: value,
+              fetchModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -206,7 +207,7 @@ class HomeSeekerCatalogBloc
           .then((value) => value.map((e) => User.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
               models: value,
-              fetchModelStatus: const ApiFetchSuccededStatus())));
+              fetchModelStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           fetchModelStatus: ApiFetchFailedStatus(exception: Exception(e))));

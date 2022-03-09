@@ -29,7 +29,7 @@ class ToggleFavoriteModel extends StatelessWidget {
       child: BlocListener<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
         listener: (context, state) {
           // TODO: implement listener
-          if (state.requestToggleModelStatus is ApiFetchSuccededStatus) {
+          if (state.requestToggleModelStatus is ApiFetchSucceededStatus) {
             context
                 .read<HomeSeekerCatalogBloc>()
                 .add(const HomeSeekerGetFavoritesEvent());

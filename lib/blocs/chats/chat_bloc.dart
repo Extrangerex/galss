@@ -33,7 +33,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           .then((value) => value.map((e) => Chat.fromJson(e)).toList())
           .then((value) {
         add(const ChatFetchStatusChanged(
-            apiFetchStatus: ApiFetchSuccededStatus()));
+            apiFetchStatus: ApiFetchSucceededStatus()));
         add(ChatRoomsChanged(rooms: value));
       });
     } catch (e) {

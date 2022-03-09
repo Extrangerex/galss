@@ -34,7 +34,7 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
           .then((value) => List.from(value))
           .then((value) => value.map((e) => ChatMessage.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
-              fetchChatHistoryStatus: const ApiFetchSuccededStatus(),
+              fetchChatHistoryStatus: const ApiFetchSucceededStatus(),
               chatMessages: value)));
     } catch (e) {
       emit(state.copyWith(
@@ -62,7 +62,7 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
           .then((value) => value.data)
           .then((value) => ApiMessage.fromJson(value))
           .then((value) => emit(state.copyWith(
-              sentMessageFetchStatus: const ApiFetchSuccededStatus(),
+              sentMessageFetchStatus: const ApiFetchSucceededStatus(),
               msgToSend: "")));
     } catch (e) {
       emit(state.copyWith(
@@ -88,7 +88,7 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
           .then((value) => value.data)
           .then((value) => emit(state.copyWith(
               greetingFetchStatus:
-                  ApiFetchSuccededStatus(payload: value['chatId']))));
+                  ApiFetchSucceededStatus(payload: value['chatId']))));
     } catch (e) {
       emit(state.copyWith(
           greetingFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));

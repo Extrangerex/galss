@@ -127,9 +127,9 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
                       BlocListener<ChatRoomBloc, ChatRoomState>(
                         listener: (context, state) {
                           if (state.greetingFetchStatus
-                              is ApiFetchSuccededStatus) {
+                              is ApiFetchSucceededStatus) {
                             final chatIdResponse = state.greetingFetchStatus
-                                as ApiFetchSuccededStatus;
+                                as ApiFetchSucceededStatus;
 
                             ChatRepository()
                                 .fetchChatById(chatIdResponse.payload)

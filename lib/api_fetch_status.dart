@@ -10,10 +10,10 @@ class ApiFetchingStatus extends ApiFetchStatus {
   const ApiFetchingStatus();
 }
 
-class ApiFetchSuccededStatus extends ApiFetchStatus {
+class ApiFetchSucceededStatus extends ApiFetchStatus {
   final dynamic payload;
 
-  const ApiFetchSuccededStatus({this.payload});
+  const ApiFetchSucceededStatus({this.payload});
 }
 
 class ApiFetchFailedStatus extends ApiFetchStatus {

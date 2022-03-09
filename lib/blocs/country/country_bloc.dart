@@ -26,7 +26,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
 
       emit(state.copyWith(
           countries: countries,
-          apiFetchStatus: const ApiFetchSuccededStatus()));
+          apiFetchStatus: const ApiFetchSucceededStatus()));
     } catch (e) {
       emit(state.copyWith(
           apiFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
@@ -47,7 +47,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
           .then((value) => List.from(value))
           .then((value) => value.map((e) => City.fromJson(e)).toList())
           .then((value) => emit(state.copyWith(
-              cities: value, apiFetchStatus: const ApiFetchSuccededStatus())));
+              cities: value, apiFetchStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           apiFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));

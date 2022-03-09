@@ -87,7 +87,7 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
   Widget switchAnonymous() {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        if (state.actionFetchStatus is ApiFetchSuccededStatus) {
+        if (state.actionFetchStatus is ApiFetchSucceededStatus) {
           context.read<UserBloc>().add(const FetchUserData());
         }
       },
@@ -209,7 +209,7 @@ class _HomeSeekerProfileState extends State<HomeSeekerProfile> {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
         // TODO: implement listener
-        if (state.actionFetchStatus is ApiFetchSuccededStatus) {
+        if (state.actionFetchStatus is ApiFetchSucceededStatus) {
           context.read<UserBloc>().add(const FetchUserData());
         }
       },

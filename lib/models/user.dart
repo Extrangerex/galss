@@ -122,9 +122,6 @@ class User {
     if (currentLocation != null) {
       data['currentLocation'] = currentLocation!.toJson();
     }
-    if (deviceTokens != null) {
-      data['deviceTokens'] = deviceTokens!.map((v) => v.toJson()).toList();
-    }
     return data;
   }
 }

@@ -13,13 +13,18 @@ class FullScreenImage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black87,
       body: GestureDetector(
-        child: Center(
+        child: SizedBox.expand(
           child: Hero(
             tag: tag,
-            child: CachedNetworkImage(
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.contain,
-              imageUrl: imageUrl,
+            child: InteractiveViewer(
+              panEnabled: false,
+              maxScale: 3,
+              child: CachedNetworkImage(
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.contain,
+                alignment: Alignment.center,
+                imageUrl: imageUrl,
+              ),
             ),
           ),
         ),

@@ -36,7 +36,7 @@ class _EditNameModalState extends State<EditNameModal> {
         listener: (context, state) {
           // TODO: implement listener
 
-          if (state.actionFetchStatus is ApiFetchSuccededStatus) {
+          if (state.actionFetchStatus is ApiFetchSucceededStatus) {
             locator<NavigationService>().pop();
           }
         },

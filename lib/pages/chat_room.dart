@@ -108,7 +108,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget bottomSheet() {
     return BlocListener<ChatRoomBloc, ChatRoomState>(
       listener: (context, state) {
-        if (state.sentMessageFetchStatus is ApiFetchSuccededStatus) {
+        if (state.sentMessageFetchStatus is ApiFetchSucceededStatus) {
           context
               .read<ChatRoomBloc>()
               .add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));

@@ -5,7 +5,6 @@ import 'package:galss/api_fetch_status.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_bloc.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_event.dart';
 import 'package:galss/blocs/home_seeker_catalog/home_seeker_catalog_state.dart';
-import 'package:galss/models/api_user_favorite.dart';
 import 'package:galss/models/api_user_like.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/theme/variables.dart';
@@ -28,7 +27,7 @@ class ToggleLikeModel extends StatelessWidget {
       child: BlocListener<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
         listener: (context, state) {
           // TODO: implement listener
-          if (state.requestToggleModelStatus is ApiFetchSuccededStatus) {
+          if (state.requestToggleModelStatus is ApiFetchSucceededStatus) {
             context
                 .read<HomeSeekerCatalogBloc>()
                 .add(const HomeSeekerGetLikedModelsEvent());
