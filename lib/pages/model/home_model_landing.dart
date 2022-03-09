@@ -18,13 +18,11 @@ import 'package:galss/modals/edit_current_location_modal.dart';
 import 'package:galss/modals/edit_name_modal.dart';
 import 'package:galss/modals/edit_profile_status_modal.dart';
 import 'package:galss/models/photo.dart';
-import 'package:galss/models/user.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/carousel_with_indicators.dart';
 import 'package:galss/shared/full_screen_image.dart';
 import 'package:galss/theme/button_styles.dart';
-import 'package:galss/theme/variables.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'home_model_connections.dart';
@@ -86,6 +84,7 @@ class HomeModelLanding extends StatelessWidget {
         return CarouselWithIndicator(
             items: photos
                 .map((e) => GestureDetector(
+                      onLongPress: () {},
                       onTap: () {
                         locator<NavigationService>()
                             .navigatorKey
