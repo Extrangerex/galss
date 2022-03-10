@@ -14,6 +14,7 @@ import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:galss/services/shared_preferences.dart';
+import 'package:galss/services/snackbar_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/variables.dart';
@@ -28,6 +29,7 @@ void setupLocator() {
   locator.registerSingleton<HttpService>(HttpService());
   locator.registerSingleton<AuthService>(AuthService());
   locator.registerSingleton<CountryService>(CountryService());
+  locator.registerSingleton<SnackbarService>(SnackbarService());
   locator.registerSingleton<NavigationService>(NavigationService());
   locator
       .registerSingleton<SharedPreferencesService>(SharedPreferencesService());
@@ -65,6 +67,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         S.delegate
       ],
+      scaffoldMessengerKey: globalScaffoldMessengerKey,
       supportedLocales: const [Locale('es')],
       locale: const Locale('es'),
       theme: ThemeData(

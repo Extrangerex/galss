@@ -36,6 +36,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignUpLicenseTermsAcceptedChanged>((event, emit) =>
         emit(state.copyWith(licenseTermsAccepted: event.licenseTermsAccepted)));
 
+    on<SignUpPasswordConfirmationChanged>((event, emit) =>
+        emit(state.copyWith(passwordConfirmation: event.password)));
+
     on<SignUpDateOfBirthChanged>(
         (event, emit) => emit(state.copyWith(dob: event.dob)));
   }

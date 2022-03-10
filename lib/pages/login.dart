@@ -15,6 +15,7 @@ import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/shared_preferences.dart';
+import 'package:galss/services/snackbar_service.dart';
 import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
@@ -29,8 +30,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
@@ -38,36 +37,26 @@ class _LoginState extends State<Login> {
   }
 
   void showSnack(String title) {
-    final snackBar = SnackBar(
-        content: Text(
-      title,
-      style: const TextStyle(
-        fontSize: 15,
-      ),
-    ));
-    scaffoldMessengerKey.currentState?.showSnackBar(snackBar);
+    locator<SnackbarService>().showMessage(title);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldMessenger(
-      key: scaffoldMessengerKey,
-      child: Scaffold(
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => UserBloc()),
-            BlocProvider(create: (context) => LoginBloc())
-          ],
-          child: BlocListener<UserBloc, UserState>(
-            listener: (context, state) {
-              if (state.authLoginData != null) {
-                locator<SharedPreferencesService>().setItem(
-                    SharedPrefs.authData, jsonEncode(state.authLoginData));
-                locator<NavigationService>().pushRemoveUntil('/');
-              }
-            },
-            child: ImagedBackgroundContainer(child: loginForm()),
-          ),
+    return Scaffold(
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => UserBloc()),
+          BlocProvider(create: (context) => LoginBloc())
+        ],
+        child: BlocListener<UserBloc, UserState>(
+          listener: (context, state) {
+            if (state.authLoginData != null) {
+              locator<SharedPreferencesService>().setItem(
+                  SharedPrefs.authData, jsonEncode(state.authLoginData));
+              locator<NavigationService>().pushRemoveUntil('/');
+            }
+          },
+          child: ImagedBackgroundContainer(child: loginForm()),
         ),
       ),
     );

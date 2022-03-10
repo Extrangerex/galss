@@ -91,6 +91,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_valid_username_password": MessageLookupByLibrary.simpleMessage(
             "Lo sentimos, no podemos encontrar una cuenta con esta dirección de correo electrónico. Inténtalo de nuevo o crea una nueva"),
         "oops": MessageLookupByLibrary.simpleMessage("Oops"),
+        "passwords_must_match": MessageLookupByLibrary.simpleMessage(
+            "Las contraseñas deben coincidir"),
+        "photo_deleted":
+            MessageLookupByLibrary.simpleMessage("Borraste esta foto"),
         "pick_a_city":
             MessageLookupByLibrary.simpleMessage("Selecciona una ciudad"),
         "poner_perfil_anonimo":
@@ -122,6 +126,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "recently_added":
             MessageLookupByLibrary.simpleMessage("Añadidas Recientemente"),
         "repeat_password":
+            MessageLookupByLibrary.simpleMessage("Repetir contraseña"),
+        "retype_password":
             MessageLookupByLibrary.simpleMessage("Repetir contraseña"),
         "save": MessageLookupByLibrary.simpleMessage("Guardar"),
         "search": MessageLookupByLibrary.simpleMessage("Buscar"),

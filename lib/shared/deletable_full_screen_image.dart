@@ -9,16 +9,19 @@ import 'package:galss/main.dart';
 import 'package:galss/models/photo.dart';
 import 'package:galss/services/http_service.dart';
 
+import '../api_fetch_status.dart';
 import '../blocs/auth/user_events.dart';
 import '../blocs/auth/user_state.dart';
 import '../services/navigation_service.dart';
+import '../services/snackbar_service.dart';
 
 class RemovableFullScreenImage extends StatelessWidget {
   final Photo photo;
   final String tag;
+  final Function? onDeleted;
 
   const RemovableFullScreenImage(
-      {Key? key, required this.photo, required this.tag})
+      {Key? key, required this.photo, required this.tag, this.onDeleted})
       : super(key: key);
 
   String get imgUrl => "${HttpService.apiBaseUrl}/${photo.urlPath!}";
@@ -51,17 +54,7 @@ class RemovableFullScreenImage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          actions: [
-            BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) {
-                return IconButton(
-                    onPressed: () {
-                      handleDeleteButton(context);
-                    },
-                    icon: const Icon(Icons.delete));
-              },
-            )
-          ],
+          actions: [deleteButton()],
         ),
         backgroundColor: Colors.black87,
         body: GestureDetector(
@@ -84,6 +77,26 @@ class RemovableFullScreenImage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
+      ),
+    );
+  }
+
+  Widget deleteButton() {
+    return BlocListener<UserBloc, UserState>(
+      listener: (context, state) {
+        if (state.actionFetchStatus is ApiFetchSucceededStatus) {
+          locator<SnackbarService>().showMessage(S.current.photo_deleted);
+          locator<NavigationService>().pushRemoveUntil('/');
+        }
+      },
+      child: BlocBuilder<UserBloc, UserState>(
+        builder: (context, state) {
+          return IconButton(
+              onPressed: () {
+                handleDeleteButton(context);
+              },
+              icon: const Icon(Icons.delete));
+        },
       ),
     );
   }

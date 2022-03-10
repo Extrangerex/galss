@@ -63,6 +63,8 @@ class AuthRepository {
   }
 
   Future<Response<dynamic>> deletePhoto(int userId, Photo photo) async {
+    print("${HttpService.apiUrl}/User/Photos/$userId/${photo.id}");
+
     return http.delete("${HttpService.apiUrl}/User/Photos/$userId/${photo.id}");
   }
 

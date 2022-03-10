@@ -14,6 +14,8 @@ import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/cached_circle_avatar.dart';
 import 'package:intl/intl.dart';
 
+import '../../shared/full_screen_image.dart';
+
 class HomeModelConnections extends StatefulWidget {
   const HomeModelConnections({Key? key}) : super(key: key);
 
@@ -95,11 +97,34 @@ class _HomeModelConnectionsState extends State<HomeModelConnections> {
                       MaterialPageRoute(
                           builder: (builder) => ChatRoom(chat: e)));
                 },
-                leading: CachedCircleAvatar(
-                  url:
-                      "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}",
-                  imgRadius: null,
-                ),
+                leading: Builder(builder: (context) {
+                  final fileName =
+                      chatFriend?.user?.profilePhoto?.fileName.toString();
+
+                  final photoUrl =
+                      "${HttpService.apiBaseUrl}/${chatFriend?.user?.profilePhoto?.urlPath}";
+
+                  return GestureDetector(
+                    onTap: () {
+                      locator<NavigationService>()
+                          .navigatorKey
+                          .currentState
+                          ?.push(MaterialPageRoute(builder: (_) {
+                        return FullScreenImage(
+                          imageUrl: photoUrl,
+                          tag: fileName!,
+                        );
+                      }));
+                    },
+                    child: Hero(
+                      tag: fileName!,
+                      child: CachedCircleAvatar(
+                        url: photoUrl,
+                        imgRadius: null,
+                      ),
+                    ),
+                  );
+                }),
                 title: Text("${chatFriend?.user?.seeker?.fullName}"),
                 subtitle: Text("${e.lastMessage}")),
           );

@@ -839,6 +839,36 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get photo_deleted {
+    return Intl.message(
+      '',
+      name: 'photo_deleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get retype_password {
+    return Intl.message(
+      '',
+      name: 'retype_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get passwords_must_match {
+    return Intl.message(
+      '',
+      name: 'passwords_must_match',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

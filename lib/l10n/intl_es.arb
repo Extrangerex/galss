@@ -118,5 +118,8 @@
   "terms_conditions_accept_disclaimer": "Al marcar esta casilla, confirmo que he leído y acepto estar sujeto a la política de términos y condiciones.",
   "prompt_delete_photo": "¿Estás seguro que quieres eliminar esta foto?",
   "delete_photo": "Eliminar foto",
-  "yes": "Si"
+  "yes": "Si",
+  "photo_deleted" : "Borraste esta foto",
+  "retype_password" : "Repetir contraseña",
+  "passwords_must_match": "Las contraseñas deben coincidir"
 }

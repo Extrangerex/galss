@@ -7,6 +7,7 @@ class SignUpState {
   final String? name;
   final String? email;
   final String? password;
+  final String? passwordConfirmation;
   final UserType userType;
   final DateTime? dob;
   final City? city;
@@ -36,7 +37,8 @@ class SignUpState {
       this.city,
       this.country,
       this.licenseTermsAccepted = false,
-      this.formState = const InitialFormStatus()});
+      this.formState = const InitialFormStatus(),
+      this.passwordConfirmation});
 
   SignUpState copyWith(
       {String? name,
@@ -48,6 +50,7 @@ class SignUpState {
       bool? licenseTermsAccepted,
       DateTime? dob,
       List<Country>? countries,
+      String? passwordConfirmation,
       FormSubmissionStatus? formState}) {
     return SignUpState(
         name: name ?? this.name,
@@ -57,6 +60,7 @@ class SignUpState {
         city: city ?? this.city,
         dob: dob ?? this.dob,
         country: country ?? this.country,
+        passwordConfirmation: passwordConfirmation ?? this.passwordConfirmation,
         licenseTermsAccepted: licenseTermsAccepted ?? this.licenseTermsAccepted,
         formState: formState ?? this.formState);
   }

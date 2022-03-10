@@ -106,6 +106,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
               ListTile(title: _emailField()),
               ListTile(title: _countryField()),
               ListTile(title: _passwordField()),
+              ListTile(title: _retypePasswordField()),
               _termsAndConditionsField(),
               const SizedBox(
                 height: 20,
@@ -248,6 +249,35 @@ class _SignupSeekerState extends State<SignupSeeker> {
     );
   }
 
+  Widget _retypePasswordField() {
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        return _inputField(
+          child: TextFormField(
+            obscureText: true,
+            validator: (v) {
+              var valid =
+                  (v ?? "").isEmpty ? S.current.error_field_required : null;
+
+              if (state.password != state.passwordConfirmation) {
+                return S.current.passwords_must_match;
+              }
+
+              return valid;
+            },
+            decoration: InputDecoration(
+                hintText: S.current.retype_password, border: InputBorder.none),
+            onChanged: (v) {
+              context
+                  .read<SignUpBloc>()
+                  .add(SignUpPasswordChanged(password: v));
+            },
+          ),
+        );
+      },
+    );
+  }
+
   Widget _passwordField() {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
@@ -255,7 +285,14 @@ class _SignupSeekerState extends State<SignupSeeker> {
           child: TextFormField(
             obscureText: true,
             validator: (v) {
-              return (v ?? "").isEmpty ? S.current.error_field_required : null;
+              var valid =
+                  (v ?? "").isEmpty ? S.current.error_field_required : null;
+
+              if (state.password != state.passwordConfirmation) {
+                return S.current.passwords_must_match;
+              }
+
+              return valid;
             },
             decoration: InputDecoration(
                 hintText: S.current.prompt_password, border: InputBorder.none),

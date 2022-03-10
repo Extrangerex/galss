@@ -115,5 +115,8 @@
   "terms_conditions_accept_disclaimer": "",
   "prompt_delete_photo": "",
   "delete_photo": "",
-  "yes": "Yes"
+  "yes": "Yes",
+  "photo_deleted" : "",
+  "retype_password" : "",
+  "passwords_must_match": ""
   }

@@ -77,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_valid_username_password": MessageLookupByLibrary.simpleMessage(
             "Sorry, we can\'t find an account with this email address. Please try again or create a new one"),
         "oops": MessageLookupByLibrary.simpleMessage(""),
+        "passwords_must_match": MessageLookupByLibrary.simpleMessage(""),
+        "photo_deleted": MessageLookupByLibrary.simpleMessage(""),
         "pick_a_city": MessageLookupByLibrary.simpleMessage("Pick city"),
         "poner_perfil_anonimo": MessageLookupByLibrary.simpleMessage(""),
         "profile_status": MessageLookupByLibrary.simpleMessage("Status"),
@@ -97,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prompt_terms_conditions": MessageLookupByLibrary.simpleMessage(""),
         "recently_added": MessageLookupByLibrary.simpleMessage(""),
         "repeat_password": MessageLookupByLibrary.simpleMessage(""),
+        "retype_password": MessageLookupByLibrary.simpleMessage(""),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage(""),
         "seeker": MessageLookupByLibrary.simpleMessage(""),

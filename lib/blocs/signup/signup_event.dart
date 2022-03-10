@@ -30,6 +30,12 @@ class SignUpPasswordChanged extends SignUpEvent {
   const SignUpPasswordChanged({required this.password});
 }
 
+class SignUpPasswordConfirmationChanged extends SignUpEvent {
+  final String password;
+
+  const SignUpPasswordConfirmationChanged({required this.password});
+}
+
 class SignUpCountryChanged extends SignUpEvent {
   final Country country;
 

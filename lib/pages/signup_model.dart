@@ -12,6 +12,7 @@ import 'package:galss/main.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/services/navigation_service.dart';
+import 'package:galss/services/snackbar_service.dart';
 import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
@@ -27,49 +28,36 @@ class SignUpModel extends StatefulWidget {
 class _SignUpModelState extends State<SignUpModel> {
   final _formKey = GlobalKey<FormState>();
   final _dobController = TextEditingController();
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>();
 
   void showSnack(String title) {
-    final snackBar = SnackBar(
-        content: Text(
-      title,
-      style: const TextStyle(
-        fontSize: 15,
-      ),
-    ));
-    scaffoldMessengerKey.currentState?.showSnackBar(snackBar);
+    locator<SnackbarService>().showMessage(title);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldMessenger(
-      key: scaffoldMessengerKey,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Image(
-            image: logo,
-            width: 75,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Image(
+          image: logo,
+          width: 75,
         ),
-        extendBodyBehindAppBar: true,
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-                create: (create) =>
-                    CountryBloc()..add(const FetchListCountry())),
-            BlocProvider(
-                create: (create) =>
-                    SignUpBloc(SignUpState(userType: UserType.model)))
-          ],
-          child: ImagedBackgroundContainer(
-              child: SizedBox(
-            child: _form(),
-          )),
-        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (create) => CountryBloc()..add(const FetchListCountry())),
+          BlocProvider(
+              create: (create) =>
+                  SignUpBloc(SignUpState(userType: UserType.model)))
+        ],
+        child: ImagedBackgroundContainer(
+            child: SizedBox(
+          child: _form(),
+        )),
       ),
     );
   }
@@ -130,6 +118,7 @@ class _SignUpModelState extends State<SignUpModel> {
               ListTile(title: _emailField()),
               ListTile(title: _countryField()),
               ListTile(title: _passwordField()),
+              ListTile(title: _retypePasswordField()),
               ListTile(title: _termsAndConditionsField()),
               _btnSubmit()
             ],
@@ -154,13 +143,46 @@ class _SignUpModelState extends State<SignUpModel> {
     });
   }
 
+  Widget _retypePasswordField() {
+    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+      return _inputField(
+        child: TextFormField(
+          obscureText: true,
+          validator: (v) {
+            var valid =
+                (v ?? "").isEmpty ? S.current.error_field_required : null;
+
+            if (state.password != state.passwordConfirmation) {
+              return S.current.passwords_must_match;
+            }
+
+            return valid;
+          },
+          decoration: InputDecoration(
+              hintText: S.current.retype_password, border: InputBorder.none),
+          onChanged: (v) => context
+              .read<SignUpBloc>()
+              .add(SignUpPasswordChanged(password: v)),
+        ),
+      );
+    });
+  }
+
   Widget _passwordField() {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
       return _inputField(
         child: TextFormField(
           obscureText: true,
-          validator: (value) =>
-              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          validator: (v) {
+            var valid =
+                (v ?? "").isEmpty ? S.current.error_field_required : null;
+
+            if (state.password != state.passwordConfirmation) {
+              return S.current.passwords_must_match;
+            }
+
+            return valid;
+          },
           decoration: InputDecoration(
               hintText: S.current.prompt_password, border: InputBorder.none),
           onChanged: (v) => context
