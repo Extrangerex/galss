@@ -35,6 +35,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserCurrentLocationChanged>(_currentLocationChanged);
 
     on<UserNameChanged>(_userNameChanged);
+    on<UserPhotoDeleted>(_photoDeleted);
   }
 
   FutureOr<void> _fetchUserData(
@@ -163,6 +164,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           .catchError((onError) => emit(state.copyWith(
               actionFetchStatus:
                   ApiFetchFailedStatus(exception: Exception(onError)))));
+    } catch (e) {
+      emit(state.copyWith(
+          actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));
+    }
+  }
+
+  FutureOr<void> _photoDeleted(
+      UserPhotoDeleted event, Emitter<UserState> emit) async {
+    try {
+      var userId = (await locator<AuthService>().authData).userId;
+
+      await locator<AuthService>()
+          .repository
+          .deletePhoto(userId!, event.photo)
+          .then((value) => value.data)
+          .then((value) => emit(state.copyWith(
+              actionFetchStatus: const ApiFetchSucceededStatus())));
     } catch (e) {
       emit(state.copyWith(
           actionFetchStatus: ApiFetchFailedStatus(exception: Exception(e))));

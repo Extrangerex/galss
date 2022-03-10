@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:galss/main.dart';
-import 'package:galss/models/api_message.dart';
 import 'package:galss/models/city.dart';
 import 'package:galss/models/user.dart';
 import 'package:galss/models/user_type.dart';
 import 'package:galss/services/http_service.dart';
+
+import '../models/photo.dart';
 
 class AuthRepository {
   final http = locator<HttpService>().http;
@@ -60,6 +60,10 @@ class AuthRepository {
     }
 
     return http.put("${HttpService.apiUrl}/User/$userId", data: user.toJson());
+  }
+
+  Future<Response<dynamic>> deletePhoto(int userId, Photo photo) async {
+    return http.delete("${HttpService.apiUrl}/User/Photos/$userId/${photo.id}");
   }
 
   Future<User> getUserInfo(int userId) async {

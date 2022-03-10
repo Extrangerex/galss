@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "congrats": MessageLookupByLibrary.simpleMessage(""),
         "country": MessageLookupByLibrary.simpleMessage(""),
         "current_location": MessageLookupByLibrary.simpleMessage(""),
+        "delete_photo": MessageLookupByLibrary.simpleMessage(""),
         "edit_profile":
             MessageLookupByLibrary.simpleMessage("Edit your profile"),
         "editar_mi_perfil": MessageLookupByLibrary.simpleMessage(""),
@@ -85,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prompt_are_u_model_or_finder":
             MessageLookupByLibrary.simpleMessage(""),
         "prompt_buy_suscription": MessageLookupByLibrary.simpleMessage(""),
+        "prompt_delete_photo": MessageLookupByLibrary.simpleMessage(""),
         "prompt_email": MessageLookupByLibrary.simpleMessage(""),
         "prompt_must_accept_terms_conditions":
             MessageLookupByLibrary.simpleMessage(""),
@@ -114,6 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city": MessageLookupByLibrary.simpleMessage("Unknown city"),
         "yearly": MessageLookupByLibrary.simpleMessage(""),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "you_have_n_connections": m2,
         "you_must_specify_country": MessageLookupByLibrary.simpleMessage(""),
         "you_talking_with_n": m3,

@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "country": MessageLookupByLibrary.simpleMessage("País"),
         "current_location":
             MessageLookupByLibrary.simpleMessage("Ubicación actúal"),
+        "delete_photo": MessageLookupByLibrary.simpleMessage("Eliminar foto"),
         "edit_profile":
             MessageLookupByLibrary.simpleMessage("Editar tu perfil"),
         "editar_mi_perfil":
@@ -103,6 +104,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "¿Eres una modelo o\n un buscador de modelo?"),
         "prompt_buy_suscription":
             MessageLookupByLibrary.simpleMessage("Comprar suscripción"),
+        "prompt_delete_photo": MessageLookupByLibrary.simpleMessage(
+            "¿Estás seguro que quieres eliminar esta foto?"),
         "prompt_email":
             MessageLookupByLibrary.simpleMessage("Correo Electrónico"),
         "prompt_must_accept_terms_conditions":
@@ -142,6 +145,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_city":
             MessageLookupByLibrary.simpleMessage("Ciudad desconocida"),
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
+        "yes": MessageLookupByLibrary.simpleMessage("Si"),
         "you_have_n_connections": m2,
         "you_must_specify_country": MessageLookupByLibrary.simpleMessage(
             "Debes colocar tu país de origen"),

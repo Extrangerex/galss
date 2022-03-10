@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/city.dart';
 import 'package:galss/models/country.dart';
+import 'package:galss/models/photo.dart';
 import 'package:galss/models/user.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -30,9 +31,7 @@ class FetchUserData extends UserEvent {
   const FetchUserData({this.userId});
 }
 
-class NewChatEvent extends UserEvent {
-
-}
+class NewChatEvent extends UserEvent {}
 
 class UserProfilePhotoChanged extends UserEvent {
   final XFile imageToUpload;
@@ -82,6 +81,12 @@ class UserCurrentLocationChanged extends UserEvent {
   final User user;
 
   const UserCurrentLocationChanged({required this.city, required this.user});
+}
+
+class UserPhotoDeleted extends UserEvent {
+  final Photo photo;
+
+  const UserPhotoDeleted({required this.photo});
 }
 
 class FetchUserDataSucceed extends UserEvent {

@@ -809,6 +809,36 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get prompt_delete_photo {
+    return Intl.message(
+      '',
+      name: 'prompt_delete_photo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get delete_photo {
+    return Intl.message(
+      '',
+      name: 'delete_photo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

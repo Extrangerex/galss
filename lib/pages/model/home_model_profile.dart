@@ -5,7 +5,6 @@ import 'package:galss/blocs/auth/user_events.dart';
 import 'package:galss/blocs/auth/user_state.dart';
 import 'package:galss/blocs/country/country_bloc.dart';
 import 'package:galss/blocs/country/country_event.dart';
-import 'package:galss/blocs/country/country_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/country.dart';
 
@@ -24,14 +23,11 @@ class _HomeModelProfileState extends State<HomeModelProfile> {
         BlocProvider(
             create: (context) => UserBloc()..add(const FetchUserData())),
         BlocProvider(
-            create: (context) =>
-                CountryBloc()..add(const FetchListCountry()))
+            create: (context) => CountryBloc()..add(const FetchListCountry()))
       ],
       child: Scaffold(
         body: ListView(
-          children: [
-            _profileStatusField()
-          ],
+          children: [_profileStatusField()],
         ),
       ),
     );

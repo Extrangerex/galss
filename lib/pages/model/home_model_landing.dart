@@ -21,6 +21,7 @@ import 'package:galss/models/photo.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/carousel_with_indicators.dart';
+import 'package:galss/shared/deletable_full_screen_image.dart';
 import 'package:galss/shared/full_screen_image.dart';
 import 'package:galss/theme/button_styles.dart';
 import 'package:image_picker/image_picker.dart';
@@ -90,8 +91,8 @@ class HomeModelLanding extends StatelessWidget {
                             .navigatorKey
                             .currentState
                             ?.push(MaterialPageRoute(builder: (_) {
-                          return FullScreenImage(
-                            imageUrl: "${HttpService.apiBaseUrl}/${e.urlPath!}",
+                          return RemovableFullScreenImage(
+                            photo: e,
                             tag: e.fileName.toString(),
                           );
                         }));
@@ -112,6 +113,19 @@ class HomeModelLanding extends StatelessWidget {
                 viewportFraction: 1, enableInfiniteScroll: false));
       },
     );
+  }
+
+  Widget deletePhotoBtn(Photo photo) {
+    return IconButton(
+        onPressed: () {},
+        icon: Container(
+            decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(25),
+                blurRadius: 5.0,
+              ),
+            ]),
+            child: const Icon(Icons.delete)));
   }
 
   Widget chatCount() {
