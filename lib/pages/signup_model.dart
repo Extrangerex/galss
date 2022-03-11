@@ -18,6 +18,8 @@ import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:intl/intl.dart';
 
+import '../utils/validators.dart';
+
 class SignUpModel extends StatefulWidget {
   const SignUpModel({Key? key}) : super(key: key);
 
@@ -197,8 +199,13 @@ class _SignUpModelState extends State<SignUpModel> {
     return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
       return _inputField(
         child: TextFormField(
-          validator: (value) =>
-              (value ?? "").isEmpty ? S.current.error_field_required : null,
+          validator: (value) {
+            if (!Validators().validateEmail(value!)) {
+              return S.current.error_invalid_email;
+            }
+
+            return value.isEmpty ? S.current.error_field_required : null;
+          },
           decoration: InputDecoration(
               hintText: S.current.prompt_email, border: InputBorder.none),
           onChanged: (v) =>

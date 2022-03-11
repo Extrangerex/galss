@@ -15,6 +15,7 @@ import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:galss/utils/validators.dart';
 import 'package:intl/intl.dart';
 
 class SignupSeeker extends StatefulWidget {
@@ -238,8 +239,13 @@ class _SignupSeekerState extends State<SignupSeeker> {
           child: TextFormField(
             decoration: InputDecoration(
                 hintText: S.current.prompt_email, border: InputBorder.none),
-            validator: (value) =>
-                (value ?? "").isEmpty ? S.current.error_field_required : null,
+            validator: (value) {
+              if (!Validators().validateEmail(value!)) {
+                return S.current.error_invalid_email;
+              }
+
+              return value.isEmpty ? S.current.error_field_required : null;
+            },
             onChanged: (v) {
               context.read<SignUpBloc>().add(SignUpEmailChanged(email: v));
             },

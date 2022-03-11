@@ -111,7 +111,7 @@ class _HomeModelState extends State<HomeModel> {
             children: [
               header(),
               DrawerListItem(
-                label: S.current.home,
+                label: S.current.my_profile,
                 selected: index == 0,
                 onPressed: () {
                   context.read<NavigationBloc>().add(

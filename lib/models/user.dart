@@ -13,7 +13,7 @@ class User {
   int? type;
   Model? model;
   Seeker? seeker;
-  List<Photo>? photos;
+  List<Photo>? _photos;
   Photo? profilePhoto;
   UserLatLng? lastLocation;
   bool? anonymous;
@@ -31,7 +31,6 @@ class User {
       this.type,
       this.model,
       this.seeker,
-      this.photos,
       this.profilePhoto,
       this.lastLocation,
       this.anonymous,
@@ -39,6 +38,9 @@ class User {
       this.country,
       this.currentLocation,
       this.deviceTokens});
+
+  List<Photo>? get photos =>
+      _photos!.where((element) => element.deleted == false).toList();
 
   User copyWith(Map<String, dynamic> json) {
     return User(
@@ -69,9 +71,9 @@ class User {
     model = json['model'] != null ? Model.fromJson(json['model']) : null;
     seeker = json['seeker'] != null ? Seeker.fromJson(json['seeker']) : null;
     if (json['photos'] != null) {
-      photos = <Photo>[];
+      _photos = <Photo>[];
       json['photos'].forEach((v) {
-        photos!.add(Photo.fromJson(v));
+        _photos!.add(Photo.fromJson(v));
       });
     }
     profilePhoto = json['profilePhoto'] != null
@@ -105,8 +107,8 @@ class User {
     if (seeker != null) {
       data['seeker'] = seeker!.toJson();
     }
-    if (photos != null) {
-      data['photos'] = photos!.map((v) => v.toJson()).toList();
+    if (_photos != null) {
+      data['photos'] = _photos!.map((v) => v.toJson()).toList();
     }
     if (profilePhoto != null) {
       data['profilePhoto'] = profilePhoto!.toJson();
