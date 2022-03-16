@@ -276,7 +276,7 @@ class _SignupSeekerState extends State<SignupSeeker> {
             onChanged: (v) {
               context
                   .read<SignUpBloc>()
-                  .add(SignUpPasswordChanged(password: v));
+                  .add(SignUpPasswordConfirmationChanged(password: v));
             },
           ),
         );

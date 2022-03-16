@@ -164,7 +164,7 @@ class _SignUpModelState extends State<SignUpModel> {
               hintText: S.current.retype_password, border: InputBorder.none),
           onChanged: (v) => context
               .read<SignUpBloc>()
-              .add(SignUpPasswordChanged(password: v)),
+              .add(SignUpPasswordConfirmationChanged(password: v)),
         ),
       );
     });
@@ -178,6 +178,7 @@ class _SignUpModelState extends State<SignUpModel> {
           validator: (v) {
             var valid =
                 (v ?? "").isEmpty ? S.current.error_field_required : null;
+
 
             if (state.password != state.passwordConfirmation) {
               return S.current.passwords_must_match;
