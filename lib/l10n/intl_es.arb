@@ -121,5 +121,6 @@
   "yes": "Si",
   "photo_deleted" : "Borraste esta foto",
   "retype_password" : "Repetir contraseña",
-  "passwords_must_match": "Las contraseñas deben coincidir"
+  "passwords_must_match": "Las contraseñas deben coincidir",
+  "invalid_user_password": "Nombre de usuario o contraseña inválido"
 }

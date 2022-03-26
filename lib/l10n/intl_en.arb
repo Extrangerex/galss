@@ -118,5 +118,6 @@
   "yes": "Yes",
   "photo_deleted" : "",
   "retype_password" : "",
-  "passwords_must_match": ""
+  "passwords_must_match": "",
+  "invalid_user_password": ""
   }

@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
           final statusCode = (state.formState as FormFailedStatus).status;
 
           if (statusCode == 404 || statusCode == 400) {
-            showSnack(S.current.not_valid_username_password);
+            showSnack(S.current.invalid_user_password);
           } else if (statusCode == 403) {
             showSnack(S.current.error_inactive_account);
           } else {

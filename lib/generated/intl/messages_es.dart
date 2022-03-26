@@ -73,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Las Fuentes que Tienen (*) Son Obligatorias"),
         "greeting": MessageLookupByLibrary.simpleMessage("Hola"),
         "home": MessageLookupByLibrary.simpleMessage("Inicio"),
+        "invalid_user_password": MessageLookupByLibrary.simpleMessage(
+            "Nombre de usuario o contraseña inválido"),
         "language": MessageLookupByLibrary.simpleMessage("Español"),
         "lastname": MessageLookupByLibrary.simpleMessage("Apellido"),
         "liked_by_n_people": m0,

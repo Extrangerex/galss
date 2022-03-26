@@ -7,7 +7,7 @@ class SnackbarService {
   showMessage(String message) {
     final snackBar = SnackBar(
       content: Text(message),
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 5000),
     );
 
     globalScaffoldMessengerKey.currentState?.showSnackBar(snackBar);

@@ -869,6 +869,16 @@ class S {
       args: [],
     );
   }
+
+  /// ``
+  String get invalid_user_password {
+    return Intl.message(
+      '',
+      name: 'invalid_user_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
