@@ -61,7 +61,7 @@
       }
     }
   },
-  "you_talking_with_n": "Talking to {targetName}...",
+  "you_talking_with_n": "{targetName}",
   "@you_talking_with_n": {
     "description": "Specify the name of your chat target",
     "placeholders": {

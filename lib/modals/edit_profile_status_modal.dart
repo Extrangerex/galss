@@ -61,7 +61,7 @@ class _EditProfileStatusModalState extends State<EditProfileStatusModal> {
                   children: [
                     const Spacer(),
                     BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-                      return TextButton(
+                      return ElevatedButton(
                           onPressed: () {
                             handleChangeProfileStatus(context);
                           },

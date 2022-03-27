@@ -82,7 +82,7 @@ class _EditNameModalState extends State<EditNameModal> {
 
   Widget saveBtn() {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-      return TextButton(
+      return ElevatedButton(
           onPressed: () {
             handleChangeProfileStatus(context, state.user);
           },

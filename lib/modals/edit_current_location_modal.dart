@@ -80,7 +80,7 @@ class _EditCurrentLocationModalState extends State<EditCurrentLocationModal> {
                     const Spacer(),
                     BlocBuilder<UserBloc, UserState>(
                       builder: (context, state) {
-                        return TextButton(
+                        return ElevatedButton(
                             onPressed: () {
                               handleChangeCurrentLocation(
                                   context, state.user, city);

@@ -26,6 +26,10 @@ class AuthRepository {
         data: {"token": deviceToken});
   }
 
+  Future<Response<dynamic>> signOut() async {
+    return http.post("${HttpService.apiUrl}/api/Login/SignOut");
+  }
+
   Future<Response<dynamic>> toggleAnonymous(int userId,
       {bool isAnonymous = false}) async {
     return http.put(
@@ -63,8 +67,6 @@ class AuthRepository {
   }
 
   Future<Response<dynamic>> deletePhoto(int userId, Photo photo) async {
-    print("${HttpService.apiUrl}/User/Photos/$userId/${photo.id}");
-
     return http.delete("${HttpService.apiUrl}/User/Photos/$userId/${photo.id}");
   }
 

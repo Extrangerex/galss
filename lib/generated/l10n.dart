@@ -570,10 +570,10 @@ class S {
     );
   }
 
-  /// `Talking to {targetName}...`
+  /// `{targetName}`
   String you_talking_with_n(String targetName) {
     return Intl.message(
-      'Talking to $targetName...',
+      '$targetName',
       name: 'you_talking_with_n',
       desc: 'Specify the name of your chat target',
       args: [targetName],

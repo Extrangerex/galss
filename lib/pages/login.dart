@@ -18,8 +18,10 @@ import 'package:galss/services/shared_preferences.dart';
 import 'package:galss/services/snackbar_service.dart';
 import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
+import 'package:galss/shared/light_themed_widget.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/button_styles.dart';
+import 'package:galss/theme/input_bordered_decoration.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -112,8 +114,8 @@ class _LoginState extends State<Login> {
       return _inputField(
           child: TextFormField(
         obscureText: true,
-        decoration: InputDecoration(
-            hintText: S.current.prompt_password, border: InputBorder.none),
+        decoration: InputWhiteFilledBorderedDecoration(
+            hintText: S.current.prompt_password),
         validator: (value) => null,
         onChanged: (value) => context
             .read<LoginBloc>()
@@ -123,30 +125,23 @@ class _LoginState extends State<Login> {
   }
 
   Widget _inputField({required Widget child, ThemeData? data}) {
-    return Theme(
-      data: data ?? ThemeData.light(),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.black12)),
-        child: child,
-      ),
+    return LightThemedWidget(
+      child: child,
     );
   }
 
   Widget _usernameField() {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return _inputField(
-          child: TextFormField(
-        validator: (value) => null,
-        decoration: InputDecoration(
-            hintText: S.current.prompt_email, border: InputBorder.none),
-        onChanged: (value) => context
-            .read<LoginBloc>()
-            .add(LoginUsernameChanged(username: value)),
-      ));
+        child: TextFormField(
+          validator: (value) => null,
+          decoration: InputWhiteFilledBorderedDecoration(
+              hintText: S.current.prompt_email),
+          onChanged: (value) => context
+              .read<LoginBloc>()
+              .add(LoginUsernameChanged(username: value)),
+        ),
+      );
     });
   }
 

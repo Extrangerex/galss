@@ -26,7 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(roomsLength) => "Tienes ${roomsLength} conexion(es)";
 
-  static String m3(targetName) => "Estas hablando con ${targetName}...";
+  static String m3(targetName) => "${targetName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{

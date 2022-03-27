@@ -42,6 +42,8 @@ class AuthService {
   Future<bool> signOut() async {
     user.add(null);
 
+    await postNewDeviceToken("");
+
     return (await locator<SharedPreferencesService>()
             .deleteItem(SharedPrefs.authData) ??
         false);

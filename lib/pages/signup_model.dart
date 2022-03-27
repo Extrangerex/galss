@@ -15,7 +15,9 @@ import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/snackbar_service.dart';
 import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
+import 'package:galss/shared/light_themed_widget.dart';
 import 'package:galss/shared/logo.dart';
+import 'package:galss/theme/input_bordered_decoration.dart';
 import 'package:intl/intl.dart';
 
 import '../utils/validators.dart';
@@ -64,17 +66,9 @@ class _SignUpModelState extends State<SignUpModel> {
     );
   }
 
-  Widget _inputField({required Widget child, ThemeData? data}) {
-    return Theme(
-      data: data ?? ThemeData.light(),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.black12)),
-        child: child,
-      ),
+  Widget _inputField({required Widget child}) {
+    return LightThemedWidget(
+      child: child,
     );
   }
 
@@ -136,8 +130,8 @@ class _SignUpModelState extends State<SignUpModel> {
         child: TextFormField(
           validator: (value) =>
               (value ?? "").isEmpty ? S.current.error_field_required : null,
-          decoration: InputDecoration(
-              hintText: S.current.name, border: InputBorder.none),
+          decoration: InputWhiteFilledBorderedDecoration(
+              hintText: S.current.name),
           onChanged: (v) =>
               context.read<SignUpBloc>().add(SignUpNameChanged(name: v)),
         ),
@@ -160,8 +154,8 @@ class _SignUpModelState extends State<SignUpModel> {
 
             return valid;
           },
-          decoration: InputDecoration(
-              hintText: S.current.retype_password, border: InputBorder.none),
+          decoration: InputWhiteFilledBorderedDecoration(
+              hintText: S.current.retype_password),
           onChanged: (v) => context
               .read<SignUpBloc>()
               .add(SignUpPasswordConfirmationChanged(password: v)),
@@ -186,8 +180,8 @@ class _SignUpModelState extends State<SignUpModel> {
 
             return valid;
           },
-          decoration: InputDecoration(
-              hintText: S.current.prompt_password, border: InputBorder.none),
+          decoration: InputWhiteFilledBorderedDecoration(
+              hintText: S.current.prompt_password),
           onChanged: (v) => context
               .read<SignUpBloc>()
               .add(SignUpPasswordChanged(password: v)),
@@ -207,8 +201,8 @@ class _SignUpModelState extends State<SignUpModel> {
 
             return value.isEmpty ? S.current.error_field_required : null;
           },
-          decoration: InputDecoration(
-              hintText: S.current.prompt_email, border: InputBorder.none),
+          decoration: InputWhiteFilledBorderedDecoration(
+              hintText: S.current.prompt_email),
           onChanged: (v) =>
               context.read<SignUpBloc>().add(SignUpEmailChanged(email: v)),
         ),
@@ -246,8 +240,8 @@ class _SignUpModelState extends State<SignUpModel> {
                 (value ?? "").isEmpty ? S.current.error_field_required : null,
             controller: _dobController,
             readOnly: true,
-            decoration: InputDecoration(
-                hintText: S.current.birthdate, border: InputBorder.none),
+            decoration: InputWhiteFilledBorderedDecoration(
+                hintText: S.current.birthdate),
           ),
         );
       },
@@ -315,7 +309,7 @@ class _SignUpModelState extends State<SignUpModel> {
               isExpanded: true,
               value: context.read<SignUpBloc>().state.country,
               isDense: true,
-              decoration: const InputDecoration(border: InputBorder.none),
+              decoration: const InputWhiteFilledBorderedDecoration(),
               onChanged: (v) {
                 if (v == null) return;
                 context

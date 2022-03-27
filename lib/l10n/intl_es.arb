@@ -62,7 +62,7 @@
     }
   },
   "not_specified": "No especificado",
-  "you_talking_with_n": "Estas hablando con {targetName}...",
+  "you_talking_with_n": "{targetName}",
   "@you_talking_with_n": {
     "description": "Especificar el nombre del usuario con quien hablas",
     "placeholders": {
@@ -73,7 +73,6 @@
     }
   },
   "type_a_message_placeholder": "Aa",
-
   "liked_by_n_people": "Les ha gustado a {likesCount} persona(s)",
   "@liked_by_n_people": {
     "description": "Muestra la cantidad de likes de una modelo",
