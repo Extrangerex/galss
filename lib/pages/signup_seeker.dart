@@ -20,6 +20,8 @@ import 'package:galss/theme/input_bordered_decoration.dart';
 import 'package:galss/utils/validators.dart';
 import 'package:intl/intl.dart';
 
+import '../services/snackbar_service.dart';
+
 class SignupSeeker extends StatefulWidget {
   const SignupSeeker({Key? key}) : super(key: key);
 
@@ -84,6 +86,9 @@ class _SignupSeekerState extends State<SignupSeeker> {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state.formState is FormSuccessStatus) {
+          locator<SnackbarService>()
+              .showMessage(S.current.user_seeker_registered);
+
           locator<NavigationService>().pushRemoveUntil('/',
               arguments: (state.formState as FormSuccessStatus).payload);
         } else if (state.formState is FormFailedStatus) {
@@ -176,8 +181,8 @@ class _SignupSeekerState extends State<SignupSeeker> {
           child: TextFormField(
             validator: (value) =>
                 (value ?? "").isEmpty ? S.current.error_field_required : null,
-            decoration: InputWhiteFilledBorderedDecoration(
-                hintText: S.current.name),
+            decoration:
+                InputWhiteFilledBorderedDecoration(hintText: S.current.name),
             onChanged: (v) {
               context.read<SignUpBloc>().add(SignUpNameChanged(name: v));
             },

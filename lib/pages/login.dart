@@ -19,6 +19,7 @@ import 'package:galss/services/snackbar_service.dart';
 import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/light_themed_widget.dart';
+import 'package:galss/shared/loading_dialog.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/button_styles.dart';
 import 'package:galss/theme/input_bordered_decoration.dart';
@@ -82,6 +83,7 @@ class _LoginState extends State<Login> {
             showSnack(S.current.something_went_wrong);
           }
 
+          LoadingDialog.dismiss();
           context.read<LoginBloc>().add(const LoginFormStatusChanged(
               formSubmissionStatus: InitialFormStatus()));
         }
@@ -154,6 +156,7 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     context.read<LoginBloc>().add(LoginFormSubmitted());
+                    LoadingDialog.show();
                   }
                 },
                 child: Text(S.current.action_sign_in_short)));

@@ -152,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aa"),
         "unknown_city":
             MessageLookupByLibrary.simpleMessage("Ciudad desconocida"),
+        "user_seeker_registered": MessageLookupByLibrary.simpleMessage(
+            "Ha creado una cuenta con éxito."),
         "yearly": MessageLookupByLibrary.simpleMessage("Anuales"),
         "yes": MessageLookupByLibrary.simpleMessage("Si"),
         "you_have_n_connections": m2,
