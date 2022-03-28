@@ -77,7 +77,7 @@ class _SignUpModelState extends State<SignUpModel> {
       listener: (context, state) {
         if (state.formState is FormSuccessStatus) {
           locator<NavigationService>()
-              .pushRemoveUntil('/signup/model/succeded');
+              .pushRemoveUntil('/signup/model/succeeded');
           return;
         } else if (state.formState is FormFailedStatus) {
           final data = state.formState as FormFailedStatus;
@@ -90,6 +90,10 @@ class _SignUpModelState extends State<SignUpModel> {
           } else {
             showSnack('${S.current.oops}, ${S.current.something_went_wrong}');
           }
+
+          context
+              .read<SignUpBloc>()
+              .add(const SignUpFormStatusChanged(status: InitialFormStatus()));
         }
       },
       child: SingleChildScrollView(
@@ -130,8 +134,8 @@ class _SignUpModelState extends State<SignUpModel> {
         child: TextFormField(
           validator: (value) =>
               (value ?? "").isEmpty ? S.current.error_field_required : null,
-          decoration: InputWhiteFilledBorderedDecoration(
-              hintText: S.current.name),
+          decoration:
+              InputWhiteFilledBorderedDecoration(hintText: S.current.name),
           onChanged: (v) =>
               context.read<SignUpBloc>().add(SignUpNameChanged(name: v)),
         ),
@@ -172,7 +176,6 @@ class _SignUpModelState extends State<SignUpModel> {
           validator: (v) {
             var valid =
                 (v ?? "").isEmpty ? S.current.error_field_required : null;
-
 
             if (state.password != state.passwordConfirmation) {
               return S.current.passwords_must_match;

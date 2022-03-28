@@ -1,3 +1,4 @@
+import 'package:galss/form_submission_status.dart';
 import 'package:galss/models/city.dart';
 import 'package:galss/models/country.dart';
 import 'package:galss/models/user_type.dart';
@@ -67,3 +68,9 @@ class SignUpLicenseTermsAcceptedChanged extends SignUpEvent {
 }
 
 class SignUpFormSubmitted extends SignUpEvent {}
+
+class SignUpFormStatusChanged extends SignUpEvent {
+  final FormSubmissionStatus status;
+
+  const SignUpFormStatusChanged({required this.status});
+}

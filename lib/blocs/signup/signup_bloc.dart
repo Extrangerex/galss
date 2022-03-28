@@ -61,8 +61,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       var response = await repository.signUp(body);
 
-      print(response.statusCode);
-
       if (response.statusCode == 409) {
       } else if (response.statusCode == 200) {
         emit(state.copyWith(

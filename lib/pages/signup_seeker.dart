@@ -102,6 +102,11 @@ class _SignupSeekerState extends State<SignupSeeker> {
           } else {
             showSnack('${S.current.oops}, ${S.current.something_went_wrong}');
           }
+
+          
+          context
+              .read<SignUpBloc>()
+              .add(const SignUpFormStatusChanged(status: InitialFormStatus()));
         }
       },
       child: Form(
