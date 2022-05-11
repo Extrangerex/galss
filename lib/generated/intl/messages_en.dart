@@ -20,115 +20,144 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(likesCount) => "${likesCount} people liked it";
+  static String m0(likesCount) => "Liked by ${likesCount} person(s)";
 
-  static String m1(likesCount) => "${likesCount} people liked you";
+  static String m1(likesCount) => "You have been liked by ${likesCount} people";
 
-  static String m2(roomsLength) => "You have ${roomsLength} connections";
+  static String m2(roomsLength) => "You have ${roomsLength} connection(s)";
 
   static String m3(targetName) => "${targetName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "action_sign_in": MessageLookupByLibrary.simpleMessage(""),
-        "action_sign_in_short": MessageLookupByLibrary.simpleMessage(""),
+        "action_sign_in": MessageLookupByLibrary.simpleMessage("Log in"),
+        "action_sign_in_short":
+            MessageLookupByLibrary.simpleMessage("Get into"),
         "add_new_name": MessageLookupByLibrary.simpleMessage("Add a new name"),
-        "add_photo": MessageLookupByLibrary.simpleMessage(""),
+        "add_photo": MessageLookupByLibrary.simpleMessage("Add a photo"),
         "add_your_new_state":
-            MessageLookupByLibrary.simpleMessage("Add a new profile status"),
-        "annual": MessageLookupByLibrary.simpleMessage(""),
-        "birthdate": MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage("Add your state"),
+        "birthdate": MessageLookupByLibrary.simpleMessage("Date of birth"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "change_current_location":
-            MessageLookupByLibrary.simpleMessage("Change current location"),
-        "choose_your_subscription": MessageLookupByLibrary.simpleMessage(""),
-        "close_to_me": MessageLookupByLibrary.simpleMessage(""),
-        "congrats": MessageLookupByLibrary.simpleMessage(""),
-        "country": MessageLookupByLibrary.simpleMessage(""),
-        "current_location": MessageLookupByLibrary.simpleMessage(""),
-        "delete_photo": MessageLookupByLibrary.simpleMessage(""),
+        "change_current_location": MessageLookupByLibrary.simpleMessage(
+            "Change your current location"),
+        "choose_your_subscription":
+            MessageLookupByLibrary.simpleMessage("choose your plan"),
+        "close_to_me": MessageLookupByLibrary.simpleMessage("Close to me"),
+        "congrats": MessageLookupByLibrary.simpleMessage("Congratulations"),
+        "country": MessageLookupByLibrary.simpleMessage("Country"),
+        "current_location":
+            MessageLookupByLibrary.simpleMessage("Current location"),
+        "delete_photo": MessageLookupByLibrary.simpleMessage("Delete picture"),
         "edit_profile":
-            MessageLookupByLibrary.simpleMessage("Edit your profile"),
-        "editar_mi_perfil": MessageLookupByLibrary.simpleMessage(""),
-        "email_in_use": MessageLookupByLibrary.simpleMessage(""),
-        "error_field_required": MessageLookupByLibrary.simpleMessage(""),
-        "error_inactive_account": MessageLookupByLibrary.simpleMessage(""),
-        "error_invalid_email": MessageLookupByLibrary.simpleMessage(""),
-        "error_invalid_password": MessageLookupByLibrary.simpleMessage(""),
-        "exit": MessageLookupByLibrary.simpleMessage(""),
-        "finder": MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage("edit your profile"),
+        "editar_mi_perfil":
+            MessageLookupByLibrary.simpleMessage("Edit my Profile"),
+        "email_in_use":
+            MessageLookupByLibrary.simpleMessage("This email already in use"),
+        "error_field_required":
+            MessageLookupByLibrary.simpleMessage("This field is required"),
+        "error_inactive_account": MessageLookupByLibrary.simpleMessage(
+            "Your account is still inactive. If you have a concern, doubt, complaint or suggestion, you can contact us galssapp@gmail.com"),
+        "error_invalid_email": MessageLookupByLibrary.simpleMessage(
+            "This email address is not valid"),
+        "error_invalid_password":
+            MessageLookupByLibrary.simpleMessage("This password is too short"),
+        "exit": MessageLookupByLibrary.simpleMessage("Go out"),
+        "finder": MessageLookupByLibrary.simpleMessage("Seeker"),
         "fonts_with_asterisk_are_mandatory":
-            MessageLookupByLibrary.simpleMessage(""),
-        "greeting": MessageLookupByLibrary.simpleMessage("Hey"),
-        "home": MessageLookupByLibrary.simpleMessage(""),
-        "invalid_user_password": MessageLookupByLibrary.simpleMessage(""),
-        "language": MessageLookupByLibrary.simpleMessage("English"),
-        "lastname": MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(
+                "Fonts that have (*) are required"),
+        "greeting": MessageLookupByLibrary.simpleMessage("Hello"),
+        "home": MessageLookupByLibrary.simpleMessage("Start"),
+        "invalid_user_password": MessageLookupByLibrary.simpleMessage(
+            "Invalid username or password"),
+        "language": MessageLookupByLibrary.simpleMessage("Spanish"),
+        "lastname": MessageLookupByLibrary.simpleMessage("Surname"),
         "liked_by_n_people": m0,
-        "model": MessageLookupByLibrary.simpleMessage(""),
-        "model_catalog": MessageLookupByLibrary.simpleMessage(""),
-        "monthly": MessageLookupByLibrary.simpleMessage(""),
-        "montly": MessageLookupByLibrary.simpleMessage(""),
-        "my_connections": MessageLookupByLibrary.simpleMessage(""),
-        "my_profile": MessageLookupByLibrary.simpleMessage(""),
+        "model": MessageLookupByLibrary.simpleMessage("Model"),
+        "model_catalog": MessageLookupByLibrary.simpleMessage("Model Catalogs"),
+        "monthly": MessageLookupByLibrary.simpleMessage("Monthly"),
+        "my_connections":
+            MessageLookupByLibrary.simpleMessage("my connections"),
+        "my_profile": MessageLookupByLibrary.simpleMessage("My profile"),
         "n_people_liked_you": m1,
-        "name": MessageLookupByLibrary.simpleMessage(""),
-        "nationality": MessageLookupByLibrary.simpleMessage(""),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "nationality": MessageLookupByLibrary.simpleMessage("Nationality"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not specified"),
         "not_valid_username_password": MessageLookupByLibrary.simpleMessage(
-            "Sorry, we can\'t find an account with this email address. Please try again or create a new one"),
-        "oops": MessageLookupByLibrary.simpleMessage(""),
-        "passwords_must_match": MessageLookupByLibrary.simpleMessage(""),
-        "photo_deleted": MessageLookupByLibrary.simpleMessage(""),
-        "pick_a_city": MessageLookupByLibrary.simpleMessage("Pick city"),
-        "poner_perfil_anonimo": MessageLookupByLibrary.simpleMessage(""),
-        "profile_status": MessageLookupByLibrary.simpleMessage("Status"),
-        "prompt_accept_terms_conditions":
-            MessageLookupByLibrary.simpleMessage(""),
-        "prompt_all_fields_requeried": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_are_u_model_or_finder":
-            MessageLookupByLibrary.simpleMessage(""),
-        "prompt_buy_suscription": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_delete_photo": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_email": MessageLookupByLibrary.simpleMessage(""),
+            "Sorry, we can\'t find an account with this email address. Please try again or create a new"),
+        "oops": MessageLookupByLibrary.simpleMessage("oops"),
+        "passwords_must_match":
+            MessageLookupByLibrary.simpleMessage("Passwords must match"),
+        "photo_deleted":
+            MessageLookupByLibrary.simpleMessage("you deleted this photo"),
+        "pick_a_city": MessageLookupByLibrary.simpleMessage("select a city"),
+        "poner_perfil_anonimo":
+            MessageLookupByLibrary.simpleMessage("Put Anonymous Profile"),
+        "profile_status": MessageLookupByLibrary.simpleMessage("Condition"),
+        "prompt_accept_terms_conditions": MessageLookupByLibrary.simpleMessage(
+            "I accept the terms and conditions"),
+        "prompt_all_fields_requeried":
+            MessageLookupByLibrary.simpleMessage("All fields are required"),
+        "prompt_annual": MessageLookupByLibrary.simpleMessage("Annual"),
+        "prompt_are_u_model_or_finder": MessageLookupByLibrary.simpleMessage(
+            "Are you a model or\n a model finder?"),
+        "prompt_buy_suscription":
+            MessageLookupByLibrary.simpleMessage("Buy subscription"),
+        "prompt_delete_photo": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this photo?"),
+        "prompt_email": MessageLookupByLibrary.simpleMessage("Email"),
+        "prompt_monthly": MessageLookupByLibrary.simpleMessage("Monthly"),
         "prompt_must_accept_terms_conditions":
-            MessageLookupByLibrary.simpleMessage(""),
-        "prompt_next": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_password": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_passwords_must_match": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_select_country": MessageLookupByLibrary.simpleMessage(""),
-        "prompt_terms_conditions": MessageLookupByLibrary.simpleMessage(""),
-        "recently_added": MessageLookupByLibrary.simpleMessage(""),
-        "repeat_password": MessageLookupByLibrary.simpleMessage(""),
-        "retype_password": MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(
+                "You must agree to terms and conditions"),
+        "prompt_next": MessageLookupByLibrary.simpleMessage("Continue"),
+        "prompt_password": MessageLookupByLibrary.simpleMessage("Password"),
+        "prompt_passwords_must_match":
+            MessageLookupByLibrary.simpleMessage("passwords must match"),
+        "prompt_select_country":
+            MessageLookupByLibrary.simpleMessage("Select a country"),
+        "prompt_terms_conditions":
+            MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
+        "recently_added":
+            MessageLookupByLibrary.simpleMessage("Recently Added"),
+        "repeat_password":
+            MessageLookupByLibrary.simpleMessage("Repeat password"),
+        "retype_password":
+            MessageLookupByLibrary.simpleMessage("Repeat password"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "search": MessageLookupByLibrary.simpleMessage(""),
-        "seeker": MessageLookupByLibrary.simpleMessage(""),
-        "sign_up": MessageLookupByLibrary.simpleMessage(""),
-        "sign_up_form_for_galss_models":
-            MessageLookupByLibrary.simpleMessage(""),
-        "signin_form": MessageLookupByLibrary.simpleMessage(""),
+        "search": MessageLookupByLibrary.simpleMessage("Seek"),
+        "seeker": MessageLookupByLibrary.simpleMessage("Seeker"),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Check in"),
+        "sign_up_form_for_galss_models": MessageLookupByLibrary.simpleMessage(
+            "Application Form for Galss Models"),
+        "signin_form": MessageLookupByLibrary.simpleMessage("Login Form"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went wrong"),
         "switch_anonymous_mode":
-            MessageLookupByLibrary.simpleMessage("Switch anonymous mode"),
+            MessageLookupByLibrary.simpleMessage("put anonymous profile"),
         "technically_there_is_nothing_wrong_but":
-            MessageLookupByLibrary.simpleMessage(""),
-        "terms_conditions_accept_disclaimer":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(
+                "Technically there is nothing wrong, but something does not add up"),
+        "terms_conditions_accept_disclaimer": MessageLookupByLibrary.simpleMessage(
+            "By checking this box, I confirm that I have read and agree to be bound by the terms and conditions policy."),
         "type_a_message_placeholder":
-            MessageLookupByLibrary.simpleMessage("Aa"),
-        "unknown_city": MessageLookupByLibrary.simpleMessage("Unknown city"),
-        "user_seeker_registered": MessageLookupByLibrary.simpleMessage(""),
-        "yearly": MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage("oh"),
+        "unknown_city": MessageLookupByLibrary.simpleMessage("unknown city"),
+        "user_seeker_registered": MessageLookupByLibrary.simpleMessage(
+            "You have successfully created an account."),
+        "yearly": MessageLookupByLibrary.simpleMessage("Annuals"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "you_have_n_connections": m2,
-        "you_must_specify_country": MessageLookupByLibrary.simpleMessage(""),
+        "you_must_specify_country": MessageLookupByLibrary.simpleMessage(
+            "You must enter your country of origin"),
         "you_talking_with_n": m3,
         "your_favorites":
-            MessageLookupByLibrary.simpleMessage("Your favorites"),
-        "your_likes": MessageLookupByLibrary.simpleMessage("Likes"),
+            MessageLookupByLibrary.simpleMessage("your favorites"),
+        "your_likes": MessageLookupByLibrary.simpleMessage("your likes"),
         "your_request_was_received_see_you_in_48hr":
-            MessageLookupByLibrary.simpleMessage("")
+            MessageLookupByLibrary.simpleMessage(
+                "Your request was received correctly.\n Before 48 hours we will be\n confirming.")
       };
 }

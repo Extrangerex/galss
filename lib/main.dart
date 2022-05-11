@@ -24,6 +24,9 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 final locator = GetIt.I;
 
+final String defaultLocale =
+    Platform.localeName; // Returns locale string in the form 'en_US'
+
 void setupLocator() {
   locator.registerSingleton<PaymentService>(PaymentService());
   locator.registerSingleton<HttpService>(HttpService());
@@ -68,8 +71,15 @@ class MyApp extends StatelessWidget {
         S.delegate
       ],
       scaffoldMessengerKey: globalScaffoldMessengerKey,
-      supportedLocales: const [Locale('es')],
-      locale: const Locale('es'),
+      supportedLocales: const [
+        Locale('es'),
+        Locale('en'),
+        Locale('pt'),
+        Locale('fr'),
+        Locale('it'),
+        Locale('hi')
+      ],
+      locale: Locale(defaultLocale),
       theme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: primaryColor,

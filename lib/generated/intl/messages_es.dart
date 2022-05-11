@@ -106,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Acepto los Términos y Condiciones"),
         "prompt_all_fields_requeried": MessageLookupByLibrary.simpleMessage(
             "Todos los Campos Son Obligatorios"),
+        "prompt_annual": MessageLookupByLibrary.simpleMessage("Anual"),
         "prompt_are_u_model_or_finder": MessageLookupByLibrary.simpleMessage(
             "¿Eres una modelo o\n un buscador de modelo?"),
         "prompt_buy_suscription":
@@ -114,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "¿Estás seguro que quieres eliminar esta foto?"),
         "prompt_email":
             MessageLookupByLibrary.simpleMessage("Correo Electrónico"),
+        "prompt_monthly": MessageLookupByLibrary.simpleMessage("Mensual"),
         "prompt_must_accept_terms_conditions":
             MessageLookupByLibrary.simpleMessage(
                 "Debes aceptar los terminos y condiciones"),
