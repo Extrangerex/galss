@@ -29,3 +29,9 @@ class ChatSentMessageEvent extends ChatRoomEvent {
 
   const ChatSentMessageEvent({required this.message, required this.roomId});
 }
+
+class ChatJoinRoomEvent extends ChatRoomEvent {
+  final int roomId;
+
+  const ChatJoinRoomEvent({required this.roomId});
+}

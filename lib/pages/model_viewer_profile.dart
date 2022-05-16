@@ -20,6 +20,7 @@ import 'package:galss/models/user.dart';
 import 'package:galss/pages/chat_room.dart';
 import 'package:galss/pages/seeker/home_seeker_connections.dart';
 import 'package:galss/repository/chat_repository.dart';
+import 'package:galss/services/chat_service.dart';
 import 'package:galss/services/http_service.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/shared/carousel_with_indicators.dart';
@@ -54,7 +55,7 @@ class _ModelViewerProfileState extends State<ModelViewerProfile> {
                 UserBloc()..add(FetchUserData(userId: widget.userModel.id))),
         BlocProvider(
             create: (create) => ChatBloc()..add(const ChatGetChatsEvent())),
-        BlocProvider(create: (create) => ChatRoomBloc()),
+        BlocProvider(create: (create) => ChatRoomBloc(ChatService())),
       ],
       child: Scaffold(
         backgroundColor: backgroundColor,

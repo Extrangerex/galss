@@ -10,16 +10,34 @@ import 'package:galss/main.dart';
 import 'package:galss/models/api_chat_message.dart';
 import 'package:galss/models/api_message.dart';
 import 'package:galss/services/auth_service.dart';
+import 'package:galss/services/chat_service.dart';
 import 'package:galss/services/http_service.dart';
 
 class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
-  ChatRoomBloc() : super(ChatRoomState()) {
+  final ChatService chatService;
+
+  ChatRoomBloc(this.chatService) : super(ChatRoomState()) {
     on<ChatGetChatHistoryEvent>(_fetchGetChatHistory);
-    on<ChatMessageChanged>(
-        (event, emit) => emit(state.copyWith(msgToSend: event.message)));
+    on<ChatMessageChanged>((event, emit) =>
+        emit(state.copyWith(msgToSend: ChatMessage(message: event.message))));
     on<ChatSentMessageEvent>(_postChatMessage);
 
     on<ChatSentGreetingEvent>(_postChatGreeting);
+
+    on<ChatJoinRoomEvent>(_joinRoom);
+  }
+
+  FutureOr<void> _joinRoom(
+      ChatJoinRoomEvent event, Emitter<ChatRoomState> emit) async {
+    final roomId = event.roomId;
+    final userData = await locator<AuthService>().authData;
+
+    chatService.join(
+      ChatDto(
+        chatId: roomId.toString(),
+        fromUserId: userData.userId.toString(),
+      ),
+    );
   }
 
   FutureOr<void> _fetchGetChatHistory(
@@ -51,19 +69,13 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
 
     final userData = await locator<AuthService>().authData;
 
-    debugPrint(
-        jsonEncode({"fromUserId": userData.userId, "message": event.message}));
-
     try {
-      await locator<HttpService>()
-          .http
-          .post("${HttpService.apiUrl}/Chat/Messages/${event.roomId}",
-              data: {"fromUserId": userData.userId, "message": event.message})
-          .then((value) => value.data)
-          .then((value) => ApiMessage.fromJson(value))
-          .then((value) => emit(state.copyWith(
-              sentMessageFetchStatus: const ApiFetchSucceededStatus(),
-              msgToSend: "")));
+      return emit(state.copyWith(
+          sentMessageFetchStatus: const ApiFetchSucceededStatus(),
+          msgToSend: ChatMessage(
+              message: event.message,
+              chatId: event.roomId,
+              userId: userData.userId)));
     } catch (e) {
       emit(state.copyWith(
           sentMessageFetchStatus:

@@ -14,6 +14,7 @@ import 'package:galss/blocs/chat_room/chat_room_state.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/api_chat.dart';
 import 'package:galss/models/user.dart';
+import 'package:galss/services/chat_service.dart';
 import 'package:galss/services/firebase_messaging_service.dart';
 import 'package:galss/theme/variables.dart';
 
@@ -29,9 +30,9 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   final TextEditingController _msgTextEditingController =
       TextEditingController();
-  Timer? chatTimer;
   late ChatRoomBloc _chatRoomBloc;
   final ScrollController _scrollController = ScrollController();
+  final chatService = ChatService();
 
   BubbleStyle styleSomebody = BubbleStyle(
     nip: BubbleNip.leftCenter,
@@ -56,19 +57,21 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   void initState() {
     super.initState();
+    _chatRoomBloc = ChatRoomBloc(chatService);
 
-    _chatRoomBloc = ChatRoomBloc();
+    _chatRoomBloc.chatService.onMessage((p0) {
+      if (_chatRoomBloc.isClosed) {
+        return;
+      }
 
-    onMessageReceived.listen((value) {
       _chatRoomBloc.add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
     });
   }
 
   @override
   void dispose() {
+    _chatRoomBloc.chatService.Disconnect();
     super.dispose();
-    chatTimer?.cancel();
-    _chatRoomBloc.close();
   }
 
   @override
@@ -79,6 +82,7 @@ class _ChatRoomState extends State<ChatRoom> {
               create: (create) => UserBloc()..add(const FetchUserData())),
           BlocProvider(
               create: (create) => _chatRoomBloc
+                ..add(ChatJoinRoomEvent(roomId: widget.chat.id!))
                 ..add(ChatGetChatHistoryEvent(roomId: widget.chat.id!)))
         ],
         child: Scaffold(
@@ -113,6 +117,12 @@ class _ChatRoomState extends State<ChatRoom> {
               .read<ChatRoomBloc>()
               .add(ChatGetChatHistoryEvent(roomId: widget.chat.id!));
           _msgTextEditingController.text = "";
+
+          chatService.sendMessage(ChatDto(
+              chatId: state.msgToSend?.chatId.toString(),
+              fromUserId: state.msgToSend?.userId.toString(),
+              message: state.msgToSend?.message));
+
           context.read<ChatRoomBloc>().emit(state.copyWith(
               sentMessageFetchStatus: const ApiFetchInitialStatus()));
         }
@@ -143,12 +153,12 @@ class _ChatRoomState extends State<ChatRoom> {
               BlocBuilder<ChatRoomBloc, ChatRoomState>(
                   builder: (context, state) => IconButton(
                       onPressed: () {
-                        if (state.msgToSend?.isEmpty ?? true) {
+                        if (state.msgToSend?.message?.isEmpty ?? true) {
                           return;
                         }
 
                         context.read<ChatRoomBloc>().add(ChatSentMessageEvent(
-                            message: state.msgToSend ?? "",
+                            message: state.msgToSend?.message ?? "",
                             roomId: widget.chat.id!));
                       },
                       icon: const FaIcon(FontAwesomeIcons.paperPlane)))

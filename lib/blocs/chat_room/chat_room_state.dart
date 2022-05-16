@@ -6,7 +6,7 @@ class ChatRoomState {
   final ApiFetchStatus greetingFetchStatus;
   final ApiFetchStatus sentMessageFetchStatus;
   final ApiFetchStatus fetchChatHistoryStatus;
-  final String? msgToSend;
+  final ChatMessage? msgToSend;
 
   ChatRoomState(
       {this.chatMessages = const [],
@@ -20,7 +20,7 @@ class ChatRoomState {
           ApiFetchStatus? greetingFetchStatus,
           ApiFetchStatus? sentMessageFetchStatus,
           ApiFetchStatus? fetchChatHistoryStatus,
-          String? msgToSend}) =>
+          ChatMessage? msgToSend}) =>
       ChatRoomState(
           chatMessages: chatMessages ?? this.chatMessages,
           greetingFetchStatus: greetingFetchStatus ?? this.greetingFetchStatus,
@@ -28,5 +28,5 @@ class ChatRoomState {
               sentMessageFetchStatus ?? this.sentMessageFetchStatus,
           fetchChatHistoryStatus:
               fetchChatHistoryStatus ?? this.fetchChatHistoryStatus,
-      msgToSend: msgToSend ?? this.msgToSend);
+          msgToSend: msgToSend ?? this.msgToSend);
 }
