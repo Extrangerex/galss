@@ -3,28 +3,29 @@ import 'package:flutter/services.dart';
 import 'package:galss/config/constants.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:rxdart/subjects.dart';
 
 class PaymentService {
-  Future<void> isSubscribed(Function(dynamic, bool) cb) async {
+  final BehaviorSubject<bool> isSubscribed = BehaviorSubject()..add(false);
+
+  PaymentService() {
     try {
       Purchases.addPurchaserInfoUpdateListener((purchase) async {
         PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
 
-        bool isSubscribed = false;
+        bool _isSubscribed = false;
 
         if (purchaserInfo.entitlements.all[revenueCatEntitlementKey] != null &&
             (purchaserInfo
                     .entitlements.all[revenueCatEntitlementKey]?.isActive ??
                 false)) {
           // monthly subscription is active
-          isSubscribed = true;
+          _isSubscribed = true;
         }
 
-        cb(null, isSubscribed);
+        isSubscribed.add(_isSubscribed);
       });
-    } catch (e) {
-      cb(e, false);
-    }
+    } catch (e) {}
   }
 
   Future<Offering?> fetchOffer(String identifier) async {

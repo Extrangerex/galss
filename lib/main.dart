@@ -47,6 +47,8 @@ Future<void> main() async {
   await Purchases.setDebugLogsEnabled(true);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  debugPrint('Locale: $defaultLocale');
+
   if (Platform.isAndroid) {
     await Purchases.setup("goog_OzclXrIoLpROpKJugNkUIFniBRz");
   } else if (Platform.isIOS) {
@@ -81,7 +83,7 @@ class MyApp extends StatelessWidget {
         Locale('it'),
         Locale('hi')
       ],
-      locale: Locale(defaultLocale),
+      locale: Locale(defaultLocale.split('_')[0]),
       theme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: primaryColor,
@@ -103,12 +105,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
 
     locator<AuthService>().authData.then((value) {
       if (value.userType != null) {
         if (value.userType == UserType.seeker.index) {
-          locator<PaymentService>().isSubscribed((p0, p1) {
+          locator<PaymentService>().isSubscribed.listen((p1) {
             if (p1) {
               locator<NavigationService>().navigateTo('/seeker');
             } else {
@@ -125,6 +126,8 @@ class _HomeState extends State<Home> {
 
       locator<NavigationService>().navigateTo('/login');
     });
+
+    super.initState();
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
+import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
@@ -21,6 +22,16 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    locator<PaymentService>().isSubscribed.listen(
+      (p1) {
+        if (p1) {
+          locator<NavigationService>().navigateTo('/seeker');
+        }
+
+        setState(() {});
+      },
+    );
   }
 
   Widget _monthlySubscriptionBtn() {
