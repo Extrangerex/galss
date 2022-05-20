@@ -15,10 +15,13 @@
       "localizations" : [
 
       ],
-      "name" : "subscription_group",
+      "name" : "access_all_features",
       "subscriptions" : [
         {
           "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
 
           ],
           "displayPrice" : "9.99",
@@ -41,6 +44,9 @@
         },
         {
           "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
 
           ],
           "displayPrice" : "79.99",
@@ -70,6 +76,6 @@
   },
   "version" : {
     "major" : 1,
-    "minor" : 1
+    "minor" : 2
   }
 }
