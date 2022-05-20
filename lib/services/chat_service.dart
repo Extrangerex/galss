@@ -44,7 +44,6 @@ class ChatService {
     }
 
     io.onConnect((_) {
-      debugPrint('Connected to chat service');
       io.emit(event, data);
     });
   }
@@ -54,7 +53,6 @@ class ChatService {
   }
 
   void sendMessage(ChatDto chatDto) {
-    debugPrint('Sending message ${chatDto.message}');
     emit('message', chatDto.toJson());
   }
 

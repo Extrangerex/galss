@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:galss/config/constants.dart';
 import 'package:galss/firebase_options.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/models/api_login.dart';
 import 'package:galss/models/user_type.dart';
+import 'package:galss/pages/signup_seeker_subscription.dart';
 import 'package:galss/router_generator.dart';
 import 'package:galss/services/auth_service.dart';
 import 'package:galss/services/country_service.dart';
@@ -48,7 +50,7 @@ Future<void> main() async {
   if (Platform.isAndroid) {
     await Purchases.setup("goog_OzclXrIoLpROpKJugNkUIFniBRz");
   } else if (Platform.isIOS) {
-    await Purchases.setup("appl_OylMRLjcxAiHRQJlaQPfcyeqJMX");
+    await Purchases.setup("appl_OylMRLjcxAiHRQJlaQPfcyeqJMXs");
   }
 
   setupLocator();
@@ -105,8 +107,19 @@ class _HomeState extends State<Home> {
 
     locator<AuthService>().authData.then((value) {
       if (value.userType != null) {
-        locator<NavigationService>().pushRemoveUntil(
-            value.userType == UserType.model.index ? '/model' : '/seeker');
+        if (value.userType == UserType.seeker.index) {
+          locator<PaymentService>().isSubscribed((p0, p1) {
+            if (p1) {
+              locator<NavigationService>().navigateTo('/seeker');
+            } else {
+              locator<NavigationService>()
+                  .navigateTo('/signup/seeker/subscribe');
+            }
+          });
+        } else if (value.userType == UserType.model.index) {
+          locator<NavigationService>().navigateTo('/model');
+        }
+
         return;
       }
 

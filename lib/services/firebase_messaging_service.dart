@@ -45,8 +45,6 @@ class FirebaseMessagingService {
         deviceToken,
         apiLogin: ApiLogin.fromJson(jsonDecode(authData ?? "{}")));
 
-    debugPrint("${tokenUpdateResponse?.message}");
-
     initMessaging();
   }
 
