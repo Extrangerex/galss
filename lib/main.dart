@@ -52,7 +52,7 @@ Future<void> main() async {
   if (Platform.isAndroid) {
     await Purchases.setup("goog_OzclXrIoLpROpKJugNkUIFniBRz");
   } else if (Platform.isIOS) {
-    await Purchases.setup("appl_OylMRLjcxAiHRQJlaQPfcyeqJMXs");
+    await Purchases.setup("appl_OylMRLjcxAiHRQJlaQPfcyeqJMX");
   }
 
   setupLocator();
