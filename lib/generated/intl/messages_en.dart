@@ -31,8 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "action_sign_in": MessageLookupByLibrary.simpleMessage("Log in"),
-        "action_sign_in_short":
-            MessageLookupByLibrary.simpleMessage("Get into"),
+        "action_sign_in_short": MessageLookupByLibrary.simpleMessage("Sign in"),
         "add_new_name": MessageLookupByLibrary.simpleMessage("Add a new name"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Add a photo"),
         "add_your_new_state":
@@ -63,7 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This email address is not valid"),
         "error_invalid_password":
             MessageLookupByLibrary.simpleMessage("This password is too short"),
-        "exit": MessageLookupByLibrary.simpleMessage("Go out"),
+        "exit": MessageLookupByLibrary.simpleMessage("Sign out"),
         "finder": MessageLookupByLibrary.simpleMessage("Seeker"),
         "fonts_with_asterisk_are_mandatory":
             MessageLookupByLibrary.simpleMessage(
@@ -72,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Start"),
         "invalid_user_password": MessageLookupByLibrary.simpleMessage(
             "Invalid username or password"),
-        "language": MessageLookupByLibrary.simpleMessage("Spanish"),
+        "language": MessageLookupByLibrary.simpleMessage("English"),
         "lastname": MessageLookupByLibrary.simpleMessage("Surname"),
         "liked_by_n_people": m0,
         "model": MessageLookupByLibrary.simpleMessage("Model"),
@@ -93,6 +92,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "photo_deleted":
             MessageLookupByLibrary.simpleMessage("you deleted this photo"),
         "pick_a_city": MessageLookupByLibrary.simpleMessage("select a city"),
+        "please_confirm_your_email_address":
+            MessageLookupByLibrary.simpleMessage(
+                "Please confirm your email address"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("Put Anonymous Profile"),
         "profile_status": MessageLookupByLibrary.simpleMessage("Condition"),
@@ -147,15 +149,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_city": MessageLookupByLibrary.simpleMessage("unknown city"),
         "user_seeker_registered": MessageLookupByLibrary.simpleMessage(
             "You have successfully created an account."),
+        "verification_link_sent":
+            MessageLookupByLibrary.simpleMessage("Verification link sent"),
         "yearly": MessageLookupByLibrary.simpleMessage("Annuals"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "you_have_n_connections": m2,
         "you_must_specify_country": MessageLookupByLibrary.simpleMessage(
             "You must enter your country of origin"),
         "you_talking_with_n": m3,
-        "your_favorites":
-            MessageLookupByLibrary.simpleMessage("your favorites"),
-        "your_likes": MessageLookupByLibrary.simpleMessage("your likes"),
+        "your_favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
+        "your_likes": MessageLookupByLibrary.simpleMessage("Likes"),
         "your_request_was_received_see_you_in_48hr":
             MessageLookupByLibrary.simpleMessage(
                 "Your request was received correctly.\n Before 48 hours we will be\n confirming.")

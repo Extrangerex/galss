@@ -17,6 +17,7 @@ import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/payment_service.dart';
 import 'package:galss/services/shared_preferences.dart';
 import 'package:galss/services/snackbar_service.dart';
+import 'package:galss/services/validation_service.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/variables.dart';
@@ -40,6 +41,8 @@ void setupLocator() {
       .registerSingleton<SharedPreferencesService>(SharedPreferencesService());
   locator
       .registerSingleton<FirebaseMessagingService>(FirebaseMessagingService());
+
+  locator.registerSingleton<ValidationService>(ValidationService());
 }
 
 Future<void> main() async {
@@ -109,6 +112,8 @@ class _HomeState extends State<Home> {
     locator<AuthService>().authData.then((value) {
       if (value.userType != null) {
         if (value.userType == UserType.seeker.index) {
+          // check if email is verified
+
           locator<PaymentService>().isSubscribed.listen((p1) {
             if (p1) {
               locator<NavigationService>().navigateTo('/seeker');

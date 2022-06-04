@@ -122,5 +122,7 @@
   "retype_password" : "Repetir contraseña",
   "passwords_must_match": "Las contraseñas deben coincidir",
   "invalid_user_password": "Nombre de usuario o contraseña inválido",
-  "user_seeker_registered": "Ha creado una cuenta con éxito."
+  "user_seeker_registered": "Ha creado una cuenta con éxito.",
+  "please_confirm_your_email_address": "Por favor confirme su dirección de correo electrónico",
+  "verification_link_sent": "Enlace de verificación enviado"
 }

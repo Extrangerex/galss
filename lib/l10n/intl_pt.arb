@@ -199,5 +199,7 @@
         "example": "Jhon Doe"
       }
     }
-  }
+  },
+  "please_confirm_your_email_address": "Por favor, confirme seu endereço de email",
+  "verification_link_sent": "Link de verificação enviado"
 }

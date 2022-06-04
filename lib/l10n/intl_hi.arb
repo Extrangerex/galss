@@ -199,5 +199,7 @@
         "example": "Jhon Doe"
       }
     }
-  }
+  },
+  "please_confirm_your_email_address": "अपने ईमेल पते की पुष्टि करें",
+  "verification_link_sent": "सत्यापन लिंक भेजा गया"
 }

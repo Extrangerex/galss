@@ -99,6 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("tu as supprimé cette photo"),
         "pick_a_city":
             MessageLookupByLibrary.simpleMessage("sélectionner une ville"),
+        "please_confirm_your_email_address":
+            MessageLookupByLibrary.simpleMessage(
+                "Veuillez confirmer votre adresse électronique"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("Mettre un profil anonyme"),
         "profile_status": MessageLookupByLibrary.simpleMessage("État"),
@@ -155,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_city": MessageLookupByLibrary.simpleMessage("ville inconnue"),
         "user_seeker_registered": MessageLookupByLibrary.simpleMessage(
             "Vous avez créé un compte avec succès."),
+        "verification_link_sent":
+            MessageLookupByLibrary.simpleMessage("Lien de vérification envoyé"),
         "yearly": MessageLookupByLibrary.simpleMessage("Annuelles"),
         "yes": MessageLookupByLibrary.simpleMessage("Oui"),
         "you_have_n_connections": m2,

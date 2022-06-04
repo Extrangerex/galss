@@ -60,10 +60,10 @@ class S {
     );
   }
 
-  /// `Get into`
+  /// `Sign in`
   String get action_sign_in_short {
     return Intl.message(
-      'Get into',
+      'Sign in',
       name: 'action_sign_in_short',
       desc: '',
       args: [],
@@ -260,10 +260,10 @@ class S {
     );
   }
 
-  /// `Go out`
+  /// `Sign out`
   String get exit {
     return Intl.message(
-      'Go out',
+      'Sign out',
       name: 'exit',
       desc: '',
       args: [],
@@ -320,10 +320,10 @@ class S {
     );
   }
 
-  /// `Spanish`
+  /// `English`
   String get language {
     return Intl.message(
-      'Spanish',
+      'English',
       name: 'language',
       desc: '',
       args: [],
@@ -850,20 +850,20 @@ class S {
     );
   }
 
-  /// `your favorites`
+  /// `Favorites`
   String get your_favorites {
     return Intl.message(
-      'your favorites',
+      'Favorites',
       name: 'your_favorites',
       desc: '',
       args: [],
     );
   }
 
-  /// `your likes`
+  /// `Likes`
   String get your_likes {
     return Intl.message(
-      'your likes',
+      'Likes',
       name: 'your_likes',
       desc: '',
       args: [],
@@ -887,6 +887,26 @@ class S {
       name: 'you_talking_with_n',
       desc: 'Especificar el nombre del usuario con quien hablas',
       args: [targetName],
+    );
+  }
+
+  /// `Please confirm your email address`
+  String get please_confirm_your_email_address {
+    return Intl.message(
+      'Please confirm your email address',
+      name: 'please_confirm_your_email_address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification link sent`
+  String get verification_link_sent {
+    return Intl.message(
+      'Verification link sent',
+      name: 'verification_link_sent',
+      desc: '',
+      args: [],
     );
   }
 }

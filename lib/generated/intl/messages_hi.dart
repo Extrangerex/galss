@@ -96,6 +96,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "photo_deleted": MessageLookupByLibrary.simpleMessage(
             "आपने इस फोटो को डिलीट कर दिया"),
         "pick_a_city": MessageLookupByLibrary.simpleMessage("एक शहर चुनें"),
+        "please_confirm_your_email_address":
+            MessageLookupByLibrary.simpleMessage(
+                "अपने ईमेल पते की पुष्टि करें"),
         "poner_perfil_anonimo":
             MessageLookupByLibrary.simpleMessage("बेनामी प्रोफ़ाइल डालें"),
         "profile_status": MessageLookupByLibrary.simpleMessage("स्थिति"),
@@ -150,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_city": MessageLookupByLibrary.simpleMessage("अनजान शहर"),
         "user_seeker_registered": MessageLookupByLibrary.simpleMessage(
             "आपने सफलतापूर्वक एक खाता बना लिया है।"),
+        "verification_link_sent":
+            MessageLookupByLibrary.simpleMessage("सत्यापन लिंक भेजा गया"),
         "yearly": MessageLookupByLibrary.simpleMessage("वार्षिक"),
         "yes": MessageLookupByLibrary.simpleMessage("हां"),
         "you_have_n_connections": m2,
