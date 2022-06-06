@@ -80,6 +80,7 @@ class _LoginState extends State<Login> {
           if ((state.formState as FormFailedStatus).exception
               is UserValidationException) {
             SendValidationEmailDialog.show(state.username!);
+            return;
           }
 
           if (statusCode == 404 || statusCode == 400) {
