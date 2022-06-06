@@ -8,7 +8,7 @@ import 'package:galss/services/navigation_service.dart';
 class SendValidationEmailDialog extends StatelessWidget {
   final String? email;
 
-  static Show(String email) {
+  static show(String email) {
     showDialog(
         context: locator<NavigationService>().navigatorKey.currentContext!,
         builder: (context) => SendValidationEmailDialog(email: email));

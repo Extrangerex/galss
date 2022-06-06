@@ -9,7 +9,7 @@ class ValidationService {
     try {
       final response = await locator<HttpService>()
           .http
-          .post("$validationServiceUrl/api/v1/validation/send/$email");
+          .post("$validationServiceUrl/login/send/validation/$email");
 
       if (response.statusCode == 200) {
         return response.data;
@@ -18,6 +18,22 @@ class ValidationService {
       }
     } catch (e) {
       throw Exception('Failed to send validation code');
+    }
+  }
+
+  Future<bool> getLoginStatus(String email) async {
+    try {
+      final response = await locator<HttpService>()
+          .http
+          .get("$validationServiceUrl/login/$email");
+
+      if (response.statusCode == 200) {
+        return response.data?['enabled'] ?? false;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception('Failed to get login status');
     }
   }
 }

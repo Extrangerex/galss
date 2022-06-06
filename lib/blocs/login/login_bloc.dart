@@ -4,7 +4,9 @@ import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/main.dart';
+import 'package:galss/models/user_validation_exception.dart';
 import 'package:galss/services/auth_service.dart';
+import 'package:galss/services/validation_service.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginState()) {
@@ -24,6 +26,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
      * perform login requests
      */
     emit(state.copyWith(formSubmissionStatus: const FormSubmittingStatus()));
+
+    var validation =
+        await locator<ValidationService>().getLoginStatus(state.username!);
+
+    if (!validation) {
+      emit(state.copyWith(
+          formSubmissionStatus: FormFailedStatus(
+              exception:
+                  UserValidationException('User is not enabled', 'username'),
+              status: 400)));
+      return;
+    }
 
     await locator<AuthService>()
         .repository

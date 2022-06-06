@@ -9,10 +9,12 @@ import 'package:galss/blocs/login/login_bloc.dart';
 import 'package:galss/blocs/login/login_event.dart';
 import 'package:galss/blocs/login/login_state.dart';
 import 'package:galss/config/constants.dart';
+import 'package:galss/dialogs/send_validation_email_dialog.dart';
 import 'package:galss/form_submission_status.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/models/api_login.dart';
+import 'package:galss/models/user_validation_exception.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/shared_preferences.dart';
 import 'package:galss/services/snackbar_service.dart';
@@ -74,6 +76,11 @@ class _LoginState extends State<Login> {
                   (state.formState as FormSuccessStatus).payload)));
         } else if (state.formState is FormFailedStatus) {
           final statusCode = (state.formState as FormFailedStatus).status;
+
+          if ((state.formState as FormFailedStatus).exception
+              is UserValidationException) {
+            SendValidationEmailDialog.show(state.username!);
+          }
 
           if (statusCode == 404 || statusCode == 400) {
             showSnack(S.current.invalid_user_password);

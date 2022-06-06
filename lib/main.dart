@@ -113,6 +113,7 @@ class _HomeState extends State<Home> {
       if (value.userType != null) {
         if (value.userType == UserType.seeker.index) {
           // check if email is verified
+          
 
           locator<PaymentService>().isSubscribed.listen((p1) {
             if (p1) {
