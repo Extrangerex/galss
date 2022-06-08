@@ -43,6 +43,7 @@ class _HomeSeekerCatalogState extends State<HomeSeekerCatalog> {
           backgroundColor: backgroundColor,
           appBar: AppBar(
             elevation: 0,
+            automaticallyImplyLeading: false,
             title: Container(
               width: double.infinity,
               height: 40,

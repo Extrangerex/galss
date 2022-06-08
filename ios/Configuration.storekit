@@ -36,7 +36,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "com.iscodeablesolutions.apps.galss.subscriptions.montly\n",
+          "productID" : "com.iscodeablesolutions.apps.galss.subscriptions.montly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Galss montly subscription",
           "subscriptionGroupID" : "0D065BE3",
@@ -61,7 +61,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "com.iscodeablesolutions.apps.galss.subscriptions.yearly\n",
+          "productID" : "com.iscodeablesolutions.apps.galss.subscriptions.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Galss yearly subscription",
           "subscriptionGroupID" : "0D065BE3",

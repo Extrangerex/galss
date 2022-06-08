@@ -42,6 +42,7 @@ class _HomeSeekerCloseMeState extends State<HomeSeekerCloseMe> {
           backgroundColor: backgroundColor,
           appBar: AppBar(
             elevation: 0,
+            automaticallyImplyLeading: false,
             title: Text(S.current.close_to_me),
             centerTitle: true,
             titleSpacing: 8,

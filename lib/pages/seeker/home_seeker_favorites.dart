@@ -14,11 +14,12 @@ class HomeSeekerFavorites extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(S.current.your_favorites),
         ),
         body: BlocProvider(
-          create: (create) => HomeSeekerCatalogBloc()
-            ..add(const HomeSeekerGetFavoritesEvent()),
+          create: (create) =>
+              HomeSeekerCatalogBloc()..add(const HomeSeekerGetFavoritesEvent()),
           child: BlocBuilder<HomeSeekerCatalogBloc, HomeSeekerCatalogState>(
               builder: (context, state) {
             return ListView.builder(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:galss/config/constants.dart';
-import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -10,6 +9,21 @@ class PaymentService {
 
   PaymentService() {
     try {
+      Purchases.getPurchaserInfo().then((value) {
+        bool _isSubscribed = false;
+
+        if (value.entitlements.all[revenueCatEntitlementKey] != null &&
+            (value.entitlements.all[revenueCatEntitlementKey]?.isActive ??
+                false)) {
+          // monthly subscription is active
+          _isSubscribed = true;
+        }
+
+        isSubscribed.add(_isSubscribed);
+      }).catchError((error) {
+        print("Error: $error");
+      });
+
       Purchases.addPurchaserInfoUpdateListener((purchase) async {
         PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
 
@@ -25,14 +39,15 @@ class PaymentService {
 
         isSubscribed.add(_isSubscribed);
       });
-    } catch (e) {}
+    } catch (e) {
+      debugPrint("err: ${e.toString()}");
+    }
   }
 
   Future<Offering?> fetchOffer(String identifier) async {
     try {
       final offerings = await Purchases.getOfferings().catchError((e) {
         debugPrint("Error: $e");
-        return null;
       });
 
       return offerings.getOffering(identifier);

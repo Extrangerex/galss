@@ -41,6 +41,7 @@ class _HomeSeekerDashboardState extends State<HomeSeekerDashboard> {
           size: MediaQuery.of(context).size,
           child: CustomScrollView(slivers: [
             SliverFillRemaining(
+              hasScrollBody: false,
               child: Column(
                 children: [
                   const Spacer(),
