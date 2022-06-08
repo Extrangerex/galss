@@ -13,7 +13,7 @@ class LoadingDialog extends StatelessWidget {
           .overlay!
           .context,
       barrierDismissible: false,
-      builder: (context) => LoadingDialog(),
+      builder: (context) => const LoadingDialog(),
     );
     return;
   }

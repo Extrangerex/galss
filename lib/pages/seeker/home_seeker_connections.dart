@@ -47,6 +47,7 @@ class _HomeSeekerMyConnectionsState extends State<HomeSeekerMyConnections> {
             title: title(),
             elevation: 0,
             centerTitle: true,
+            automaticallyImplyLeading: false,
             // backgroundColor: Colors.transparent,
           ),
           body: BlocBuilder<ChatBloc, ChatState>(

@@ -11,7 +11,7 @@ class ValidationService {
           .http
           .post("$validationServiceUrl/login/send/validation/$email");
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return response.data;
       } else {
         throw Exception('Failed to send validation code');

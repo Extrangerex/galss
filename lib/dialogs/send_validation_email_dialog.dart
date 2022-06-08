@@ -20,6 +20,7 @@ class SendValidationEmailDialog extends StatelessWidget {
   handleSubmit() {
     locator<ValidationService>().sendValidationCode(email).then((value) {
       locator<NavigationService>().navigateTo('/');
+      locator<SnackbarService>().showMessage(S.current.verification_link_sent);
     }).catchError((error) {
       locator<SnackbarService>().showMessage(S.current.something_went_wrong);
     });
