@@ -41,8 +41,7 @@ class FirebaseMessagingService {
     final authData =
         await SharedPreferencesService().getItem(SharedPrefs.authData);
 
-    final tokenUpdateResponse = await locator<AuthService>().postNewDeviceToken(
-        deviceToken,
+    await locator<AuthService>().postNewDeviceToken(deviceToken,
         apiLogin: ApiLogin.fromJson(jsonDecode(authData ?? "{}")));
 
     initMessaging();
@@ -66,6 +65,8 @@ class FirebaseMessagingService {
         androidNotificationChannel.id, androidNotificationChannel.name,
         channelShowBadge: true,
         visibility: NotificationVisibility.public,
+        ongoing: true,
+        importance: Importance.high,
         priority: Priority.max);
     var iosDetails = const IOSNotificationDetails();
     var generalNotificationDetails =

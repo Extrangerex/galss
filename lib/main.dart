@@ -50,8 +50,6 @@ Future<void> main() async {
   await Purchases.setDebugLogsEnabled(true);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  debugPrint('Locale: $defaultLocale');
-
   if (Platform.isAndroid) {
     await Purchases.setup("goog_OzclXrIoLpROpKJugNkUIFniBRz");
   } else if (Platform.isIOS) {
@@ -113,7 +111,6 @@ class _HomeState extends State<Home> {
       if (value.userType != null) {
         if (value.userType == UserType.seeker.index) {
           // check if email is verified
-          
 
           locator<PaymentService>().isSubscribed.listen((p1) {
             if (p1) {
