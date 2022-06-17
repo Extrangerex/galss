@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:galss/config/constants.dart';
 import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/navigation_service.dart';
@@ -51,8 +52,8 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
               child: Text(
                   "${S.current.monthly} ${snapshot.data?.monthly?.product.priceString ?? ""}"));
         },
-        future:
-            locator<PaymentService>().fetchOffer("galss_monthly_subscription"));
+        future: locator<PaymentService>()
+            .fetchOffer(revenueCatSubscriptionMonthlyId));
   }
 
   Widget _annualSubscriptionBtn() {
@@ -73,8 +74,8 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
               child: Text(
                   "${S.current.yearly} ${snapshot.data?.annual?.product.priceString ?? ""}"));
         },
-        future:
-            locator<PaymentService>().fetchOffer("galss_yearly_subscription"));
+        future: locator<PaymentService>()
+            .fetchOffer(revenueCatSubscriptionAnnualId));
   }
 
   @override
