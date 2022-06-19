@@ -52,8 +52,8 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
               child: Text(
                   "${S.current.monthly} ${snapshot.data?.monthly?.product.priceString ?? ""}"));
         },
-        future: locator<PaymentService>()
-            .fetchOffer(revenueCatSubscriptionMonthlyId));
+        future:
+            locator<PaymentService>().fetchOffer("galss_monthly_subscription"));
   }
 
   Widget _annualSubscriptionBtn() {
@@ -74,8 +74,8 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
               child: Text(
                   "${S.current.yearly} ${snapshot.data?.annual?.product.priceString ?? ""}"));
         },
-        future: locator<PaymentService>()
-            .fetchOffer(revenueCatSubscriptionAnnualId));
+        future:
+            locator<PaymentService>().fetchOffer("galss_yearly_subscription"));
   }
 
   @override

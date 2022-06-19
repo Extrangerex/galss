@@ -25,7 +25,7 @@ String get revenueCatSubscriptionMonthlyId {
   if (Platform.isAndroid) {
     return 'galss_monthly_subscription';
   } else if (Platform.isIOS) {
-    return 'com.iscodeablesolutions.apps.galss.subscriptions.montly';
+    return 'com.iscodeablesolutions.apps.galss.subscriptions.monthly';
   } else {
     return "";
   }
@@ -35,7 +35,7 @@ String get revenueCatSubscriptionAnnualId {
   if (Platform.isAndroid) {
     return 'galss_yearly_subscription';
   } else if (Platform.isIOS) {
-    return 'com.iscodeablesolutions.apps.galss.subscriptions.yearly';
+    return 'com.iscodeablesolutions.apps.galss.subscriptions.year';
   } else {
     return "";
   }
