@@ -21,7 +21,7 @@ class PaymentService {
 
         isSubscribed.add(_isSubscribed);
       }).catchError((error) {
-        print("Error: $error");
+        debugPrint("Error: $error");
       });
 
       Purchases.addPurchaserInfoUpdateListener((purchase) async {
