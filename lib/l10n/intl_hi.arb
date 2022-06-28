@@ -201,5 +201,6 @@
     }
   },
   "please_confirm_your_email_address": "अपने ईमेल पते की पुष्टि करें",
-  "verification_link_sent": "सत्यापन लिंक भेजा गया"
+  "verification_link_sent": "सत्यापन लिंक भेजा गया",
+  "subscription_terms_conditions_accept_disclaimer": "सब्सक्राइब करके आप हमारी स्वीकार कर रहे हैं"
 }

@@ -909,6 +909,16 @@ class S {
       args: [],
     );
   }
+
+  /// `By subscribing you are accepting our`
+  String get subscription_terms_conditions_accept_disclaimer {
+    return Intl.message(
+      'By subscribing you are accepting our',
+      name: 'subscription_terms_conditions_accept_disclaimer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

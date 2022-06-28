@@ -201,5 +201,6 @@
     }
   },
   "please_confirm_your_email_address": "Conferma il tuo indirizzo email",
-  "verification_link_sent": "Link di verifica inviato"
+  "verification_link_sent": "Link di verifica inviato",
+    "subscription_terms_conditions_accept_disclaimer": "Iscrivendoti accetti i nostri"
 }

@@ -146,6 +146,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Modulo di accesso"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Qualcosa è andato storto"),
+        "subscription_terms_conditions_accept_disclaimer":
+            MessageLookupByLibrary.simpleMessage(
+                "Iscrivendoti accetti i nostri"),
         "switch_anonymous_mode":
             MessageLookupByLibrary.simpleMessage("metti profilo anonimo"),
         "technically_there_is_nothing_wrong_but":

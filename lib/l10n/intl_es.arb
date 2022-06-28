@@ -124,5 +124,6 @@
   "invalid_user_password": "Nombre de usuario o contraseña inválido",
   "user_seeker_registered": "Ha creado una cuenta con éxito.",
   "please_confirm_your_email_address": "Por favor confirme su dirección de correo electrónico",
-  "verification_link_sent": "Enlace de verificación enviado"
+  "verification_link_sent": "Enlace de verificación enviado",
+  "subscription_terms_conditions_accept_disclaimer": "Al suscribirte estás aceptando nuestros"
 }

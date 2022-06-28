@@ -4,9 +4,11 @@ import 'package:galss/generated/l10n.dart';
 import 'package:galss/main.dart';
 import 'package:galss/services/navigation_service.dart';
 import 'package:galss/services/payment_service.dart';
+import 'package:galss/shared/column_spacing.dart';
 import 'package:galss/shared/imaged_background_container.dart';
 import 'package:galss/shared/logo.dart';
 import 'package:galss/theme/button_styles.dart';
+import 'package:galss/utils/intent-utils.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class SignupSeekerSubscription extends StatefulWidget {
@@ -56,6 +58,32 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
             locator<PaymentService>().fetchOffer("galss_monthly_subscription"));
   }
 
+  Widget _termsConditionsBtn() {
+    return GestureDetector(
+        onTap: () {
+          launchUrlInBrowser(
+              Uri.parse("http://www.thegalssapp.com/privacy-policy/"));
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(children: [
+                TextSpan(
+                    text:
+                        "${S.current.subscription_terms_conditions_accept_disclaimer} ",
+                    style: const TextStyle(color: Colors.white, fontSize: 16)),
+                TextSpan(
+                    text: S.current.prompt_terms_conditions,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold)),
+              ])),
+        ));
+  }
+
   Widget _annualSubscriptionBtn() {
     return FutureBuilder<Offering?>(
         builder: (context, snapshot) {
@@ -81,21 +109,17 @@ class _SignupSeekerSubscriptionState extends State<SignupSeekerSubscription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: _termsConditionsBtn(),
       body: ImagedBackgroundContainer(
-        child: Column(
+        child: ColumnSpacing(
+          spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          items: [
             const Image(
               image: logo,
               width: 200,
             ),
-            const SizedBox(
-              height: 20,
-            ),
             _monthlySubscriptionBtn(),
-            const SizedBox(
-              height: 10,
-            ),
             _annualSubscriptionBtn()
           ],
         ),

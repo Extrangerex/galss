@@ -201,5 +201,6 @@
     }
   },
   "please_confirm_your_email_address": "Please confirm your email address",
-  "verification_link_sent": "Verification link sent"
+  "verification_link_sent": "Verification link sent",
+  "subscription_terms_conditions_accept_disclaimer": "By subscribing you are accepting our"
 }

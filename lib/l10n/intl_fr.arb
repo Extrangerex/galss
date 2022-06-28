@@ -201,5 +201,6 @@
     }
   },
   "please_confirm_your_email_address": "Veuillez confirmer votre adresse électronique",
-  "verification_link_sent": "Lien de vérification envoyé"
+  "verification_link_sent": "Lien de vérification envoyé",
+  "subscription_terms_conditions_accept_disclaimer": "En vous abonnant, vous acceptez nos "
 }

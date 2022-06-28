@@ -146,6 +146,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Formulario de Inicio de Sesión"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Algo salió mal"),
+        "subscription_terms_conditions_accept_disclaimer":
+            MessageLookupByLibrary.simpleMessage(
+                "Al suscribirte estás aceptando nuestros"),
         "switch_anonymous_mode":
             MessageLookupByLibrary.simpleMessage("Poner perfil anónimo"),
         "technically_there_is_nothing_wrong_but":
